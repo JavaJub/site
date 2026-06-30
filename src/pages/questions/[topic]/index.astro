@@ -1,0 +1,62 @@
+---
+import Base from '../../../layouts/Base.astro';
+import TopicIcon from '../../../components/TopicIcon.astro';
+import { questionTopics, questionsByTopic } from '../../../lib/questions';
+import { topicLabel, ru } from '../../../lib/companies';
+
+export function getStaticPaths() {
+  return questionTopics.map((topic) => ({ params: { topic }, props: { topic } }));
+}
+const { topic } = Astro.props as { topic: string };
+const label = topicLabel(topic);
+const qs = questionsByTopic(topic);
+
+const title = `${label}: вопросы Java-собеседования с ответами (${ru(qs.length)}) | JavaJub`;
+const description = `${ru(qs.length)} вопросов по теме «${label}» с собеседований Java — с правильным ответом и разбором. Готовься к интервью прицельно.`;
+
+// FAQPage with the first answers (rich results for RU/Yandex).
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  inLanguage: 'ru',
+  mainEntity: qs.slice(0, 25).map((q) => ({
+    '@type': 'Question',
+    name: q.prompt,
+    acceptedAnswer: { '@type': 'Answer', text: q.answer },
+  })),
+};
+---
+<Base title={title} description={description} jsonLd={jsonLd}>
+  <section class="section">
+    <div class="container">
+      <nav class="crumbs mono"><a href="/">главная</a> <span>/</span> <a href="/questions/">вопросы</a> <span>/</span> <b>{label}</b></nav>
+      <div class="th-head">
+        <span class="th-ic"><TopicIcon topic={topic} size={26} /></span>
+        <div><div class="accent-bar"></div><h1><span class="hl">{label}</span>: вопросы с ответами</h1></div>
+      </div>
+      <p class="lead">{ru(qs.length)} разобранных вопросов по теме «{label}». Каждый — с правильным ответом и пояснением.</p>
+
+      <ul class="qlist">
+        {qs.map((q) => (
+          <li class="qrow">
+            <a href={`/questions/${topic}/${q.slug}/`} class="qrow__q">{q.prompt}</a>
+            <p class="qrow__a">{q.answer}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>
+<style>
+  .crumbs { color: var(--text-faint); font-size: .82rem; margin-bottom: 1rem; }
+  .crumbs a:hover { color: var(--accent-light); } .crumbs span { opacity: .5; } .crumbs b { color: var(--text-soft); }
+  .th-head { display: flex; align-items: center; gap: 1rem; }
+  .th-head h1 { margin: 0; }
+  .th-ic { flex: none; display: grid; place-items: center; width: 54px; height: 54px; color: var(--accent);
+    border: 1px solid var(--accent-line); border-radius: 14px; background: var(--accent-soft); }
+  .qlist { list-style: none; margin: 1.6rem 0 0; padding: 0; }
+  .qrow { padding: 1rem 0; border-bottom: 1px solid var(--border); }
+  .qrow__q { display: block; font-weight: 700; font-size: 1.05rem; color: var(--text); }
+  .qrow__q:hover { color: var(--accent-light); }
+  .qrow__a { margin: .4rem 0 0; color: var(--text-soft); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+</style>

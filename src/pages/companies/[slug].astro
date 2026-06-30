@@ -1,0 +1,160 @@
+---
+import Base from '../../layouts/Base.astro';
+import TelegramIcon from '../../components/icons/TelegramIcon.astro';
+import TopicIcon from '../../components/TopicIcon.astro';
+import CompanyAvatar from '../../components/CompanyAvatar.astro';
+import { tg } from '../../lib/site';
+import { indexableCompanies, topicLabel, qWord, FREE_GUIDE_COMPANIES, type Company } from '../../lib/companies';
+import { freeQuestionsForCompany, freeQuestionsByTopics } from '../../lib/questions';
+import { getGuideForCompany } from '../../lib/guides';
+
+export function getStaticPaths() {
+  return indexableCompanies.map((c) => ({ params: { slug: c.slug }, props: { company: c } }));
+}
+const { company } = Astro.props as { company: Company };
+const grades = company.gradeList.filter((g) => g !== 'Общие');
+const topics = company.topTopics.filter((t) => t !== 'other');
+
+// Only FREE questions ever reach the page. If this company has a free sample
+// guide, show the exact questions it got; otherwise show free questions on the
+// topics it asks most. Both link to full answer pages.
+const guide = getGuideForCompany(company.slug);
+const ownFree = freeQuestionsForCompany(FREE_GUIDE_COMPANIES[company.slug] ?? [], 12);
+const sample = ownFree.length >= 4 ? ownFree : freeQuestionsByTopics(topics, 10);
+const sampleIsOwn = ownFree.length >= 4;
+
+const title = `Собеседование Java в ${company.name}: реальные вопросы и подготовка | JavaJub`;
+const description = `Реальные вопросы с собеседований Java в ${company.name} по грейдам ${grades.join(', ')}: ${topics.map(topicLabel).slice(0, 4).join(', ')}. Готовься к интервью прицельно — то, что спрашивают на самом деле.`;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'JavaJub', item: 'https://www.javajub.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Компании', item: 'https://www.javajub.com/companies/' },
+    { '@type': 'ListItem', position: 3, name: company.name, item: `https://www.javajub.com/companies/${company.slug}/` },
+  ],
+};
+---
+<Base title={title} description={description} jsonLd={jsonLd}>
+  <section class="section">
+    <div class="container">
+      <nav class="crumbs mono"><a href="/">главная</a> <span>/</span> <a href="/companies/">компании</a> <span>/</span> <b>{company.name}</b></nav>
+      <div class="hub-head">
+        <CompanyAvatar name={company.name} size={66} />
+        <div>
+          <div class="accent-bar"></div>
+          <h1>Собеседование Java в <span class="hl">{company.name}</span></h1>
+        </div>
+      </div>
+      <p class="lead">Реальные вопросы с собеседований по грейдам и темам — то, что спрашивают на самом деле, а не «топ-100 из интернета».</p>
+
+      <div class="meta">
+        <div class="meta__row"><span class="meta__k">Грейды</span><span class="meta__v">{grades.map((g) => <span class="pill pill--accent">{g}</span>)}</span></div>
+        <div class="meta__row"><span class="meta__k">Темы</span><span class="meta__v">{topics.map((t) => <a class="tag tag--ic" href={`/themes/${t}/`}><TopicIcon topic={t} size={13} /> {topicLabel(t)}</a>)}</span></div>
+      </div>
+
+      <div class="hub">
+        <div class="hub__main">
+          <h2 class="sec-h"><span class="dot"></span>{sampleIsOwn
+            ? `Бесплатные вопросы с собеседований ${company.name}`
+            : `Частые вопросы по темам, которые спрашивают в ${company.name}`}</h2>
+          <p class="muted hub__note">{sampleIsOwn
+            ? 'Реальные вопросы из бесплатного разбора — с ответами. Нажми, чтобы открыть полный ответ.'
+            : 'Вопросы по ключевым темам этой компании — бесплатно, с разбором. Нажми, чтобы открыть ответ.'}</p>
+          <ol class="qlist">
+            {sample.map((q) => (
+              <li class="qitem">
+                <span class="qitem__b" aria-hidden="true"></span>
+                {q.topic !== 'other' && <span class="tag">{topicLabel(q.topic)}</span>}
+                <a class="qitem__t" href={`/questions/${q.topic}/${q.slug}/`}>{q.prompt}</a>
+              </li>
+            ))}
+          </ol>
+
+          <div class="more card">
+            <p class="muted" style="margin:0 0 .9rem">
+              Хочешь готовиться по реальным вопросам именно к {company.name}? Полные разборы по грейдам — в наших гайдах и Telegram-канале.
+            </p>
+            <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+              <a class="btn btn--primary" href="/guides/">Смотреть гайды</a>
+              <a class="btn btn--ghost" href={`/order/?company=${company.slug}`}>Заказать под {company.name}</a>
+              <a class="btn btn--tg" href={tg(`company_${company.slug}`)} target="_blank" rel="noreferrer"><TelegramIcon /> В Telegram</a>
+            </div>
+          </div>
+        </div>
+
+        <aside class="hub__side">
+          {guide ? (
+            <a class="card guide-card" href="/guides/">
+              <img class="guide-card__cover" src={guide.cover} alt={`Гайд: собеседование Java в ${company.name}`} loading="lazy" width="240" height="320" />
+              <div class="guide-card__body">
+                <span class="pill pill--accent">бесплатный гайд</span>
+                <strong>Собес в {company.name}</strong>
+                {guide.questionCount && <span class="mono faint" style="font-size:.78rem">{guide.questionCount} {qWord(guide.questionCount)} с ответами</span>}
+                <span class="guide-card__go mono">открыть гайд →</span>
+              </div>
+            </a>
+          ) : (
+            <div class="card hub__cta">
+              <span class="kicker">гайд по {company.name}</span>
+              <h3>Готовься прицельно</h3>
+              <p class="muted">Вопросы с ответами, задачи и чек-лист — структурировано под нужный грейд.</p>
+              <a class="btn btn--primary" href={`/order/?company=${company.slug}`}>Заказать гайд</a>
+              <a class="btn btn--tg" href={tg(`company_side_${company.slug}`)} target="_blank" rel="noreferrer"><TelegramIcon /> Свежее в Telegram</a>
+            </div>
+          )}
+          <div class="card hub__quiz">
+            <h4>Проверь себя</h4>
+            <p class="muted">Тест и флешкарды по темам, которые здесь спрашивают.</p>
+            <a class="btn btn--ghost" href="/quizzes/">Пройти тест</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</Base>
+<style>
+  .crumbs { color: var(--text-faint); font-size: 0.82rem; margin-bottom: 1rem; }
+  .crumbs a:hover { color: var(--accent-light); }
+  .crumbs span { color: var(--text-faint); opacity: .5; }
+  .crumbs b { color: var(--text-soft); }
+
+  .hub-head { display: flex; align-items: center; gap: 1rem; }
+  .hub-head h1 { margin: 0; }
+
+  .meta { display: flex; flex-direction: column; gap: 0.7rem; margin: 1.6rem 0 0; }
+  .meta__row { display: flex; gap: 0.9rem; align-items: baseline; flex-wrap: wrap; }
+  .meta__k { font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-faint); min-width: 4rem; }
+  .meta__v { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+  .hub { display: grid; grid-template-columns: 1fr 19rem; gap: 1.8rem; margin-top: 2.2rem; align-items: start; }
+
+  .sec-h { display: flex; align-items: center; gap: 0.6rem; font-size: 1.3rem; margin-bottom: 0.4rem; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
+  .hub__note { font-size: 0.92rem; margin: 0 0 1rem; }
+
+  .qlist { list-style: none; margin: 0; padding: 0; }
+  .qitem { display: flex; gap: 0.6rem; align-items: baseline; padding: 0.7rem 0; border-bottom: 1px solid var(--border); }
+  .qitem__b { flex: none; width: 6px; height: 6px; border-radius: 50%; border: 1.5px solid var(--accent); margin-top: 0.45rem; }
+  .qitem .tag { flex: none; }
+  .qitem__t { color: var(--text); transition: color 0.12s ease; }
+  .qitem__t:hover { color: var(--accent-light); }
+
+  .more { margin-top: 1.4rem; background: var(--card-2); border-color: var(--border-strong); }
+
+  .guide-card { display: flex; flex-direction: column; gap: 0; padding: 0; overflow: hidden; }
+  .guide-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 16px 34px rgba(0,0,0,.35); }
+  .guide-card__cover { width: 100%; height: auto; aspect-ratio: 3 / 2.1; object-fit: cover; object-position: center 30%;
+    border-bottom: 1px solid var(--border); background: #fff; }
+  .guide-card__body { display: flex; flex-direction: column; gap: 0.4rem; align-items: flex-start; padding: 1rem 1.1rem 1.1rem; }
+  .guide-card__body strong { font-size: 1.05rem; color: var(--cream); }
+  .guide-card__go { color: var(--accent-light); font-size: 0.82rem; margin-top: 0.2rem; }
+
+  .hub__side { position: sticky; top: 80px; display: flex; flex-direction: column; gap: 1rem; }
+  .hub__cta { display: flex; flex-direction: column; gap: 0.55rem; align-items: stretch; background: linear-gradient(160deg, var(--card-2), var(--card)); border-color: var(--border-strong); }
+  .hub__cta h3 { margin: 0.1rem 0 0; }
+  .hub__cta .btn { justify-content: center; }
+  .hub__quiz h4 { margin: 0 0 0.3rem; }
+
+  @media (max-width: 900px) { .hub { grid-template-columns: 1fr; } .hub__side { position: static; } }
+</style>

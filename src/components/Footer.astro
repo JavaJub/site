@@ -1,0 +1,50 @@
+---
+import BirdMark from './BirdMark.astro';
+import TelegramIcon from './icons/TelegramIcon.astro';
+import GithubIcon from './icons/GithubIcon.astro';
+import { LINKS, NAV, tg } from '../lib/site';
+const year = 2026;
+---
+<footer class="ft">
+  <div class="container ft__grid">
+    <div>
+      <div class="ft__brand"><BirdMark size={28} /><span>javajub</span></div>
+      <p class="muted ft__about">Реальные вопросы с собеседований Java по компаниям. Готовься прицельно, а не распыляйся на «всю Java сразу».</p>
+      <p class="mono faint" style="font-size:.8rem">// git push origin offer</p>
+    </div>
+    <div>
+      <h4 class="ft__h">Разделы</h4>
+      {NAV.map((i) => <a class="ft__link" href={i.href}>{i.label}</a>)}
+    </div>
+    <div>
+      <h4 class="ft__h">Каналы</h4>
+      <a class="ft__link ft__link--ic" href={tg('footer')} target="_blank" rel="noreferrer"><TelegramIcon size={15} /> Telegram · @java_jub</a>
+      <a class="ft__link" href="/pro/">JavaJub Pro</a>
+      <a class="ft__link ft__link--ic" href={LINKS.github} target="_blank" rel="noreferrer"><GithubIcon size={15} /> GitHub</a>
+    </div>
+    <div>
+      <h4 class="ft__h">Подготовка</h4>
+      <a class="ft__link" href="/guides/">Гайды по компаниям</a>
+      <a class="ft__link" href="/napravleniya/">Направления (финтех…)</a>
+      <a class="ft__link" href="/vakansii/">Java-вакансии</a>
+      <a class="ft__link" href="/quizzes/">Тесты и флешкарты</a>
+      <a class="ft__link" href="/order/">Заказать гайд под компанию</a>
+    </div>
+  </div>
+  <div class="container ft__legal">
+    <span class="faint">© {year} JavaJub</span>
+    <span class="faint">Сделано для тех, кто готовится к Java-собесам в России</span>
+  </div>
+</footer>
+<style>
+  .ft { border-top: 4px solid var(--accent); background: var(--ink); margin-top: 3rem; padding-block: 2.5rem 1.5rem; }
+  .ft__grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 1.6rem; }
+  .ft__brand { display: flex; align-items: center; gap: 0.5rem; font-weight: 800; font-size: 1.2rem; color: var(--cream); }
+  .ft__about { max-width: 32ch; margin-top: 0.7rem; }
+  .ft__h { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--cream); margin-bottom: 0.7rem; }
+  .ft__link { display: block; color: var(--text-soft); padding: 0.2rem 0; font-size: 0.95rem; }
+  .ft__link--ic { display: inline-flex; align-items: center; gap: 0.45rem; }
+  .ft__link:hover { color: var(--accent-light); }
+  .ft__legal { display: flex; justify-content: space-between; gap: 1rem; margin-top: 2rem; padding-top: 1.2rem; border-top: 1px solid var(--border); font-size: 0.85rem; flex-wrap: wrap; }
+  @media (max-width: 760px) { .ft__grid { grid-template-columns: 1fr 1fr; } }
+</style>

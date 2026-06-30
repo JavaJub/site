@@ -1,0 +1,122 @@
+---
+import '@fontsource-variable/inter';
+import '@fontsource/jetbrains-mono/400.css';
+import '@fontsource/jetbrains-mono/600.css';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Lightbox from '../components/Lightbox.astro';
+import TelegramIcon from '../components/icons/TelegramIcon.astro';
+import { SITE, LINKS, tg } from '../lib/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  keywords?: string;
+  ogImage?: string;
+  noCta?: boolean;
+  jsonLd?: object | object[];
+}
+const {
+  title = SITE.title,
+  description = SITE.description,
+  keywords,
+  ogImage = '/img/og-javajub.png',
+  noCta = false,
+  jsonLd,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+const ogUrl = new URL(ogImage, SITE.url).href;
+
+// Privacy-friendly, COOKIELESS analytics (self-hosted Umami / Plausible-style).
+// Loads ONLY when configured via env — otherwise nothing is injected: no cookies,
+// no third-party requests, no personal data. Set both vars at build to enable.
+const ANALYTICS_SRC = import.meta.env.PUBLIC_ANALYTICS_SRC;
+const ANALYTICS_ID = import.meta.env.PUBLIC_ANALYTICS_ID;
+
+const orgLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${SITE.url}/#organization`,
+      name: 'JavaJub',
+      url: SITE.url,
+      logo: `${SITE.url}/img/javajub-mark-transparent.png`,
+      sameAs: [LINKS.telegram, LINKS.github],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE.url}/#website`,
+      name: SITE.name,
+      url: SITE.url,
+      inLanguage: 'ru',
+      description: SITE.description,
+      publisher: { '@id': `${SITE.url}/#organization` },
+    },
+  ],
+};
+const ldList = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+---
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      (function () {
+        try {
+          var t = localStorage.getItem('jj-theme');
+          // Dark is the brand default; only an explicit user choice switches it.
+          document.documentElement.setAttribute('data-theme', t === 'light' ? 'light' : 'dark');
+        } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+      })();
+    </script>
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {keywords && <meta name="keywords" content={keywords} />}
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="ru-RU" href={canonical} />
+    <link rel="alternate" hreflang="x-default" href={canonical} />
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+    <meta name="theme-color" content="#0e0c0b" />
+    {ANALYTICS_SRC && ANALYTICS_ID && (
+      <script is:inline defer src={ANALYTICS_SRC} data-website-id={ANALYTICS_ID} data-do-not-track="true"></script>
+    )}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="JavaJub" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogUrl} />
+    <meta property="og:locale" content="ru_RU" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <Fragment set:html={`<script type="application/ld+json">${JSON.stringify(orgLd)}</script>`} />
+    {ldList.map((ld) => (
+      <Fragment set:html={`<script type="application/ld+json">${JSON.stringify(ld)}</script>`} />
+    ))}
+  </head>
+  <body>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    {!noCta && (
+      <div class="ctabar">
+        <div class="container ctabar__inner">
+          <span class="mono" style="font-size:.9rem;color:var(--text-soft)">
+            <span style="color:var(--accent-light)">›</span> новые гайды и свежие вопросы с собесов — первыми в Telegram
+          </span>
+          <span style="display:flex;gap:.6rem;flex-wrap:wrap">
+            <a class="btn btn--ghost" href="/guides/">Смотреть гайды</a>
+            <a class="btn btn--tg" href={tg('ctabar')} target="_blank" rel="noreferrer"><TelegramIcon /> Подписаться</a>
+          </span>
+        </div>
+      </div>
+    )}
+    <Footer />
+    <Lightbox />
+  </body>
+</html>

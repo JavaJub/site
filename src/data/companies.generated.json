@@ -1,0 +1,6097 @@
+{
+  "stats": {
+    "companies": 134,
+    "questions": 13271,
+    "insights": 57,
+    "topicTotals": {
+      "collections": 1281,
+      "spring": 1759,
+      "other": 4251,
+      "testing": 158,
+      "devops": 86,
+      "hibernate": 624,
+      "sql": 2403,
+      "security": 162,
+      "jvm": 194,
+      "algorithms": 657,
+      "java-core": 375,
+      "system-design": 789,
+      "kafka": 301,
+      "concurrency": 231
+    }
+  },
+  "topicLabels": {
+    "java-core": "Java Core",
+    "collections": "Коллекции",
+    "jvm": "JVM",
+    "concurrency": "Многопоточность",
+    "spring": "Spring",
+    "hibernate": "Hibernate / JPA",
+    "sql": "Базы данных / SQL",
+    "kafka": "Kafka / микросервисы",
+    "devops": "DevOps",
+    "testing": "Тестирование",
+    "algorithms": "Алгоритмы",
+    "system-design": "System Design",
+    "security": "Security",
+    "other": "Прочее"
+  },
+  "companies": [
+    {
+      "slug": "sberbank",
+      "name": "Сбербанк",
+      "source": "https://bazasobesov.ru/companies/java/sberbank",
+      "grades": {
+        "Junior": 79,
+        "Junior+": 67,
+        "Middle": 194,
+        "Middle+": 84,
+        "Senior": 16
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 440,
+      "interviewCount": 34,
+      "insightCount": 13,
+      "topicCounts": {
+        "collections": 29,
+        "spring": 61,
+        "other": 153,
+        "testing": 4,
+        "devops": 6,
+        "hibernate": 21,
+        "sql": 49,
+        "security": 5,
+        "jvm": 8,
+        "algorithms": 26,
+        "java-core": 26,
+        "system-design": 19,
+        "kafka": 23,
+        "concurrency": 10
+      },
+      "topTopics": [
+        "other",
+        "spring",
+        "sql",
+        "collections",
+        "algorithms",
+        "java-core"
+      ]
+    },
+    {
+      "slug": "aston",
+      "name": "Aston",
+      "source": "https://bazasobesov.ru/companies/java/aston",
+      "grades": {
+        "Junior": 32,
+        "Junior+": 23,
+        "Middle": 125,
+        "Middle+": 64,
+        "Senior": 17
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 261,
+      "interviewCount": 11,
+      "insightCount": 0,
+      "topicCounts": {
+        "spring": 51,
+        "sql": 45,
+        "other": 77,
+        "algorithms": 8,
+        "java-core": 5,
+        "collections": 13,
+        "devops": 7,
+        "testing": 5,
+        "concurrency": 5,
+        "jvm": 3,
+        "kafka": 16,
+        "system-design": 11,
+        "hibernate": 14,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "spring",
+        "sql",
+        "kafka",
+        "hibernate",
+        "collections"
+      ]
+    },
+    {
+      "slug": "gazprombank",
+      "name": "Газпромбанк",
+      "source": "https://bazasobesov.ru/companies/java/gazprombank",
+      "grades": {
+        "Junior": 40,
+        "Junior+": 23,
+        "Middle": 99,
+        "Middle+": 40,
+        "Senior": 11
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 213,
+      "interviewCount": 1,
+      "insightCount": 5,
+      "topicCounts": {
+        "collections": 19,
+        "concurrency": 9,
+        "spring": 26,
+        "other": 66,
+        "testing": 4,
+        "jvm": 11,
+        "devops": 4,
+        "sql": 32,
+        "java-core": 5,
+        "algorithms": 8,
+        "hibernate": 8,
+        "kafka": 9,
+        "system-design": 10,
+        "security": 2
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "jvm",
+        "system-design"
+      ]
+    },
+    {
+      "slug": "tbank",
+      "name": "ТБанк",
+      "source": "https://bazasobesov.ru/companies/java/tbank",
+      "grades": {
+        "Junior": 21,
+        "Junior+": 19,
+        "Middle": 94,
+        "Middle+": 53,
+        "Senior": 12
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 199,
+      "interviewCount": 7,
+      "insightCount": 10,
+      "topicCounts": {
+        "collections": 13,
+        "sql": 50,
+        "devops": 11,
+        "other": 64,
+        "java-core": 4,
+        "algorithms": 6,
+        "kafka": 3,
+        "concurrency": 8,
+        "system-design": 11,
+        "jvm": 7,
+        "spring": 15,
+        "hibernate": 5,
+        "testing": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "devops",
+        "system-design"
+      ]
+    },
+    {
+      "slug": "innotech",
+      "name": "Иннотех",
+      "source": "https://bazasobesov.ru/companies/java/innotech",
+      "grades": {
+        "Junior": 32,
+        "Junior+": 22,
+        "Middle": 94,
+        "Middle+": 29,
+        "Senior": 10
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 187,
+      "interviewCount": 6,
+      "insightCount": 0,
+      "topicCounts": {
+        "spring": 25,
+        "concurrency": 8,
+        "other": 51,
+        "devops": 7,
+        "system-design": 16,
+        "collections": 16,
+        "algorithms": 17,
+        "sql": 24,
+        "java-core": 5,
+        "hibernate": 7,
+        "jvm": 5,
+        "kafka": 4,
+        "testing": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "spring",
+        "sql",
+        "algorithms",
+        "system-design",
+        "collections"
+      ]
+    },
+    {
+      "slug": "bft-holding",
+      "name": "БФТ Холдинг",
+      "source": "https://bazasobesov.ru/companies/java/bft-holding",
+      "grades": {
+        "Junior": 29,
+        "Junior+": 17,
+        "Middle": 73,
+        "Middle+": 33,
+        "Senior": 13
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 165,
+      "interviewCount": 1,
+      "insightCount": 6,
+      "topicCounts": {
+        "collections": 15,
+        "other": 56,
+        "hibernate": 12,
+        "sql": 36,
+        "java-core": 3,
+        "algorithms": 5,
+        "jvm": 3,
+        "spring": 17,
+        "concurrency": 4,
+        "kafka": 5,
+        "testing": 1,
+        "system-design": 7,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "hibernate",
+        "system-design"
+      ]
+    },
+    {
+      "slug": "promsvyazbank",
+      "name": "Промсвязьбанк",
+      "source": "shadowhint://promsvyazbank",
+      "grades": {
+        "Junior": 34,
+        "Junior+": 25,
+        "Middle": 67,
+        "Middle+": 30,
+        "Senior": 8
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 164,
+      "interviewCount": 0,
+      "insightCount": 0,
+      "topicCounts": {
+        "collections": 21,
+        "spring": 22,
+        "java-core": 9,
+        "other": 58,
+        "hibernate": 5,
+        "sql": 25,
+        "algorithms": 5,
+        "system-design": 6,
+        "kafka": 3,
+        "testing": 3,
+        "concurrency": 3,
+        "security": 3,
+        "jvm": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "java-core",
+        "system-design"
+      ]
+    },
+    {
+      "slug": "magnit",
+      "name": "Магнит",
+      "source": "shadowhint://magnit",
+      "grades": {
+        "Junior": 25,
+        "Junior+": 12,
+        "Middle": 61,
+        "Middle+": 49,
+        "Senior": 8
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 155,
+      "interviewCount": 0,
+      "insightCount": 0,
+      "topicCounts": {
+        "concurrency": 8,
+        "sql": 32,
+        "other": 45,
+        "collections": 10,
+        "spring": 19,
+        "testing": 2,
+        "kafka": 9,
+        "java-core": 8,
+        "algorithms": 5,
+        "jvm": 2,
+        "hibernate": 8,
+        "system-design": 6,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "kafka",
+        "concurrency"
+      ]
+    },
+    {
+      "slug": "ayteko",
+      "name": "Айтеко",
+      "source": "https://bazasobesov.ru/companies/java/ayteko",
+      "grades": {
+        "Junior": 38,
+        "Junior+": 21,
+        "Middle": 55,
+        "Middle+": 28,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 149,
+      "interviewCount": 2,
+      "insightCount": 1,
+      "topicCounts": {
+        "concurrency": 3,
+        "spring": 23,
+        "other": 51,
+        "collections": 16,
+        "devops": 2,
+        "sql": 24,
+        "java-core": 6,
+        "algorithms": 4,
+        "kafka": 7,
+        "security": 2,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "jvm": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "kafka",
+        "java-core"
+      ]
+    },
+    {
+      "slug": "it-one",
+      "name": "IT ONE",
+      "source": "https://bazasobesov.ru/companies/java/it-one",
+      "grades": {
+        "Junior": 24,
+        "Junior+": 19,
+        "Middle": 63,
+        "Middle+": 32,
+        "Senior": 9
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 147,
+      "interviewCount": 6,
+      "insightCount": 3,
+      "topicCounts": {
+        "collections": 15,
+        "spring": 28,
+        "concurrency": 3,
+        "other": 45,
+        "algorithms": 7,
+        "sql": 19,
+        "java-core": 6,
+        "jvm": 5,
+        "kafka": 7,
+        "system-design": 6,
+        "testing": 1,
+        "hibernate": 4,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "spring",
+        "sql",
+        "collections",
+        "algorithms",
+        "kafka"
+      ]
+    },
+    {
+      "slug": "alfabank",
+      "name": "Альфа-Банк",
+      "source": "https://bazasobesov.ru/companies/java/alfabank",
+      "grades": {
+        "Junior": 23,
+        "Junior+": 14,
+        "Middle": 62,
+        "Middle+": 36,
+        "Senior": 8
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 143,
+      "interviewCount": 1,
+      "insightCount": 3,
+      "topicCounts": {
+        "spring": 30,
+        "other": 40,
+        "collections": 10,
+        "sql": 20,
+        "java-core": 2,
+        "algorithms": 4,
+        "jvm": 7,
+        "kafka": 8,
+        "concurrency": 5,
+        "system-design": 10,
+        "devops": 1,
+        "testing": 1,
+        "hibernate": 4,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "spring",
+        "sql",
+        "collections",
+        "system-design",
+        "kafka"
+      ]
+    },
+    {
+      "slug": "kvando-technologies",
+      "name": "KVANDO Technologies",
+      "source": "https://bazasobesov.ru/companies/java/kvando-technologies",
+      "grades": {
+        "Junior": 27,
+        "Junior+": 19,
+        "Middle": 65,
+        "Middle+": 23,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 141,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 38,
+        "collections": 10,
+        "sql": 35,
+        "jvm": 4,
+        "java-core": 3,
+        "algorithms": 6,
+        "spring": 18,
+        "devops": 5,
+        "concurrency": 2,
+        "hibernate": 6,
+        "kafka": 5,
+        "system-design": 7,
+        "testing": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "severstal",
+      "name": "Северсталь",
+      "source": "https://bazasobesov.ru/companies/java/severstal",
+      "grades": {
+        "Junior": 24,
+        "Junior+": 11,
+        "Middle": 62,
+        "Middle+": 34,
+        "Senior": 9
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 140,
+      "interviewCount": 2,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 49,
+        "collections": 13,
+        "spring": 23,
+        "sql": 25,
+        "java-core": 2,
+        "algorithms": 5,
+        "concurrency": 3,
+        "jvm": 2,
+        "system-design": 7,
+        "testing": 1,
+        "hibernate": 4,
+        "kafka": 5,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "leruamerlen",
+      "name": "ЛеруаМерлен",
+      "source": "shadowhint://leruamerlen",
+      "grades": {
+        "Junior": 45,
+        "Junior+": 14,
+        "Middle": 50,
+        "Middle+": 23,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 139,
+      "interviewCount": 0,
+      "insightCount": 0,
+      "topicCounts": {
+        "sql": 22,
+        "testing": 2,
+        "other": 54,
+        "spring": 16,
+        "algorithms": 9,
+        "system-design": 6,
+        "java-core": 4,
+        "collections": 10,
+        "devops": 2,
+        "concurrency": 2,
+        "kafka": 2,
+        "security": 4,
+        "hibernate": 5,
+        "jvm": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "algorithms",
+        "system-design"
+      ]
+    },
+    {
+      "slug": "stroki-dev",
+      "name": "stroki.dev",
+      "source": "https://bazasobesov.ru/companies/java/stroki-dev",
+      "grades": {
+        "Junior": 26,
+        "Junior+": 8,
+        "Middle": 58,
+        "Middle+": 37,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 136,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "concurrency": 6,
+        "other": 46,
+        "sql": 28,
+        "java-core": 4,
+        "algorithms": 6,
+        "collections": 13,
+        "spring": 18,
+        "system-design": 6,
+        "testing": 1,
+        "hibernate": 5,
+        "kafka": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "concurrency",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "it-ekspertiza",
+      "name": "ИТ-Экспертиза",
+      "source": "shadowhint://it-ekspertiza",
+      "grades": {
+        "Junior": 26,
+        "Junior+": 20,
+        "Middle": 47,
+        "Middle+": 34,
+        "Senior": 8
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 135,
+      "interviewCount": 0,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 44,
+        "algorithms": 5,
+        "sql": 23,
+        "java-core": 3,
+        "collections": 10,
+        "devops": 2,
+        "security": 6,
+        "spring": 19,
+        "concurrency": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 2,
+        "jvm": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "concurrency",
+        "security"
+      ]
+    },
+    {
+      "slug": "jsa-group",
+      "name": "JSA Group",
+      "source": "https://bazasobesov.ru/companies/java/jsa-group",
+      "grades": {
+        "Junior": 45,
+        "Junior+": 13,
+        "Middle": 44,
+        "Middle+": 25,
+        "Senior": 8
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 135,
+      "interviewCount": 1,
+      "insightCount": 3,
+      "topicCounts": {
+        "other": 63,
+        "sql": 17,
+        "kafka": 6,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 11,
+        "hibernate": 6,
+        "spring": 14,
+        "devops": 1,
+        "system-design": 6,
+        "testing": 1,
+        "concurrency": 2,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "kafka",
+        "hibernate"
+      ]
+    },
+    {
+      "slug": "market-plato",
+      "name": "Маркет Плато",
+      "source": "shadowhint://market-plato",
+      "grades": {
+        "Junior": 21,
+        "Junior+": 9,
+        "Middle": 63,
+        "Middle+": 31,
+        "Senior": 8
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 132,
+      "interviewCount": 0,
+      "insightCount": 0,
+      "topicCounts": {
+        "collections": 13,
+        "spring": 14,
+        "concurrency": 4,
+        "sql": 24,
+        "other": 43,
+        "java-core": 3,
+        "algorithms": 5,
+        "kafka": 7,
+        "devops": 1,
+        "security": 3,
+        "system-design": 9,
+        "testing": 1,
+        "hibernate": 4,
+        "jvm": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "kafka"
+      ]
+    },
+    {
+      "slug": "ozon-ozon",
+      "name": "Ozon",
+      "source": "https://bazasobesov.ru/companies/java/ozon-ozon",
+      "grades": {
+        "Junior": 22,
+        "Junior+": 16,
+        "Middle": 54,
+        "Middle+": 30,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 129,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "collections": 16,
+        "other": 36,
+        "sql": 32,
+        "java-core": 2,
+        "algorithms": 9,
+        "jvm": 3,
+        "concurrency": 3,
+        "kafka": 3,
+        "spring": 11,
+        "testing": 1,
+        "system-design": 8,
+        "hibernate": 4,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "collections",
+        "spring",
+        "algorithms",
+        "system-design"
+      ]
+    },
+    {
+      "slug": "codeitup",
+      "name": "CodeITUP",
+      "source": "shadowhint://codeitup",
+      "grades": {
+        "Junior": 21,
+        "Junior+": 16,
+        "Middle": 50,
+        "Middle+": 31,
+        "Senior": 9
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 127,
+      "interviewCount": 0,
+      "insightCount": 0,
+      "topicCounts": {
+        "spring": 21,
+        "other": 42,
+        "sql": 15,
+        "java-core": 5,
+        "algorithms": 7,
+        "collections": 13,
+        "system-design": 7,
+        "concurrency": 7,
+        "jvm": 2,
+        "testing": 1,
+        "hibernate": 4,
+        "kafka": 2,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "spring",
+        "sql",
+        "collections",
+        "algorithms",
+        "system-design"
+      ]
+    },
+    {
+      "slug": "pro-it",
+      "name": "PRO-IT",
+      "source": "shadowhint://pro-it",
+      "grades": {
+        "Junior": 17,
+        "Junior+": 15,
+        "Middle": 53,
+        "Middle+": 33,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 125,
+      "interviewCount": 0,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 37,
+        "sql": 21,
+        "java-core": 2,
+        "algorithms": 13,
+        "collections": 10,
+        "spring": 19,
+        "concurrency": 6,
+        "hibernate": 8,
+        "testing": 1,
+        "system-design": 5,
+        "kafka": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "algorithms",
+        "collections",
+        "hibernate"
+      ]
+    },
+    {
+      "slug": "samokat",
+      "name": "Самокат",
+      "source": "https://bazasobesov.ru/companies/java/samokat",
+      "grades": {
+        "Junior": 23,
+        "Junior+": 8,
+        "Middle": 44,
+        "Middle+": 32,
+        "Senior": 15
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 122,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 37,
+        "hibernate": 5,
+        "sql": 34,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "concurrency": 3,
+        "devops": 1,
+        "system-design": 10,
+        "spring": 10,
+        "testing": 1,
+        "kafka": 5,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "system-design",
+        "spring",
+        "collections",
+        "hibernate"
+      ]
+    },
+    {
+      "slug": "tetrasoft-tetrasoft",
+      "name": "TetraSoft",
+      "source": "https://bazasobesov.ru/companies/java/tetrasoft-tetrasoft",
+      "grades": {
+        "Junior": 19,
+        "Junior+": 11,
+        "Middle": 56,
+        "Middle+": 26,
+        "Senior": 10
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 122,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "collections": 17,
+        "other": 35,
+        "sql": 17,
+        "java-core": 5,
+        "algorithms": 6,
+        "hibernate": 7,
+        "devops": 3,
+        "spring": 17,
+        "kafka": 6,
+        "testing": 1,
+        "system-design": 5,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "collections",
+        "sql",
+        "spring",
+        "hibernate",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "x5tech",
+      "name": "X5Tech",
+      "source": "shadowhint://x5tech",
+      "grades": {
+        "Junior": 22,
+        "Junior+": 20,
+        "Middle": 50,
+        "Middle+": 22,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 121,
+      "interviewCount": 0,
+      "insightCount": 0,
+      "topicCounts": {
+        "spring": 15,
+        "other": 45,
+        "devops": 2,
+        "sql": 18,
+        "java-core": 7,
+        "algorithms": 6,
+        "collections": 8,
+        "jvm": 4,
+        "concurrency": 2,
+        "security": 2,
+        "testing": 1,
+        "system-design": 6,
+        "hibernate": 4,
+        "kafka": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "java-core",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "itsmartfinance-aytisf",
+      "name": "itsmartfinance АйтиСФ",
+      "source": "shadowhint://itsmartfinance-aytisf",
+      "grades": {
+        "Junior": 29,
+        "Junior+": 17,
+        "Middle": 44,
+        "Middle+": 22,
+        "Senior": 8
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 120,
+      "interviewCount": 0,
+      "insightCount": 0,
+      "topicCounts": {
+        "collections": 15,
+        "sql": 21,
+        "other": 40,
+        "java-core": 2,
+        "algorithms": 4,
+        "spring": 16,
+        "kafka": 4,
+        "system-design": 7,
+        "devops": 3,
+        "testing": 1,
+        "hibernate": 4,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "leansoftwareproduction",
+      "name": "LeanSoftwareProduction",
+      "source": "shadowhint://leansoftwareproduction",
+      "grades": {
+        "Junior": 30,
+        "Junior+": 13,
+        "Middle": 50,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 119,
+      "interviewCount": 0,
+      "insightCount": 0,
+      "topicCounts": {
+        "collections": 14,
+        "other": 46,
+        "java-core": 5,
+        "spring": 14,
+        "testing": 3,
+        "devops": 1,
+        "algorithms": 7,
+        "sql": 15,
+        "system-design": 6,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "collections",
+        "spring",
+        "algorithms",
+        "system-design"
+      ]
+    },
+    {
+      "slug": "t1",
+      "name": "Т1",
+      "source": "shadowhint://t1",
+      "grades": {
+        "Junior": 23,
+        "Junior+": 16,
+        "Middle": 47,
+        "Middle+": 26,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 119,
+      "interviewCount": 0,
+      "insightCount": 0,
+      "topicCounts": {
+        "collections": 11,
+        "spring": 22,
+        "other": 34,
+        "sql": 26,
+        "java-core": 4,
+        "algorithms": 5,
+        "devops": 3,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "algorithms",
+        "system-design"
+      ]
+    },
+    {
+      "slug": "tenchat",
+      "name": "TenChat",
+      "source": "https://bazasobesov.ru/companies/java/tenchat",
+      "grades": {
+        "Junior": 23,
+        "Junior+": 9,
+        "Middle": 45,
+        "Middle+": 31,
+        "Senior": 8
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 116,
+      "interviewCount": 0,
+      "insightCount": 1,
+      "topicCounts": {
+        "testing": 2,
+        "other": 37,
+        "devops": 4,
+        "sql": 20,
+        "java-core": 6,
+        "algorithms": 4,
+        "collections": 8,
+        "hibernate": 9,
+        "spring": 17,
+        "system-design": 5,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "hibernate",
+        "collections",
+        "java-core"
+      ]
+    },
+    {
+      "slug": "atollis",
+      "name": "АТОЛЛис",
+      "source": "shadowhint://atollis",
+      "grades": {
+        "Junior": 25,
+        "Junior+": 9,
+        "Middle": 46,
+        "Middle+": 24,
+        "Senior": 9
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 113,
+      "interviewCount": 0,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 37,
+        "collections": 9,
+        "spring": 19,
+        "sql": 20,
+        "java-core": 2,
+        "algorithms": 4,
+        "system-design": 8,
+        "security": 4,
+        "testing": 1,
+        "hibernate": 4,
+        "kafka": 3,
+        "concurrency": 1,
+        "jvm": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "otp-bank",
+      "name": "ОТП Банк",
+      "source": "https://bazasobesov.ru/companies/java/otp-bank",
+      "grades": {
+        "Junior": 23,
+        "Junior+": 11,
+        "Middle": 46,
+        "Middle+": 26,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 113,
+      "interviewCount": 3,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 31,
+        "spring": 16,
+        "kafka": 3,
+        "jvm": 6,
+        "sql": 16,
+        "java-core": 3,
+        "algorithms": 4,
+        "collections": 14,
+        "hibernate": 7,
+        "devops": 4,
+        "concurrency": 2,
+        "testing": 1,
+        "system-design": 5,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "spring",
+        "sql",
+        "collections",
+        "hibernate",
+        "jvm"
+      ]
+    },
+    {
+      "slug": "homecredit",
+      "name": "Homecredit",
+      "source": "shadowhint://homecredit",
+      "grades": {
+        "Junior": 20,
+        "Junior+": 11,
+        "Middle": 46,
+        "Middle+": 28,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 112,
+      "interviewCount": 0,
+      "insightCount": 0,
+      "topicCounts": {
+        "spring": 24,
+        "sql": 20,
+        "other": 31,
+        "java-core": 5,
+        "algorithms": 4,
+        "collections": 8,
+        "devops": 3,
+        "testing": 2,
+        "kafka": 2,
+        "system-design": 5,
+        "hibernate": 5,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "spring",
+        "sql",
+        "collections",
+        "java-core",
+        "system-design"
+      ]
+    },
+    {
+      "slug": "ibs",
+      "name": "IBS",
+      "source": "https://bazasobesov.ru/companies/java/ibs",
+      "grades": {
+        "Junior": 21,
+        "Junior+": 18,
+        "Middle": 46,
+        "Middle+": 20,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 112,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "concurrency": 2,
+        "collections": 13,
+        "spring": 19,
+        "java-core": 3,
+        "other": 34,
+        "sql": 15,
+        "algorithms": 8,
+        "jvm": 2,
+        "system-design": 6,
+        "testing": 4,
+        "hibernate": 4,
+        "kafka": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "spring",
+        "sql",
+        "collections",
+        "algorithms",
+        "system-design"
+      ]
+    },
+    {
+      "slug": "bell-integrator",
+      "name": "Bell Integrator",
+      "source": "https://bazasobesov.ru/companies/java/bell-integrator",
+      "grades": {
+        "Junior": 19,
+        "Junior+": 11,
+        "Middle": 50,
+        "Middle+": 23,
+        "Senior": 8
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 111,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 34,
+        "collections": 10,
+        "sql": 23,
+        "java-core": 2,
+        "algorithms": 4,
+        "spring": 17,
+        "jvm": 2,
+        "hibernate": 6,
+        "system-design": 7,
+        "devops": 2,
+        "testing": 1,
+        "kafka": 1,
+        "concurrency": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "hibernate"
+      ]
+    },
+    {
+      "slug": "rshb",
+      "name": "РСХБ",
+      "source": "shadowhint://rshb",
+      "grades": {
+        "Junior": 22,
+        "Junior+": 15,
+        "Middle": 43,
+        "Middle+": 21,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 108,
+      "interviewCount": 0,
+      "insightCount": 0,
+      "topicCounts": {
+        "java-core": 8,
+        "other": 34,
+        "sql": 16,
+        "algorithms": 6,
+        "collections": 15,
+        "spring": 15,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "collections",
+        "spring",
+        "java-core",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "yandeks",
+      "name": "Яндекс",
+      "source": "https://bazasobesov.ru/companies/java/yandeks",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 12,
+        "Middle": 52,
+        "Middle+": 21,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 108,
+      "interviewCount": 3,
+      "insightCount": 1,
+      "topicCounts": {
+        "other": 31,
+        "sql": 15,
+        "java-core": 5,
+        "algorithms": 18,
+        "collections": 15,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "algorithms",
+        "sql",
+        "collections",
+        "spring",
+        "java-core"
+      ]
+    },
+    {
+      "slug": "goznak",
+      "name": "ГОЗНАК",
+      "source": "shadowhint://goznak",
+      "grades": {
+        "Junior": 26,
+        "Junior+": 7,
+        "Middle": 48,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 107,
+      "interviewCount": 0,
+      "insightCount": 0,
+      "topicCounts": {
+        "sql": 16,
+        "devops": 3,
+        "hibernate": 6,
+        "other": 35,
+        "spring": 12,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 9,
+        "kafka": 8,
+        "system-design": 7,
+        "security": 2,
+        "testing": 1,
+        "concurrency": 1,
+        "jvm": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "kafka",
+        "system-design"
+      ]
+    },
+    {
+      "slug": "evrone",
+      "name": "Evrone",
+      "source": "shadowhint://evrone",
+      "grades": {
+        "Junior": 18,
+        "Junior+": 7,
+        "Middle": 43,
+        "Middle+": 29,
+        "Senior": 9
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 106,
+      "interviewCount": 0,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 32,
+        "system-design": 9,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 9,
+        "spring": 13,
+        "jvm": 2,
+        "kafka": 10,
+        "security": 3,
+        "testing": 1,
+        "hibernate": 4,
+        "concurrency": 2
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "kafka",
+        "system-design",
+        "collections"
+      ]
+    },
+    {
+      "slug": "dcloud",
+      "name": "DCloud",
+      "source": "https://bazasobesov.ru/companies/java/dcloud",
+      "grades": {
+        "Junior": 20,
+        "Junior+": 12,
+        "Middle": 39,
+        "Middle+": 24,
+        "Senior": 10
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 105,
+      "interviewCount": 2,
+      "insightCount": 0,
+      "topicCounts": {
+        "spring": 16,
+        "collections": 12,
+        "other": 27,
+        "devops": 3,
+        "sql": 15,
+        "java-core": 5,
+        "algorithms": 4,
+        "testing": 2,
+        "hibernate": 7,
+        "system-design": 7,
+        "kafka": 4,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "spring",
+        "sql",
+        "collections",
+        "hibernate",
+        "system-design"
+      ]
+    },
+    {
+      "slug": "dom-rf",
+      "name": "Дом.рф",
+      "source": "shadowhint://dom-rf",
+      "grades": {
+        "Junior": 18,
+        "Junior+": 9,
+        "Middle": 46,
+        "Middle+": 24,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 104,
+      "interviewCount": 0,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 31,
+        "sql": 18,
+        "java-core": 3,
+        "algorithms": 5,
+        "collections": 13,
+        "spring": 17,
+        "system-design": 7,
+        "security": 2,
+        "testing": 1,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "domopult",
+      "name": "Домопульт",
+      "source": "shadowhint://domopult",
+      "grades": {
+        "Junior": 17,
+        "Junior+": 8,
+        "Middle": 44,
+        "Middle+": 28,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 104,
+      "interviewCount": 0,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 32,
+        "sql": 25,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 10,
+        "spring": 14,
+        "system-design": 6,
+        "testing": 1,
+        "hibernate": 6,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "hibernate"
+      ]
+    },
+    {
+      "slug": "liga-tsifrovoy-ekonomiki",
+      "name": "Лига Цифровой Экономики",
+      "source": "https://bazasobesov.ru/companies/java/liga-tsifrovoy-ekonomiki",
+      "grades": {
+        "Junior": 17,
+        "Junior+": 9,
+        "Middle": 49,
+        "Middle+": 22,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 104,
+      "interviewCount": 1,
+      "insightCount": 2,
+      "topicCounts": {
+        "sql": 21,
+        "other": 34,
+        "java-core": 3,
+        "algorithms": 8,
+        "collections": 8,
+        "kafka": 5,
+        "system-design": 6,
+        "spring": 11,
+        "testing": 1,
+        "hibernate": 4,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "algorithms",
+        "collections",
+        "system-design"
+      ]
+    },
+    {
+      "slug": "nord-clan",
+      "name": "Nord Clan",
+      "source": "https://bazasobesov.ru/companies/java/nord-clan",
+      "grades": {
+        "Junior": 21,
+        "Junior+": 11,
+        "Middle": 40,
+        "Middle+": 25,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 104,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "spring": 15,
+        "collections": 13,
+        "other": 34,
+        "sql": 16,
+        "java-core": 4,
+        "algorithms": 4,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 7,
+        "kafka": 2,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "hibernate",
+        "system-design"
+      ]
+    },
+    {
+      "slug": "ooo-enfors",
+      "name": "ООО\"Энфорс\"",
+      "source": "shadowhint://ooo-enfors",
+      "grades": {
+        "Junior": 20,
+        "Junior+": 10,
+        "Middle": 42,
+        "Middle+": 19,
+        "Senior": 12
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 103,
+      "interviewCount": 0,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 34,
+        "spring": 12,
+        "sql": 19,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "devops": 4,
+        "kafka": 4,
+        "security": 2,
+        "testing": 1,
+        "system-design": 7,
+        "hibernate": 4,
+        "concurrency": 1,
+        "jvm": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "tehnointellekt",
+      "name": "Техноинтеллект",
+      "source": "shadowhint://tehnointellekt",
+      "grades": {
+        "Junior": 17,
+        "Junior+": 7,
+        "Middle": 42,
+        "Middle+": 28,
+        "Senior": 9
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 103,
+      "interviewCount": 0,
+      "insightCount": 0,
+      "topicCounts": {
+        "spring": 16,
+        "other": 34,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 11,
+        "concurrency": 2,
+        "kafka": 6,
+        "testing": 1,
+        "system-design": 6,
+        "hibernate": 4,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "spring",
+        "sql",
+        "collections",
+        "kafka",
+        "system-design"
+      ]
+    },
+    {
+      "slug": "trt",
+      "name": "ТРТ",
+      "source": "shadowhint://trt",
+      "grades": {
+        "Junior": 31,
+        "Junior+": 7,
+        "Middle": 38,
+        "Middle+": 20,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 103,
+      "interviewCount": 0,
+      "insightCount": 0,
+      "topicCounts": {
+        "spring": 12,
+        "other": 40,
+        "kafka": 3,
+        "sql": 17,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "devops": 1,
+        "testing": 2,
+        "system-design": 6,
+        "security": 2,
+        "hibernate": 4,
+        "concurrency": 1,
+        "jvm": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "santander",
+      "name": "Santander",
+      "source": "shadowhint://santander",
+      "grades": {
+        "Junior": 19,
+        "Junior+": 8,
+        "Middle": 40,
+        "Middle+": 24,
+        "Senior": 11
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 102,
+      "interviewCount": 0,
+      "insightCount": 0,
+      "topicCounts": {
+        "collections": 11,
+        "testing": 2,
+        "sql": 22,
+        "other": 25,
+        "java-core": 4,
+        "algorithms": 4,
+        "kafka": 7,
+        "system-design": 10,
+        "spring": 10,
+        "hibernate": 4,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "collections",
+        "system-design",
+        "spring",
+        "kafka"
+      ]
+    },
+    {
+      "slug": "2gis",
+      "name": "2GIS",
+      "source": "shadowhint://2gis",
+      "grades": {
+        "Junior": 17,
+        "Junior+": 7,
+        "Middle": 44,
+        "Middle+": 26,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 101,
+      "interviewCount": 0,
+      "insightCount": 0,
+      "topicCounts": {
+        "collections": 12,
+        "other": 26,
+        "sql": 23,
+        "java-core": 2,
+        "algorithms": 12,
+        "system-design": 7,
+        "spring": 10,
+        "testing": 1,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "collections",
+        "algorithms",
+        "spring",
+        "system-design"
+      ]
+    },
+    {
+      "slug": "arammeem",
+      "name": "AramMeem",
+      "source": "shadowhint://arammeem",
+      "grades": {
+        "Junior": 29,
+        "Junior+": 7,
+        "Middle": 34,
+        "Middle+": 19,
+        "Senior": 8
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 97,
+      "interviewCount": 0,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 41,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "system-design": 7,
+        "spring": 10,
+        "testing": 1,
+        "hibernate": 4,
+        "kafka": 2,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "akseniks",
+      "name": "Аксеникс",
+      "source": "shadowhint://akseniks",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 41,
+        "Middle+": 23,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 93,
+      "interviewCount": 0,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 28,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "kafka": 3,
+        "spring": 17,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 7,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "spring",
+        "sql",
+        "collections",
+        "hibernate",
+        "system-design"
+      ]
+    },
+    {
+      "slug": "pochtateh",
+      "name": "ПочтаТех",
+      "source": "shadowhint://pochtateh",
+      "grades": {
+        "Junior": 20,
+        "Junior+": 7,
+        "Middle": 35,
+        "Middle+": 22,
+        "Senior": 8
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 92,
+      "interviewCount": 0,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 31,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 12,
+        "system-design": 11,
+        "testing": 1,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "system-design",
+        "collections",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "vk",
+      "name": "VK",
+      "source": "shadowhint://vk",
+      "grades": {
+        "Junior": 19,
+        "Junior+": 6,
+        "Middle": 37,
+        "Middle+": 21,
+        "Senior": 8
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 91,
+      "interviewCount": 0,
+      "insightCount": 0,
+      "topicCounts": {
+        "sql": 17,
+        "other": 28,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "hibernate": 6,
+        "system-design": 10,
+        "spring": 11,
+        "testing": 1,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "system-design",
+        "collections",
+        "hibernate"
+      ]
+    },
+    {
+      "slug": "a-dengi",
+      "name": "А Деньги",
+      "source": "https://bazasobesov.ru/companies/java/a-dengi",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 1,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "acvo",
+      "name": "Акселератор возможностей",
+      "source": "https://bazasobesov.ru/companies/java/acvo",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 2,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "akselerator-vozmozhnostey-avf-consulting",
+      "name": "AVF Consulting",
+      "source": "https://bazasobesov.ru/companies/java/akselerator-vozmozhnostey-avf-consulting",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 0,
+      "insightCount": 1,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "alfa-kapital",
+      "name": "Альфа Капитал",
+      "source": "sobes://alfa-kapital",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 0,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "alliance-credit",
+      "name": "Alliance Credit",
+      "source": "https://bazasobesov.ru/companies/java/alliance-credit",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "antara-antara",
+      "name": "Antara",
+      "source": "https://bazasobesov.ru/companies/java/antara-antara",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "avito-avito",
+      "name": "Авито",
+      "source": "https://bazasobesov.ru/companies/java/avito-avito",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 0,
+      "insightCount": 1,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "axiom-jdk",
+      "name": "Axiom JDK",
+      "source": "https://bazasobesov.ru/companies/java/axiom-jdk",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "bank-rossii",
+      "name": "Банк России",
+      "source": "https://bazasobesov.ru/companies/java/bank-rossii",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "bars-grup",
+      "name": "Барс Груп",
+      "source": "https://bazasobesov.ru/companies/java/bars-grup",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "bilayn",
+      "name": "Билайн",
+      "source": "https://bazasobesov.ru/companies/java/bilayn",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 1,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "brainway-ltd",
+      "name": "Brainway LTD",
+      "source": "https://bazasobesov.ru/companies/java/brainway-ltd",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "comtek-inc",
+      "name": "COMTEK Inc",
+      "source": "https://bazasobesov.ru/companies/java/comtek-inc",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "datanomika",
+      "name": "Datanomika",
+      "source": "https://bazasobesov.ru/companies/java/datanomika",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "demius-demius",
+      "name": "Demius",
+      "source": "https://bazasobesov.ru/companies/java/demius-demius",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "diasoft",
+      "name": "Диасофт",
+      "source": "sobes://diasoft",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 0,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "dinamika",
+      "name": "Динамика",
+      "source": "https://bazasobesov.ru/companies/java/dinamika",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "dis-group",
+      "name": "DIS Group",
+      "source": "https://bazasobesov.ru/companies/java/dis-group",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 0,
+      "insightCount": 1,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "dns",
+      "name": "DNS",
+      "source": "sobes://dns",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 0,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "dzen",
+      "name": "Дзен",
+      "source": "https://bazasobesov.ru/companies/java/dzen",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "eat-split-split-fud",
+      "name": "Eat & Split",
+      "source": "https://bazasobesov.ru/companies/java/eat-split-split-fud",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "eclipse-digital",
+      "name": "Eclipse Digital",
+      "source": "https://bazasobesov.ru/companies/java/eclipse-digital",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "effective-mobile",
+      "name": "Effective Mobile",
+      "source": "https://bazasobesov.ru/companies/java/effective-mobile",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "eraga-infosystem",
+      "name": "ERaga Infosystem",
+      "source": "https://bazasobesov.ru/companies/java/eraga-infosystem",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "exemter",
+      "name": "Exemter",
+      "source": "https://bazasobesov.ru/companies/java/exemter",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "farzoom",
+      "name": "Farzoom",
+      "source": "https://bazasobesov.ru/companies/java/farzoom",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "firecode",
+      "name": "Firecode",
+      "source": "https://bazasobesov.ru/companies/java/firecode",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "format-koda",
+      "name": "Формат кода",
+      "source": "https://bazasobesov.ru/companies/java/format-koda",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 2,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "fsk",
+      "name": "ФСК",
+      "source": "https://bazasobesov.ru/companies/java/fsk",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "go-invest",
+      "name": "Go Invest",
+      "source": "https://bazasobesov.ru/companies/java/go-invest",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 0,
+      "insightCount": 1,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "gosuslugi",
+      "name": "Госуслуги",
+      "source": "sobes://gosuslugi",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 0,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "ifellow",
+      "name": "iFellow",
+      "source": "https://bazasobesov.ru/companies/java/ifellow",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 2,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "itfb-group",
+      "name": "ITFB Group",
+      "source": "https://bazasobesov.ru/companies/java/itfb-group",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "konsaltika",
+      "name": "Консалтика",
+      "source": "https://bazasobesov.ru/companies/java/konsaltika",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "lanit",
+      "name": "Ланит",
+      "source": "https://bazasobesov.ru/companies/java/lanit",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "marshall",
+      "name": "Marshall",
+      "source": "https://bazasobesov.ru/companies/java/marshall",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "metallinvestbank",
+      "name": "Металл Инвест Банк",
+      "source": "https://bazasobesov.ru/companies/java/metallinvestbank",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "mosbirzha",
+      "name": "Мосбиржа",
+      "source": "sobes://mosbirzha",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 0,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "mts-bank",
+      "name": "МТС Банк",
+      "source": "sobes://mts-bank",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 0,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "mts",
+      "name": "МТС",
+      "source": "https://bazasobesov.ru/companies/java/mts",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 2,
+      "insightCount": 1,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "mvideo",
+      "name": "МВидео",
+      "source": "sobes://mvideo",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 0,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "netmonet",
+      "name": "Нетмонет",
+      "source": "https://bazasobesov.ru/companies/java/netmonet",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "nexign",
+      "name": "Nexign",
+      "source": "https://bazasobesov.ru/companies/java/nexign",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "nord-codes",
+      "name": "Nord.Codes",
+      "source": "https://bazasobesov.ru/companies/java/nord-codes",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "npf-buduschee",
+      "name": "НПФ Будущее",
+      "source": "https://bazasobesov.ru/companies/java/npf-buduschee",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "peredovye-platezhnye-resheniya",
+      "name": "Передовые Платежные Решения",
+      "source": "https://bazasobesov.ru/companies/java/peredovye-platezhnye-resheniya",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "perfect-art",
+      "name": "Perfect Art",
+      "source": "https://bazasobesov.ru/companies/java/perfect-art",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 0,
+      "insightCount": 1,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "premium-it-solution",
+      "name": "Premium IT Solution",
+      "source": "https://bazasobesov.ru/companies/java/premium-it-solution",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "prime",
+      "name": "Prime",
+      "source": "https://bazasobesov.ru/companies/java/prime",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "prooftech-it",
+      "name": "ProofTech IT",
+      "source": "https://bazasobesov.ru/companies/java/prooftech-it",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 1,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "rayffayzen-bank",
+      "name": "Райффайзен Банк",
+      "source": "https://bazasobesov.ru/companies/java/rayffayzen-bank",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "red-collar",
+      "name": "Red Collar",
+      "source": "https://bazasobesov.ru/companies/java/red-collar",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "redlab",
+      "name": "RedLab",
+      "source": "https://bazasobesov.ru/companies/java/redlab",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "renyu",
+      "name": "Ренью",
+      "source": "https://bazasobesov.ru/companies/java/renyu",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "revolut",
+      "name": "Revolut",
+      "source": "sobes://revolut",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 0,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "rosgosstrah",
+      "name": "Росгосстрах",
+      "source": "https://bazasobesov.ru/companies/java/rosgosstrah",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "rostelekom",
+      "name": "Ростелеком",
+      "source": "https://bazasobesov.ru/companies/java/rostelekom",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "rstyle-softlab",
+      "name": "RStyle Softlab",
+      "source": "https://bazasobesov.ru/companies/java/rstyle-softlab",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "rt-mis",
+      "name": "РТ МИС",
+      "source": "https://bazasobesov.ru/companies/java/rt-mis",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "rtlabs",
+      "name": "РТ Лабс",
+      "source": "https://bazasobesov.ru/companies/java/rtlabs",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "rzhd-tehnologii",
+      "name": "РЖД Технологии",
+      "source": "https://bazasobesov.ru/companies/java/rzhd-tehnologii",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "secreate",
+      "name": "Secreate",
+      "source": "https://bazasobesov.ru/companies/java/secreate",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "siberteam",
+      "name": "Siberteam",
+      "source": "https://bazasobesov.ru/companies/java/siberteam",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "sibintek-soft",
+      "name": "Сибинтек Софт",
+      "source": "https://bazasobesov.ru/companies/java/sibintek-soft",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "simbirsoft",
+      "name": "SimbirSoft",
+      "source": "https://bazasobesov.ru/companies/java/simbirsoft",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "skvad",
+      "name": "Сквад",
+      "source": "https://bazasobesov.ru/companies/java/skvad",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "solar-solar",
+      "name": "Solar",
+      "source": "https://bazasobesov.ru/companies/java/solar-solar",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "sovkombank",
+      "name": "Совкомбанк",
+      "source": "https://bazasobesov.ru/companies/java/sovkombank",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 2,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "sportmaster",
+      "name": "Спортмастер",
+      "source": "sobes://sportmaster",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 0,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "surf",
+      "name": "Surf",
+      "source": "https://bazasobesov.ru/companies/java/surf",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "tehno-diasoft-techno-diasoft",
+      "name": "Techno Diasoft",
+      "source": "https://bazasobesov.ru/companies/java/tehno-diasoft-techno-diasoft",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "tiqum",
+      "name": "Tiqum",
+      "source": "https://bazasobesov.ru/companies/java/tiqum",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "topcase",
+      "name": "TopCase",
+      "source": "https://bazasobesov.ru/companies/java/topcase",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "transneft-tehnologii",
+      "name": "Транснефть Технологии",
+      "source": "https://bazasobesov.ru/companies/java/transneft-tehnologii",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 2,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "udobnyy-soft-comfort-soft",
+      "name": "Comfort Soft",
+      "source": "https://bazasobesov.ru/companies/java/udobnyy-soft-comfort-soft",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "uralsib",
+      "name": "Уралсиб",
+      "source": "https://bazasobesov.ru/companies/java/uralsib",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "usm",
+      "name": "USM",
+      "source": "https://bazasobesov.ru/companies/java/usm",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "v6-servises",
+      "name": "V6 Services",
+      "source": "https://bazasobesov.ru/companies/java/v6-servises",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "vebmost-elzhur",
+      "name": "Вебмост (Элжур)",
+      "source": "https://bazasobesov.ru/companies/java/vebmost-elzhur",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "vtb",
+      "name": "ВТБ",
+      "source": "https://bazasobesov.ru/companies/java/vtb",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 3,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "wildberries",
+      "name": "Wildberries",
+      "source": "sobes://wildberries",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 0,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "workme",
+      "name": "Workme",
+      "source": "https://bazasobesov.ru/companies/java/workme",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 1,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    },
+    {
+      "slug": "ylab-development",
+      "name": "YLAB Development",
+      "source": "https://bazasobesov.ru/companies/java/ylab-development",
+      "grades": {
+        "Junior": 16,
+        "Junior+": 6,
+        "Middle": 30,
+        "Middle+": 19,
+        "Senior": 7
+      },
+      "gradeList": [
+        "Junior",
+        "Junior+",
+        "Middle",
+        "Middle+",
+        "Senior"
+      ],
+      "totalQuestions": 78,
+      "interviewCount": 2,
+      "insightCount": 0,
+      "topicCounts": {
+        "other": 25,
+        "sql": 15,
+        "java-core": 2,
+        "algorithms": 4,
+        "collections": 8,
+        "spring": 10,
+        "testing": 1,
+        "system-design": 5,
+        "hibernate": 4,
+        "kafka": 1,
+        "concurrency": 1,
+        "jvm": 1,
+        "security": 1
+      },
+      "topTopics": [
+        "other",
+        "sql",
+        "spring",
+        "collections",
+        "system-design",
+        "algorithms"
+      ]
+    }
+  ]
+}

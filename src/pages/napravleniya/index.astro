@@ -1,0 +1,38 @@
+---
+import Base from '../../layouts/Base.astro';
+import { directions, directionCompanies } from '../../lib/directions';
+import { ru, stats } from '../../lib/companies';
+
+const title = 'Java по направлениям: финтех, маркетплейсы, аутсорс — вопросы и компании | JavaJub';
+const description = 'Подготовка к собеседованию Java по направлениям: финтех и банки, маркетплейсы, продуктовые, аутсорс, телеком. Какие компании нанимают Java-разработчиков и что спрашивают на собесах.';
+const keywords = 'java финтех, java банк собеседование, java маркетплейс, java аутсорс, java телеком, java по направлениям, java вопросы по компаниям';
+const list = directions.map((d) => ({ d, n: directionCompanies(d).length }));
+---
+<Base title={title} description={description} keywords={keywords}>
+  <section class="section">
+    <div class="container">
+      <nav class="crumbs mono"><a href="/">главная</a> <span>/</span> <b>направления</b></nav>
+      <div class="accent-bar"></div>
+      <h1>Java по <span class="hl">направлениям</span></h1>
+      <p class="lead">Куда идёшь на собес — туда и готовься. Подборки компаний и вопросов по направлениям: финтех и банки, маркетплейсы, продуктовые, аутсорс, телеком — всего {ru(stats.companies)} компаний в базе.</p>
+      <div class="dgrid">
+        {list.map(({ d, n }) => (
+          <a class="dcard card card--link" href={`/napravleniya/${d.slug}/`}>
+            <h2 class="dcard__t">{d.name}</h2>
+            <p class="muted dcard__p">{d.intro}</p>
+            <span class="dcard__go mono">собеседования Java · {n} компаний →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
+<style>
+  .crumbs { color: var(--text-faint); font-size: .82rem; margin-bottom: 1rem; }
+  .crumbs a:hover { color: var(--accent-light); } .crumbs span { opacity: .5; } .crumbs b { color: var(--text-soft); }
+  .dgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr)); gap: 1rem; margin-top: 1.6rem; }
+  .dcard { display: flex; flex-direction: column; gap: .5rem; }
+  .dcard__t { margin: 0; font-size: 1.25rem; }
+  .dcard__p { font-size: .92rem; margin: 0; }
+  .dcard__go { color: var(--accent-light); font-size: .82rem; margin-top: auto; }
+</style>

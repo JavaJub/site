@@ -1,0 +1,60 @@
+---
+import Base from '../../layouts/Base.astro';
+import CompanyCard from '../../components/CompanyCard.astro';
+import TelegramIcon from '../../components/icons/TelegramIcon.astro';
+import { tg } from '../../lib/site';
+import { indexableCompanies, ru, stats } from '../../lib/companies';
+import { directions } from '../../lib/directions';
+
+const featured = indexableCompanies.slice(0, 12);
+const title = 'Java-вакансии и работа: какие компании нанимают и что спрашивают | JavaJub';
+const description = 'Java-работа и вакансии в России: какие компании нанимают Java-разработчиков (банки, финтех, маркетплейсы) и что спрашивают на собеседованиях. Готовься под реальные вакансии — бесплатно.';
+const keywords = 'java вакансии, java работа, java job, java разработчик вакансии, работа java разработчиком, java вакансии россия, java собеседование вакансии';
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'JavaJub', item: 'https://www.javajub.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Java-вакансии', item: 'https://www.javajub.com/vakansii/' },
+  ],
+};
+---
+<Base title={title} description={description} keywords={keywords} jsonLd={jsonLd}>
+  <section class="section">
+    <div class="container">
+      <nav class="crumbs mono"><a href="/">главная</a> <span>/</span> <b>вакансии</b></nav>
+      <div class="accent-bar"></div>
+      <h1>Java-вакансии и <span class="hl">работа</span></h1>
+      <p class="lead">Ищешь работу Java-разработчиком? Главное на собеседовании — пройти технический этап. Мы показываем, какие компании нанимают и <b>что именно спрашивают на их собесах</b>, чтобы ты готовился под реальные вакансии, а не «вообще». Свежие Java-вакансии и разборы выходят в нашем Telegram-канале.</p>
+      <div class="vcta">
+        <a class="btn btn--tg" href={tg('vakansii')} target="_blank" rel="noreferrer"><TelegramIcon /> Вакансии в Telegram</a>
+        <a class="btn btn--ghost" href="/companies/">Компании в базе</a>
+      </div>
+
+      <h2 class="sec-h">Какие компании нанимают Java-разработчиков</h2>
+      <p class="muted">В базе {ru(stats.companies)} компаний — от банков и финтеха до маркетплейсов и аутсорса. Открой компанию, чтобы увидеть реальные вопросы с её собеседований по грейдам.</p>
+      <div class="grid grid--cards" style="margin-top:1.2rem">
+        {featured.map((c) => <CompanyCard company={c} />)}
+      </div>
+      <p style="margin-top:1.2rem"><a class="btn btn--ghost" href="/companies/">Все {ru(stats.companies)} компаний →</a></p>
+
+      <h2 class="sec-h">Вакансии по направлениям</h2>
+      <p class="muted">Java-вакансии и собеседования различаются по направлениям — выбери своё:</p>
+      <div class="vdirs">
+        {directions.map((d) => <a class="vdir" href={`/napravleniya/${d.slug}/`}>{d.name} <span aria-hidden="true">→</span></a>)}
+      </div>
+
+      <h2 class="sec-h">Что спрашивают на Java-собеседованиях</h2>
+      <p class="muted">Под вакансию Java Middle/Senior обычно проверяют: Java Core и ООП, коллекции, JVM и память, многопоточность, Spring и транзакции, базы данных и SQL, очереди (Kafka), микросервисы и System Design, плюс задачи на live-coding и code review. Всё это есть в наших <a href="/guides/">гайдах</a> и <a href="/questions/">вопросах с ответами</a> — бесплатно.</p>
+    </div>
+  </section>
+</Base>
+<style>
+  .crumbs { color: var(--text-faint); font-size: .82rem; margin-bottom: 1rem; }
+  .crumbs a:hover { color: var(--accent-light); } .crumbs span { opacity: .5; } .crumbs b { color: var(--text-soft); }
+  .vcta { display: flex; gap: .6rem; flex-wrap: wrap; margin: 1.2rem 0 .5rem; }
+  .sec-h { margin: 2.2rem 0 .2rem; font-size: 1.4rem; }
+  .vdirs { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1rem; }
+  .vdir { border: 1px solid var(--border); border-radius: var(--radius-pill); padding: .5rem 1rem; font-weight: 600; background: var(--card); }
+  .vdir:hover { border-color: var(--accent); color: var(--accent-light); }
+</style>

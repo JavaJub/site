@@ -1,0 +1,336 @@
+---
+import Base from '../layouts/Base.astro';
+import BirdMark from '../components/BirdMark.astro';
+import CompanyCard from '../components/CompanyCard.astro';
+import TopicIcon from '../components/TopicIcon.astro';
+import TelegramIcon from '../components/icons/TelegramIcon.astro';
+import Cases from '../components/Cases.astro';
+import { tg, LINKS } from '../lib/site';
+import { indexableCompanies, stats, topicLabel, ru } from '../lib/companies';
+import { guides, guidesStats } from '../lib/guides';
+
+const featured = indexableCompanies.slice(0, 8);
+const topics = Object.entries(stats.topicTotals)
+  .filter(([k]) => k !== 'other')
+  .sort((a, b) => b[1] - a[1]);
+const guidePreview = guides.slice(0, 6);
+
+const title = 'Java-собеседования: реальные вопросы, подготовка и гайды по компаниям | JavaJub';
+const description = 'Подготовка к собеседованию Java: реальные вопросы с собеседований по компаниям (Сбер, Т-Банк, Альфа, ВТБ, Яндекс, VK, Ozon), ответы, тесты, гайды и материалы. Бесплатно. Свежее — в Telegram.';
+const keywords = 'java, java собеседование, java собес, подготовка к собеседованию java, java вопросы, вопросы с собеседований java, java материалы, java курсы, java вакансии, java работа, java job, java telegram, java tg, финтех java';
+
+const faq = [
+  { q: 'Где найти реальные вопросы с собеседований Java?', a: 'На JavaJub собраны реальные вопросы с собеседований Java по конкретным компаниям и темам — с ответами и разбором. Открой раздел «Вопросы» или выбери компанию и грейд.' },
+  { q: 'Как подготовиться к собеседованию Java?', a: 'Выбери компанию, к которой готовишься, посмотри реальные вопросы по её грейдам и темам, закрепи тестами и флешкартами. Так подготовка идёт прицельно, а не «по всей Java сразу».' },
+  { q: 'Это курсы по Java?', a: 'Нет. Это не курсы, а бесплатные материалы для подготовки к собеседованию: реальные вопросы с ответами, тесты и гайды по компаниям. Идеально, чтобы освежить знания перед интервью.' },
+  { q: 'По каким компаниям и направлениям есть вопросы?', a: 'В базе 134 компании — банки и финтех (Сбер, Альфа, ВТБ, Т-Банк), маркетплейсы (Ozon, Wildberries), аутсорс и продуктовые. Есть подборки по направлениям, например Java в финтехе.' },
+  { q: 'Где смотреть Java-вакансии?', a: 'Мы публикуем, какие компании нанимают Java-разработчиков и что спрашивают на их собеседованиях, чтобы готовиться под реальные вакансии. Свежие вакансии и гайды выходят в нашем Telegram-канале.' },
+  { q: 'Есть Telegram-канал?', a: 'Да — @java_jub. Там новые гайды, вопросы с собеседований и вакансии Java выходят первыми. Подписка бесплатная.' },
+];
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+<Base title={title} description={description} keywords={keywords} jsonLd={faqLd}>
+  <!-- HERO -->
+  <section class="section hero">
+    <div class="container hero__grid">
+      <div>
+        <span class="kicker"><BirdMark size={18} /> java interview · подготовка к собеседованию</span>
+        <h1>Вопросы с собеседований <span class="hl">Java</span>,<br />которые задают на самом деле</h1>
+        <p class="lead">
+          Не «топ-100 вопросов из интернета», а то, что спрашивают конкретно в Сбере, Т-Банке,
+          Альфе, ВТБ, Яндексе, VK, Ozon и десятках других компаний. Найди компанию — готовься прицельно.
+        </p>
+        <div class="hero__cta">
+          <a class="btn btn--primary" href="/companies/">Найти свою компанию</a>
+          <a class="btn btn--ghost" href="/quizzes/">Пройти тест</a>
+          <a class="btn btn--tg" href={tg('hero')} target="_blank" rel="noreferrer"><TelegramIcon /> Свежее в Telegram</a>
+        </div>
+        <div class="hero__metrics">
+          <span class="hero__metrics-label mono">база JavaJub в цифрах</span>
+          <ul class="metrics">
+            <li class="metric metric--lead">
+              <svg class="metric__ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 9h.01M9 13h.01M9 17h.01M13 9h2M13 13h2M13 17h2M5 21V5a2 2 0 0 1 2-2h6l6 6v12a0 0 0 0 1 0 0H5Z"/><path d="M13 3v6h6"/></svg>
+              <span class="metric__num"><em>{ru(stats.questions)}+</em></span>
+              <span class="metric__lbl">вопросов с собесов в базе</span>
+            </li>
+            <li class="metric">
+              <svg class="metric__ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-6h6v6"/></svg>
+              <span class="metric__num">{ru(stats.companies)}</span>
+              <span class="metric__lbl">компаний в базе</span>
+            </li>
+            <li class="metric">
+              <svg class="metric__ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-3"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="m9 14 2 2 4-4"/></svg>
+              <span class="metric__num">247</span>
+              <span class="metric__lbl">разобранных собесов</span>
+            </li>
+            <li class="metric">
+              <svg class="metric__ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0 0 12 2Z"/></svg>
+              <span class="metric__num">{ru(guidesStats.count)}</span>
+              <span class="metric__lbl">бесплатных гайдов</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <aside class="hero__side">
+        <div class="card hero__demo">
+          <span class="mono faint" style="font-size:.78rem">// собес в Альфа-Банк · Middle</span>
+          <p class="hero__q"><span class="tag">Spring</span> Как работает <code>@Transactional</code>? В какой момент создаётся proxy?</p>
+          <p class="hero__q"><span class="tag">Коллекции</span> Что будет, если <code>hashCode()</code> возвращает random int?</p>
+          <p class="hero__q"><span class="tag">Kafka</span> Гарантии доставки: at least / at most / exactly once?</p>
+          <span class="mono faint" style="font-size:.78rem">+ ещё вопросы по грейдам →</span>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section section--alt how">
+    <div class="container">
+      <div class="accent-bar"></div>
+      <h2>Готовься не «ко всей Java», а к конкретному собесу</h2>
+      <div class="grid how__steps">
+        <div class="card"><span class="how__n mono">01</span><h3>Найди компанию</h3><p>В базе — {ru(stats.companies)} компаний от банков до маркетплейсов и аутсорса.</p></div>
+        <div class="card"><span class="how__n mono">02</span><h3>Смотри реальные вопросы</h3><p>Вопросы с собесов, сгруппированные по грейду и теме — что спрашивают именно там.</p></div>
+        <div class="card"><span class="how__n mono">03</span><h3>Закрепи тестом</h3><p>Тесты и флешкарды по слабым темам — прямо на сайте, без регистрации.</p></div>
+        <div class="card"><span class="how__n mono">04</span><h3>Получай свежее</h3><p>Новые гайды и разборы собесов выходят в нашем Telegram-канале первыми.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GUIDES SHOWCASE -->
+  <section class="section">
+    <div class="container">
+      <div class="row">
+        <div><div class="accent-bar"></div><h2>Готовые гайды по компаниям</h2><p class="muted">Реальные вопросы с собесов с ответами — бесплатно, в PDF. {ru(guidesStats.totalQuestions)}+ разобранных вопросов.</p></div>
+        <a class="btn btn--ghost" href="/guides/">Все {ru(guidesStats.count)} гайдов →</a>
+      </div>
+      <div class="gshowcase">
+        {guidePreview.map((g) => (
+          <a class="gtile" href="/guides/">
+            <span class="gtile__cover"><img src={g.cover} alt={`Гайд: собеседование Java в ${g.company}`} loading="lazy" width="150" height="212" /></span>
+            <span class="gtile__name">{g.company}</span>
+            <span class="gtile__grade mono">{g.grade}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- BRAND BAND -->
+  <section class="section band">
+    <div class="container">
+      <div class="band__inner">
+        <img class="band__bg" src="/img/pro-glow.jpg" alt="" aria-hidden="true" loading="lazy" width="1600" height="893" />
+        <span class="band__glow" aria-hidden="true"></span>
+        <div class="band__content">
+          <span class="kicker">// JavaJub</span>
+          <h2>Готовься к тому, что спрашивают <span class="hl">на самом деле</span></h2>
+          <p>Реальные вопросы с собесов, ответы и задачи — по компаниям, темам и грейдам. Бесплатно на сайте, глубже — в Pro.</p>
+          <div class="band__btns">
+            <a class="btn btn--primary" href="/guides/">Смотреть гайды</a>
+            <a class="btn band__ghost" href="/companies/">Выбрать компанию</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPANY WALL -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="row">
+        <div><div class="accent-bar"></div><h2>Компании</h2><p class="muted">Реальные вопросы по грейдам — Middle, Senior, Junior и стажировки.</p></div>
+        <a class="btn btn--ghost" href="/companies/">Все {ru(stats.companies)} компаний →</a>
+      </div>
+      <div class="grid grid--cards" style="margin-top:1.4rem">
+        {featured.map((c) => <CompanyCard company={c} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- TOPICS -->
+  <section class="section">
+    <div class="container">
+      <div class="accent-bar"></div>
+      <h2>Темы, которые любят спрашивать</h2>
+      <div class="topics">
+        {topics.map(([key]) => (
+          <a class="topic" href={`/themes/${key}/`}>
+            <span class="topic__l"><span class="topic__ic"><TopicIcon topic={key} size={16} /></span>{topicLabel(key)}</span>
+            <span class="topic__go" aria-hidden="true">→</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- MULTI-CHANNEL: give value, then offer channels -->
+  <section class="section section--alt channels">
+    <div class="container">
+      <div class="accent-bar"></div>
+      <h2>Учись здесь. Получай свежее — где удобно</h2>
+      <p class="lead">Сайт сам по себе закрывает подготовку. А новые гайды и разборы собесов можно ловить тем каналом, который тебе ближе.</p>
+      <div class="grid channels__grid">
+        <div class="card channels__card">
+          <span class="pill pill--accent">на сайте · бесплатно</span>
+          <h3>Вопросы, тесты, флешкарды</h3>
+          <p>Реальные вопросы по компаниям и темам, тесты с прогрессом и интервальными повторами — без регистрации.</p>
+          <a class="btn btn--ghost" href="/quizzes/">Открыть тесты</a>
+        </div>
+        <div class="card channels__card">
+          <span class="pill pill--accent">бесплатно · PDF</span>
+          <h3>Готовые гайды по компаниям</h3>
+          <p>Реальные вопросы с собесов с ответами — открывай и читай прямо на сайте, без регистрации.</p>
+          <a class="btn btn--ghost" href="/guides/">Смотреть гайды</a>
+        </div>
+        <div class="card channels__card">
+          <span class="pill pill--solid">в Telegram</span>
+          <h3>Живая лента и сообщество</h3>
+          <p>Новые гайды и реальные вопросы с собесов по компаниям. Самое свежее выходит здесь первым.</p>
+          <a class="btn btn--tg" href={tg('channels')} target="_blank" rel="noreferrer"><TelegramIcon /> Канал @java_jub</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOCIAL PROOF -->
+  <Cases heading="С нами проходят собесы" />
+
+  <!-- ORDER A GUIDE -->
+  <section class="section section--alt">
+    <div class="container order">
+      <div class="order__inner">
+        <img class="order__bg" src="/img/order-desk.jpg" alt="" aria-hidden="true" loading="lazy" width="1600" height="893" />
+        <div>
+          <div class="accent-bar"></div>
+          <h2>Нет твоей компании? Закажи гайд</h2>
+          <p class="lead">Скажи, к какой компании и на какой грейд готовишься — соберём разбор с реальными вопросами. Оформить заявку можно в Telegram.</p>
+        </div>
+        <a class="btn btn--primary order__btn" href="/order/">Заказать гайд под компанию</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ (SEO) -->
+  <section class="section faq">
+    <div class="container">
+      <div class="accent-bar"></div>
+      <h2>Частые вопросы про подготовку к собеседованию Java</h2>
+      <div class="faq__list">
+        {faq.map((f) => (
+          <details class="faq__item">
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero__grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 2.4rem; align-items: center; }
+  .hl { color: var(--accent); }
+  .hero h1 { margin-top: 0.8rem; }
+  .hero .lead { margin-bottom: 0; }
+  .hero__cta { display: flex; flex-wrap: wrap; gap: 0.7rem; margin: 1.5rem 0 2rem; }
+  .hero__metrics { border-top: 1px solid var(--border); padding-top: 1.3rem; }
+  .hero__metrics-label { display: block; color: var(--text-faint); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.85rem; }
+  .metrics { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr)); gap: 0.7rem; }
+  .metric { position: relative; min-width: 0; display: flex; flex-direction: column; gap: 0.1rem;
+    padding: 0.85rem 1rem 0.9rem 1.1rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--card); overflow: hidden; }
+  .metric::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--border); }
+  .metric--lead { background: linear-gradient(160deg, var(--card-2), var(--card)); border-color: var(--border-strong); }
+  .metric--lead::before { background: linear-gradient(var(--accent), var(--accent-light)); }
+  .metric__ic { color: var(--accent); margin-bottom: 0.3rem; }
+  .metric__num { font-size: clamp(1.55rem, 3vw, 2.1rem); font-weight: 800; letter-spacing: -0.04em; color: var(--cream); line-height: 1.02; white-space: nowrap; }
+  .metric--lead .metric__num { color: var(--accent-light); }
+  .metric__num em { font-style: normal; color: var(--accent); }
+  .metric__lbl { font-size: 0.79rem; line-height: 1.25; color: var(--text-soft); margin-top: 0.2rem; overflow-wrap: anywhere; }
+  .hero__side { align-self: stretch; display: flex; }
+  .hero__demo { display: flex; flex-direction: column; gap: 0.8rem; width: 100%; background: var(--card-2); }
+  .hero__q { margin: 0; color: var(--text); font-size: 0.96rem; }
+  .hero__q .tag { margin-right: 0.4rem; }
+
+  .row { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+
+  .gshowcase { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.9rem; margin-top: 1.5rem; }
+  .gtile { display: flex; flex-direction: column; align-items: center; gap: 0.45rem; text-align: center; }
+  .gtile__cover { display: block; width: 100%; border-radius: 8px; overflow: hidden; border: 1px solid var(--border);
+    background: var(--card-2); box-shadow: 0 10px 24px rgba(0,0,0,.35); transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease; }
+  .gtile__cover img { width: 100%; height: auto; aspect-ratio: 3 / 4.24; object-fit: cover; object-position: center 22%; background: #fff; }
+  .gtile:hover .gtile__cover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 18px 34px rgba(0,0,0,.45); }
+  .gtile__name { font-weight: 700; font-size: 0.9rem; color: var(--text); line-height: 1.15; }
+  .gtile:hover .gtile__name { color: var(--accent-light); }
+  .gtile__grade { font-size: 0.72rem; color: var(--text-faint); }
+  @media (max-width: 900px) { .gshowcase { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 460px) { .gshowcase { grid-template-columns: repeat(2, 1fr); } }
+  .how__steps { grid-template-columns: repeat(4, 1fr); margin-top: 1.4rem; }
+  .how__n { color: var(--accent); font-size: 1.1rem; font-weight: 700; }
+
+  .topics { display: grid; grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr)); gap: 0.7rem; margin-top: 1.3rem; }
+  .topic { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem;
+    border: 1px solid var(--border); border-radius: 10px; padding: 0.7rem 0.9rem; font-weight: 600; background: var(--card); }
+  .topic:hover { border-color: var(--accent); color: var(--accent-light); }
+  .topic__l { display: inline-flex; align-items: center; gap: 0.55rem; }
+  .topic__ic { color: var(--accent); display: inline-grid; place-items: center; flex: none; }
+  .topic__go { color: var(--text-faint); transition: transform 0.14s ease, color 0.14s ease; }
+  .topic:hover .topic__go { color: var(--accent-light); transform: translateX(3px); }
+
+  .channels__grid { grid-template-columns: repeat(3, 1fr); margin-top: 1.4rem; }
+  .channels__card { display: flex; flex-direction: column; gap: 0.6rem; align-items: flex-start; }
+  .channels__card h3 { margin: 0.2rem 0 0; }
+  .channels__card .btn { margin-top: auto; }
+
+  .order__inner { position: relative; overflow: hidden; display: flex; align-items: center; justify-content: space-between; gap: 1.6rem;
+    border: 1px solid var(--border-strong); border-radius: var(--radius); padding: clamp(1.6rem, 4vw, 2.6rem);
+    background: #0e0c0b; flex-wrap: wrap; color: #efe6df; }
+  .order__bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 65%; z-index: 0; }
+  .order__inner::after { content: ""; position: absolute; inset: 0; z-index: 0;
+    background: linear-gradient(105deg, rgba(8,7,6,.92) 30%, rgba(8,7,6,.62) 70%, rgba(255,61,0,.16)); }
+  .order__inner > div, .order__btn { position: relative; z-index: 1; }
+  .order__inner h2 { color: #fff7f2; }
+  .order__inner .lead { color: rgba(244,236,230,.85); }
+  .order__btn { white-space: nowrap; }
+
+  .band__inner { position: relative; overflow: hidden; border-radius: var(--radius); border: 1px solid var(--border-strong);
+    background: #0e0c0b; padding: clamp(2rem, 6vw, 3.4rem); min-height: 260px; display: flex; align-items: center; }
+  .band__bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center right; z-index: 0; }
+  .band__inner::after { content: ""; position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(95deg, rgba(8,7,6,.92) 34%, rgba(8,7,6,.5) 78%); }
+  /* live, breathing orange glow — pure CSS, zero bytes, motion-safe */
+  .band__glow { position: absolute; inset: 0; z-index: 2; pointer-events: none; mix-blend-mode: screen;
+    background: radial-gradient(42% 64% at 80% 26%, rgba(255,61,0,.5), rgba(255,90,30,.16) 46%, transparent 72%);
+    animation: bandGlow 17s ease-in-out infinite alternate; will-change: transform, opacity; }
+  @keyframes bandGlow {
+    0%   { transform: translate3d(0, 0, 0) scale(1);     opacity: .65; }
+    50%  { transform: translate3d(-3%, 2.5%, 0) scale(1.14); opacity: 1; }
+    100% { transform: translate3d(2.5%, -2%, 0) scale(1.06); opacity: .8; }
+  }
+  @media (prefers-reduced-motion: reduce) { .band__glow { animation: none; opacity: .8; } }
+  .band__content { position: relative; z-index: 3; max-width: 42rem; color: #efe6df; }
+  .band__content h2 { color: #fff7f2; margin: .55rem 0 .6rem; }
+  .band__content p { color: rgba(244,236,230,.85); margin: 0 0 1.2rem; max-width: 40ch; }
+  .band__btns { display: flex; gap: .6rem; flex-wrap: wrap; }
+  .band__ghost { background: transparent; color: #fff7f2; border: 1px solid rgba(255,247,242,.32); }
+  .band__ghost:hover { border-color: var(--accent); color: var(--accent-light); }
+
+  .faq__list { display: flex; flex-direction: column; gap: .6rem; margin-top: 1.4rem; max-width: 54rem; }
+  .faq__item { border: 1px solid var(--border); border-radius: var(--radius); background: var(--card); padding: 0 1.1rem; }
+  .faq__item summary { cursor: pointer; padding: 1rem 0; font-weight: 700; color: var(--text); list-style: none; position: relative; padding-right: 1.8rem; }
+  .faq__item summary::-webkit-details-marker { display: none; }
+  .faq__item summary::after { content: "+"; position: absolute; right: 0; top: 50%; transform: translateY(-50%); color: var(--accent); font-size: 1.35rem; line-height: 1; }
+  .faq__item[open] summary::after { content: "−"; }
+  .faq__item p { margin: -.2rem 0 1rem; color: var(--text-soft); }
+
+  @media (max-width: 920px) {
+    .hero__grid { grid-template-columns: 1fr; }
+    .hero__side { display: none; }
+    .how__steps { grid-template-columns: repeat(2, 1fr); }
+    .channels__grid { grid-template-columns: 1fr; }
+  }
+</style>

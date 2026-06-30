@@ -1,0 +1,202 @@
+---
+// Global media lightbox. Triggers anywhere on the page via data-attributes —
+// no per-page wiring. Two implementations share one shell:
+//   data-lightbox-img="/url.jpg"  [+ data-lightbox-group="x"] [+ data-lightbox-cap]
+//   data-lightbox-pdf="/file.pdf" [+ data-lightbox-cap]
+// Progressive enhancement: keep a normal href so it still works without JS.
+---
+<div class="lb" data-lb hidden role="dialog" aria-modal="true" aria-label="Просмотр">
+  <button class="lb__close" data-lb-close type="button" aria-label="Закрыть (Esc)">✕</button>
+  <button class="lb__nav lb__nav--prev" data-lb-prev type="button" aria-label="Предыдущее" hidden>‹</button>
+  <button class="lb__nav lb__nav--next" data-lb-next type="button" aria-label="Следующее" hidden>›</button>
+  <div class="lb__dialog">
+    <div class="lb__stage" data-lb-stage></div>
+    <div class="lb__bar">
+      <span class="lb__cap mono" data-lb-cap></span>
+      <a class="lb__open" data-lb-open href="#" target="_blank" rel="noreferrer">Открыть в новой вкладке ↗</a>
+    </div>
+  </div>
+</div>
+<style>
+  .lb { position: fixed; inset: 0; z-index: 200; display: flex; align-items: center; justify-content: center;
+    background: rgba(6,5,4,.88); backdrop-filter: blur(7px); padding: clamp(.8rem, 3vw, 2.2rem); }
+  .lb__dialog { display: flex; flex-direction: column; gap: .7rem; max-width: 100%; }
+  .lb__stage { display: flex; align-items: center; justify-content: center; }
+  .lb[data-mode="img"] .lb__stage :global(img) { max-width: min(1040px, 94vw); max-height: 80vh; width: auto; height: auto;
+    object-fit: contain; border-radius: 10px; box-shadow: 0 30px 80px rgba(0,0,0,.6); background: #fff; }
+  .lb[data-mode="pdf"] .lb__stage { width: min(920px, 94vw); }
+  .lb__stage :global(.lb__pdf) { width: 100%; max-height: 84vh; overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
+    display: flex; flex-direction: column; gap: 10px; padding: 10px; border-radius: 10px; background: var(--card-2); box-shadow: 0 30px 80px rgba(0,0,0,.6); }
+  .lb__stage :global(.lb__page) { width: 100%; background: #fff; border-radius: 4px; }
+  .lb__stage :global(.lb__page canvas) { display: block; width: 100%; height: auto; }
+  .lb__stage :global(.lb__pdfmsg) { padding: 2.4rem 1rem; text-align: center; color: var(--text-soft); font-size: .85rem; }
+  .lb__stage :global(.lb__pdfmsg a) { color: var(--accent-light); }
+  .lb__bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+    color: var(--text-soft); font-size: .82rem; }
+  .lb__cap { color: var(--cream); opacity: .85; }
+  .lb__open { color: var(--accent-light); white-space: nowrap; }
+  .lb__open:hover { text-decoration: underline; }
+  .lb__close { position: absolute; top: 1rem; right: 1rem; width: 42px; height: 42px; border-radius: 10px; cursor: pointer;
+    background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.18); color: #fff; font-size: 1.2rem; line-height: 1; }
+  .lb__close:hover { background: var(--accent); border-color: var(--accent); }
+  .lb__nav { position: absolute; top: 50%; transform: translateY(-50%); width: 46px; height: 46px; border-radius: 50%; cursor: pointer;
+    background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.18); color: #fff; font-size: 1.6rem; line-height: 1; display: grid; place-items: center; }
+  .lb__nav:hover { background: var(--accent); border-color: var(--accent); }
+  .lb__nav--prev { left: clamp(.5rem, 2vw, 1.5rem); }
+  .lb__nav--next { right: clamp(.5rem, 2vw, 1.5rem); }
+  @media (max-width: 560px) { .lb__nav { width: 40px; height: 40px; } }
+</style>
+<script>
+  import pdfWorkerUrl from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
+
+  const lb = document.querySelector<HTMLElement>('[data-lb]');
+  if (lb) {
+    const stage = lb.querySelector<HTMLElement>('[data-lb-stage]')!;
+    const cap = lb.querySelector<HTMLElement>('[data-lb-cap]')!;
+    const openLink = lb.querySelector<HTMLAnchorElement>('[data-lb-open]')!;
+    const prevBtn = lb.querySelector<HTMLElement>('[data-lb-prev]')!;
+    const nextBtn = lb.querySelector<HTMLElement>('[data-lb-next]')!;
+    const closeBtn = lb.querySelector<HTMLElement>('[data-lb-close]')!;
+    type Item = { type: 'img' | 'pdf'; url: string; cap: string };
+    let group: Item[] = [];
+    let idx = 0;
+    let lastFocus: HTMLElement | null = null;
+
+    // --- PDF.js, loaded only on first PDF open ---
+    let pdfjs: any = null;
+    let pdfRun = 0;        // bumps on every open/close to cancel stale renders
+    let pdfIO: IntersectionObserver | null = null;
+    async function loadPdfjs() {
+      if (pdfjs) return pdfjs;
+      pdfjs = await import('pdfjs-dist');
+      pdfjs.GlobalWorkerOptions.workerSrc = pdfWorkerUrl;
+      return pdfjs;
+    }
+    async function renderPdf(url: string) {
+      const run = ++pdfRun;
+      pdfIO?.disconnect();
+      const wrap = document.createElement('div');
+      wrap.className = 'lb__pdf';
+      wrap.innerHTML = '<div class="lb__pdfmsg">Загрузка просмотрщика…</div>';
+      stage.replaceChildren(wrap);
+      try {
+        const lib = await loadPdfjs();
+        if (run !== pdfRun) return;
+        const doc = await lib.getDocument({ url }).promise;
+        if (run !== pdfRun) { doc.destroy?.(); return; }
+        const first = await doc.getPage(1);
+        const vp1 = first.getViewport({ scale: 1 });
+        const pageRatio = vp1.height / vp1.width; // tall A4 ≈ 1.41
+        wrap.replaceChildren();
+        const cw = (wrap.clientWidth || 700) - 20; // minus container padding
+        pdfIO = new IntersectionObserver((entries) => {
+          for (const e of entries) {
+            if (!e.isIntersecting) continue;
+            const el = e.target as HTMLElement;
+            pdfIO!.unobserve(el);
+            renderPage(doc, parseInt(el.dataset.page!, 10), el, run);
+          }
+        }, { root: wrap, rootMargin: '800px 0px' });
+        for (let p = 1; p <= doc.numPages; p++) {
+          const ph = document.createElement('div');
+          ph.className = 'lb__page';
+          ph.dataset.page = String(p);
+          ph.style.height = Math.round(cw * pageRatio) + 'px'; // reserve space for lazy render
+          wrap.appendChild(ph);
+          pdfIO.observe(ph);
+        }
+      } catch (err) {
+        if (run !== pdfRun) return;
+        wrap.innerHTML = `<div class="lb__pdfmsg">Не удалось показать PDF в окне. <a href="${url}" target="_blank" rel="noreferrer">Открыть в новой вкладке ↗</a></div>`;
+      }
+    }
+    async function renderPage(doc: any, num: number, el: HTMLElement, run: number) {
+      try {
+        const page = await doc.getPage(num);
+        if (run !== pdfRun || !el.isConnected) return;
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const base = page.getViewport({ scale: 1 });
+        const cssW = el.clientWidth || 600;
+        const vp = page.getViewport({ scale: (cssW / base.width) * dpr });
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.floor(vp.width);
+        canvas.height = Math.floor(vp.height);
+        el.style.height = ''; // let the canvas define height now that it's rendered
+        el.replaceChildren(canvas);
+        await page.render({ canvasContext: canvas.getContext('2d'), viewport: vp }).promise;
+      } catch (e) { /* page render failed — skip */ }
+    }
+
+    function render() {
+      const item = group[idx];
+      lb!.dataset.mode = item.type;
+      cap.textContent = item.cap || '';
+      openLink.href = item.url;
+      if (item.type === 'pdf') {
+        prevBtn.hidden = true; nextBtn.hidden = true;
+        renderPdf(item.url);
+        return;
+      }
+      const img = document.createElement('img');
+      img.src = item.url; img.alt = item.cap || '';
+      stage.replaceChildren(img);
+      const multi = group.length > 1;
+      prevBtn.hidden = !multi; nextBtn.hidden = !multi;
+    }
+    function open(items: Item[], start: number) {
+      group = items; idx = Math.max(0, start);
+      lastFocus = document.activeElement as HTMLElement;
+      render();
+      lb!.hidden = false;
+      document.documentElement.style.overflow = 'hidden';
+      closeBtn.focus();
+    }
+    function close() {
+      pdfRun++; pdfIO?.disconnect(); pdfIO = null;
+      lb!.hidden = true; stage.replaceChildren();
+      document.documentElement.style.overflow = '';
+      lastFocus?.focus?.();
+    }
+    function step(d: number) { idx = (idx + d + group.length) % group.length; render(); }
+
+    function imageGroup(el: Element) {
+      const g = el.getAttribute('data-lightbox-group');
+      const nodes = g
+        ? Array.from(document.querySelectorAll(`[data-lightbox-img][data-lightbox-group="${g}"]`))
+        : [el];
+      const items: Item[] = nodes.map((n) => ({
+        type: 'img', url: n.getAttribute('data-lightbox-img') || '', cap: n.getAttribute('data-lightbox-cap') || '',
+      }));
+      return { items, start: Math.max(0, nodes.indexOf(el)) };
+    }
+
+    document.addEventListener('click', (e) => {
+      const me = e as MouseEvent;
+      if (me.metaKey || me.ctrlKey || me.shiftKey || me.button !== 0) return; // let new-tab gestures pass
+      const t = (e.target as Element)?.closest?.('[data-lightbox-img],[data-lightbox-pdf]');
+      if (!t) return;
+      e.preventDefault();
+      const pdf = t.getAttribute('data-lightbox-pdf');
+      if (pdf) { open([{ type: 'pdf', url: pdf, cap: t.getAttribute('data-lightbox-cap') || '' }], 0); return; }
+      const { items, start } = imageGroup(t);
+      open(items, start);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (lb!.hidden) {
+        // activate non-native triggers (a div with role="button"); <a>/<button> self-activate
+        if (e.key === 'Enter' || e.key === ' ') {
+          const t = (e.target as Element)?.closest?.('[data-lightbox-img],[data-lightbox-pdf]');
+          if (t && t.tagName !== 'A' && t.tagName !== 'BUTTON') { e.preventDefault(); (t as HTMLElement).click(); }
+        }
+        return;
+      }
+      if (e.key === 'Escape') close();
+      else if (e.key === 'ArrowLeft' && group.length > 1) step(-1);
+      else if (e.key === 'ArrowRight' && group.length > 1) step(1);
+    });
+    lb.addEventListener('click', (e) => { if (e.target === lb) close(); });
+    closeBtn.addEventListener('click', close);
+    prevBtn.addEventListener('click', () => step(-1));
+    nextBtn.addEventListener('click', () => step(1));
+  }
+</script>

@@ -1,0 +1,100 @@
+---
+import Base from '../../layouts/Base.astro';
+import TelegramIcon from '../../components/icons/TelegramIcon.astro';
+import TopicIcon from '../../components/TopicIcon.astro';
+import { tg } from '../../lib/site';
+import { indexableCompanies, stats, topicLabel } from '../../lib/companies';
+import { freeQuestionsByTopics } from '../../lib/questions';
+
+export function getStaticPaths() {
+  return Object.keys(stats.topicTotals)
+    .filter((k) => k !== 'other')
+    .map((topic) => ({ params: { topic }, props: { topic } }));
+}
+const { topic } = Astro.props as { topic: string };
+const label = topicLabel(topic);
+
+const asked = indexableCompanies
+  .filter((c) => (c.topicCounts[topic] || 0) > 0)
+  .sort((a, b) => (b.topicCounts[topic] || 0) - (a.topicCounts[topic] || 0));
+
+// FREE questions on this topic, each linking to its full answer page.
+const sample = freeQuestionsByTopics([topic], 24);
+
+const title = `${label} — вопросы Java-собеседований по компаниям | JavaJub`;
+const description = `Вопросы Java-собеседований по теме «${label}»: то, что реально спрашивают на интервью в российских компаниях. Повтори перед собесом.`;
+---
+<Base title={title} description={description}>
+  <section class="section">
+    <div class="container">
+      <nav class="crumbs mono"><a href="/">главная</a> <span>/</span> <a href="/themes/">темы</a> <span>/</span> <b>{label}</b></nav>
+      <div class="th-head">
+        <span class="th-ic"><TopicIcon topic={topic} size={28} /></span>
+        <div><div class="accent-bar"></div><h1><span class="hl">{label}</span> на собеседовании Java</h1></div>
+      </div>
+      <p class="lead">Реальные вопросы по теме «{label}» из собесов в российских компаниях. Повтори то, что чаще всего спрашивают.</p>
+
+      <div class="tgrid">
+        <div>
+          <h2 class="sec-h"><span class="dot"></span>Вопросы по теме «{label}» — с ответами</h2>
+          <ol class="qlist">
+            {sample.map((q) => (
+              <li class="qitem">
+                <span class="qitem__b" aria-hidden="true"></span>
+                <a class="qitem__t" href={`/questions/${q.topic}/${q.slug}/`}>{q.prompt}</a>
+              </li>
+            ))}
+          </ol>
+          <div class="more card">
+            <p class="muted" style="margin:0 0 .8rem">Это бесплатные вопросы с разбором. Разбор по конкретной компании и грейду — в наших гайдах и в Telegram-канале.</p>
+            <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+              <a class="btn btn--primary" href="/guides/">Смотреть гайды</a>
+              <a class="btn btn--tg" href={tg(`theme_${topic}`)} target="_blank" rel="noreferrer"><TelegramIcon /> В Telegram</a>
+            </div>
+          </div>
+        </div>
+        <aside class="tside">
+          <div class="card">
+            <h4 style="margin:0 0 .6rem">Где это спрашивают</h4>
+            <div class="tco">
+              {asked.slice(0, 14).map((c) => (
+                <a class="tco__row" href={`/companies/${c.slug}/`}><span>{c.name}</span><span class="tco__go" aria-hidden="true">→</span></a>
+              ))}
+            </div>
+          </div>
+          <div class="card hub__quiz">
+            <h4 style="margin:0 0 .3rem">Закрепи тестом</h4>
+            <p class="muted" style="margin:0 0 .8rem">Тест и флешкарды по теме «{label}».</p>
+            <a class="btn btn--ghost" href="/quizzes/">Пройти тест</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</Base>
+<style>
+  .crumbs { color: var(--text-faint); font-size: .82rem; margin-bottom: 1rem; }
+  .crumbs a:hover { color: var(--accent-light); }
+  .crumbs span { opacity: .5; } .crumbs b { color: var(--text-soft); }
+  .th-head { display: flex; align-items: center; gap: 1rem; }
+  .th-head h1 { margin: 0; }
+  .th-ic { flex: none; display: grid; place-items: center; width: 54px; height: 54px; color: var(--accent);
+    border: 1px solid var(--accent-line); border-radius: 14px; background: var(--accent-soft); }
+  .sec-h { display: flex; align-items: center; gap: .6rem; font-size: 1.25rem; margin-bottom: 1rem; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
+  .tgrid { display: grid; grid-template-columns: 1fr 18rem; gap: 1.8rem; margin-top: 1.8rem; align-items: start; }
+  .qlist { list-style: none; margin: 0; padding: 0; }
+  .qitem { display: flex; gap: .6rem; align-items: baseline; padding: .65rem 0; border-bottom: 1px solid var(--border); }
+  .qitem__b { flex: none; width: 6px; height: 6px; border-radius: 50%; border: 1.5px solid var(--accent); margin-top: .45rem; }
+  .qitem__t { color: var(--text); transition: color .12s ease; }
+  .qitem__t:hover { color: var(--accent-light); }
+  .more { margin-top: 1.4rem; background: var(--card-2); border-color: var(--border-strong); }
+  .tside { position: sticky; top: 80px; display: flex; flex-direction: column; gap: 1rem; }
+  .tco { display: flex; flex-direction: column; gap: .1rem; }
+  .tco__row { display: flex; justify-content: space-between; gap: .5rem; padding: .32rem 0; font-size: .92rem; border-bottom: 1px solid var(--border); }
+  .tco__row:last-child { border-bottom: 0; }
+  .tco__row:hover { color: var(--accent-light); }
+  .tco__go { color: var(--text-faint); }
+  .tco__row:hover .tco__go { color: var(--accent-light); }
+  @media (max-width: 900px) { .tgrid { grid-template-columns: 1fr; } .tside { position: static; } }
+</style>

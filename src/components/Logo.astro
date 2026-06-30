@@ -1,0 +1,20 @@
+---
+import BirdMark from './BirdMark.astro';
+interface Props { size?: number; }
+const { size = 30 } = Astro.props;
+---
+<a href="/" class="logo" aria-label="JavaJub — на главную">
+  <BirdMark size={size} />
+  <span class="logo__word">javajub</span>
+</a>
+<style>
+  .logo { display: inline-flex; align-items: center; gap: 0.5rem; }
+  .logo__word {
+    font-family: var(--font-sans);
+    font-weight: 800;
+    font-size: 1.28rem;
+    letter-spacing: -0.03em;
+    color: var(--cream);
+  }
+  .logo:hover .logo__word { color: var(--contrast); }
+</style>

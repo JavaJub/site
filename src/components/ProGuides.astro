@@ -1,0 +1,73 @@
+---
+import TelegramIcon from './icons/TelegramIcon.astro';
+import { LINKS } from '../lib/site';
+import { proGuides, proGuidesCount } from '../lib/proGuides';
+
+interface Props { heading?: string; intro?: string; alt?: boolean; }
+const {
+  heading = 'Что внутри гайдов Pro',
+  intro = 'Загляни внутрь: титульный лист и содержание каждого гайда. Сами вопросы и ответы открываются в Pro — здесь только структура, чтобы понять глубину.',
+  alt = false,
+} = Astro.props;
+const kindLabel: Record<string, string> = { bank: 'банк/финтех', product: 'продукт', bundle: 'сборник' };
+---
+<section class={`section proguides ${alt ? 'section--alt' : ''}`}>
+  <div class="container">
+    <div class="accent-bar"></div>
+    <h2>{heading}</h2>
+    <p class="lead">{intro}</p>
+    <div class="pgrid">
+      {proGuides.map((g) => (
+        <article class="pg">
+          <div class="pg__shots">
+            <a class="pg__shot pg__shot--cover" href={g.cover} target="_blank" rel="noreferrer"
+               data-lightbox-img={g.cover} data-lightbox-group={`pg-${g.slug}`} data-lightbox-cap={`${g.company} · ${g.grade} — титульный лист`}><img src={g.cover} alt={`Титульный лист гайда: ${g.company} ${g.grade}`} loading="lazy" /><span class="pg__shotlbl mono">титул</span></a>
+            {g.toc && <a class="pg__shot pg__shot--toc" href={g.toc} target="_blank" rel="noreferrer"
+               data-lightbox-img={g.toc} data-lightbox-group={`pg-${g.slug}`} data-lightbox-cap={`${g.company} · ${g.grade} — содержание`}><img src={g.toc} alt={`Содержание гайда ${g.company} ${g.grade}`} loading="lazy" /><span class="pg__shotlbl mono">содержание</span></a>}
+          </div>
+          <div class="pg__body">
+            <div class="pg__head">
+              <h3 class="pg__co">{g.company}</h3>
+              <span class="pill pill--accent">{g.grade}</span>
+            </div>
+            <span class="pg__kind mono faint">{kindLabel[g.kind]} · {g.sections.length} разделов</span>
+            <div class="pg__sections">
+              {g.sections.slice(0, 6).map((s) => <span class="pg__chip">{s}</span>)}
+              {g.sections.length > 6 && <span class="pg__chip pg__chip--more">+{g.sections.length - 6}</span>}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+    <div class="pmore">
+      <p class="muted" style="margin:0">Это {proGuidesCount} из 20+ гайдов в Pro — банки, финтех и продуктовые компании, по грейдам Middle и Senior.</p>
+      <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+        <a class="btn btn--primary" href="/pro/#plans">Открыть доступ в Pro</a>
+        <a class="btn btn--tg" href={LINKS.telegramPro} target="_blank" rel="noreferrer"><TelegramIcon /> JavaJub Pro</a>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .pgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 21rem), 1fr)); gap: 1.2rem; margin-top: 1.8rem; }
+  .pg { display: flex; flex-direction: column; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
+    transition: transform .14s ease, border-color .14s ease, box-shadow .14s ease; }
+  .pg:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: 0 16px 34px rgba(0,0,0,.34); }
+  .pg__shots { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border);
+    padding: 1.1rem 1.1rem 0; background: radial-gradient(120% 80% at 50% 0, var(--accent-soft), transparent 70%), var(--card-2); }
+  .pg__shot { position: relative; display: block; border-radius: 6px 6px 0 0; overflow: hidden; box-shadow: 0 10px 22px rgba(0,0,0,.4);
+    border: 1px solid rgba(0,0,0,.12); border-bottom: 0; transition: transform .14s ease; }
+  .pg__shot:hover { transform: translateY(-3px); }
+  .pg__shot img { width: 100%; height: 158px; object-fit: cover; object-position: center top; background: #fff; display: block; }
+  .pg__shotlbl { position: absolute; bottom: 0; left: 0; right: 0; text-align: center; font-size: .6rem; text-transform: uppercase; letter-spacing: .1em;
+    color: var(--contrast); background: rgba(9,14,9,.72); padding: .12rem; }
+  .pg__body { display: flex; flex-direction: column; gap: .5rem; padding: 1rem 1.1rem 1.15rem; }
+  .pg__head { display: flex; align-items: center; justify-content: space-between; gap: .6rem; }
+  .pg__co { margin: 0; font-size: 1.12rem; }
+  .pg__kind { font-size: .74rem; }
+  .pg__sections { display: flex; flex-wrap: wrap; gap: .3rem; }
+  .pg__chip { font-size: .72rem; color: var(--text-soft); border: 1px solid var(--border); border-radius: 6px; padding: .15rem .4rem; line-height: 1.3; }
+  .pg__chip--more { color: var(--accent-light); border-color: var(--accent-line); }
+  .pmore { display: flex; align-items: center; justify-content: space-between; gap: 1.2rem; flex-wrap: wrap; margin-top: 1.8rem;
+    padding: 1.2rem 1.3rem; border: 1px solid var(--border-strong); border-radius: var(--radius); background: linear-gradient(120deg, var(--card), var(--card-2)); }
+</style>

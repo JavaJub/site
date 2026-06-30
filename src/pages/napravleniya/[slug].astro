@@ -1,0 +1,63 @@
+---
+import Base from '../../layouts/Base.astro';
+import CompanyCard from '../../components/CompanyCard.astro';
+import TelegramIcon from '../../components/icons/TelegramIcon.astro';
+import { tg } from '../../lib/site';
+import { directions, directionCompanies, type Direction } from '../../lib/directions';
+
+export function getStaticPaths() {
+  return directions.map((d) => ({ params: { slug: d.slug }, props: { dir: d } }));
+}
+const { dir } = Astro.props as { dir: Direction };
+const companies = directionCompanies(dir);
+
+const title = `${dir.name}: вопросы с собеседований Java и компании | JavaJub`;
+const description = `Собеседования Java в направлении «${dir.short}»: какие компании нанимают и что спрашивают. ${companies.length} компаний с реальными вопросами по грейдам. Стек: ${dir.stack}.`;
+const keywords = `java ${dir.short}, java ${dir.short} собеседование, java ${dir.short} вопросы, java ${dir.short} вакансии, java ${dir.short} работа`;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'JavaJub', item: 'https://www.javajub.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Направления', item: 'https://www.javajub.com/napravleniya/' },
+    { '@type': 'ListItem', position: 3, name: dir.name, item: `https://www.javajub.com/napravleniya/${dir.slug}/` },
+  ],
+};
+---
+<Base title={title} description={description} keywords={keywords} jsonLd={jsonLd}>
+  <section class="section">
+    <div class="container">
+      <nav class="crumbs mono"><a href="/">главная</a> <span>/</span> <a href="/napravleniya/">направления</a> <span>/</span> <b>{dir.name}</b></nav>
+      <div class="accent-bar"></div>
+      <h1>{dir.name}: <span class="hl">собеседования Java</span></h1>
+      <p class="lead">{dir.intro}</p>
+      <p class="muted"><b>Типичный стек:</b> {dir.stack}.</p>
+
+      <h2 class="sec-h">Компании направления «{dir.short}»</h2>
+      <p class="muted">Открой компанию — увидишь реальные вопросы с её собеседований по грейдам, бесплатно и с ответами.</p>
+      <div class="grid grid--cards" style="margin-top:1.2rem">
+        {companies.map((c) => <CompanyCard company={c} />)}
+      </div>
+
+      <div class="card dcta">
+        <div>
+          <h3 style="margin:0 0 .3rem">Готовься к собесу в {dir.short}</h3>
+          <p class="muted" style="margin:0">Бесплатные гайды и вопросы с ответами по компаниям направления. Свежие вакансии и разборы — в Telegram.</p>
+        </div>
+        <div class="dcta__btns">
+          <a class="btn btn--primary" href="/guides/">Смотреть гайды</a>
+          <a class="btn btn--ghost" href="/questions/">Вопросы с ответами</a>
+          <a class="btn btn--tg" href={tg(`napr_${dir.slug}`)} target="_blank" rel="noreferrer"><TelegramIcon /> В Telegram</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+<style>
+  .crumbs { color: var(--text-faint); font-size: .82rem; margin-bottom: 1rem; }
+  .crumbs a:hover { color: var(--accent-light); } .crumbs span { opacity: .5; } .crumbs b { color: var(--text-soft); }
+  .sec-h { margin: 2.2rem 0 .2rem; font-size: 1.4rem; }
+  .dcta { display: flex; align-items: center; justify-content: space-between; gap: 1.2rem; flex-wrap: wrap;
+    margin-top: 2rem; background: linear-gradient(120deg, var(--card), var(--card-2)); border-color: var(--border-strong); }
+  .dcta__btns { display: flex; gap: .6rem; flex-wrap: wrap; }
+</style>

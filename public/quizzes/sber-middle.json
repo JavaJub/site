@@ -1,0 +1,4498 @@
+{
+  "id": "sber-middle",
+  "title": "Сбер Java Middle readiness",
+  "kind": "company",
+  "description": "Готовность к Java Middle интервью в Сбер.",
+  "telegramUrl": "https://t.me/+vDYjUmPrBYZmMTAy",
+  "questionCount": 91,
+  "questions": [
+    {
+      "id": "auto-acid-расшифровать-070",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "sql"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 310,
+          "title": "Сбер · 8. Базы данных и SQL"
+        }
+      ],
+      "prompt": "ACID — расшифровать?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Atomicity (всё или ничего), Consistency (целостность), Isolation (параллельные транзакции), Durability (сохранность после commit)."
+        },
+        {
+          "id": "b",
+          "text": "Atomicity, Consistency, Indexing (индексы), Durability."
+        },
+        {
+          "id": "c",
+          "text": "Availability (доступность узлов кластера), Consistency (согласованность реплик между собой), Isolation (изоляция операций чтения), Distribution (распределённость данных по шардам)."
+        },
+        {
+          "id": "d",
+          "text": "Atomicity (всё или ничего), Concurrency (одновременный доступ читателей и писателей), Integrity (проверка ссылочной целостности), Durability (запись на диск после commit)."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "ACID = Atomicity, Consistency, Isolation, Durability. Главная ловушка — подмена букв похожими по звучанию терминами: Isolation путают с Indexing/Distribution, а Consistency сводят к кэшу или репликам. Availability и Distribution относятся к теореме CAP и распределённым системам, а не к ACID.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-arraylist-vs-linkedlist-где-быстрее-вставка-в-середину-025",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "collections",
+        "algorithms"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 157,
+          "title": "Сбер · 4. Collections Framework"
+        }
+      ],
+      "prompt": "ArrayList vs LinkedList — где быстрее вставка в середину?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "LinkedList всегда быстрее на вставке в середину, ведь не нужно сдвигать элементы и копировать массив, как это делает ArrayList при росте."
+        },
+        {
+          "id": "b",
+          "text": "Скорость одинакова: обе вставляют в середину за O(1)."
+        },
+        {
+          "id": "c",
+          "text": "У LinkedList O(1) на саму вставку, но O(n) на поиск позиции. В реальности ArrayList почти всегда быстрее из-за локальности в кэше CPU."
+        },
+        {
+          "id": "d",
+          "text": "ArrayList быстрее лишь из-за амортизации, а поиск позиции у LinkedList идёт за O(log n)."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "У LinkedList сама вставка O(1), но чтобы дойти до середины, нужен обход за O(n); у ArrayList — O(n) на сдвиг, но за счёт локальности данных в кэше и быстрого копирования памяти он на практике почти всегда выигрывает. Главная ловушка — считать, что отсутствие сдвига автоматически делает LinkedList быстрее, игнорируя стоимость поиска позиции и промахи кэша.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-at-least-once-vs-at-most-once-vs-exactly-once-087",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "kafka"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 363,
+          "title": "Сбер · 9. Микросервисы и архитектура"
+        }
+      ],
+      "prompt": "В чём разница: At-least-once vs at-most-once vs exactly-once?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "В реальности чаще at-least-once + идемпотентность на стороне consumer'а. Kafka с transactional producer + read_committed даёт effectively-once."
+        },
+        {
+          "id": "b",
+          "text": "На практике берут at-most-once с ретраями на consumer'е, а exactly-once в Kafka достигается одним лишь acks=all без транзакций и без идемпотентного producer'а."
+        },
+        {
+          "id": "c",
+          "text": "At-least-once исключает дубли, at-most-once — потери; exactly-once даёт read_uncommitted."
+        },
+        {
+          "id": "d",
+          "text": "Чаще берут exactly-once «из коробки»: Kafka сама дедуплицирует сообщения по ключу."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "At-least-once допускает дубли, но не потери; at-most-once — наоборот; на практике берут at-least-once и обеспечивают идемпотентность на consumer'е, а Kafka даёт effectively-once через transactional producer + isolation.level=read_committed. Ловушки: путаница гарантий местами, ошибочное read_uncommitted вместо read_committed и миф о дедупликации «из коробки» — acks=all сам по себе exactly-once не даёт.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-atomic-классы-как-работают-без-блокировок-049",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "concurrency"
+      ],
+      "companies": [
+        "sber",
+        "liga"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 235,
+          "title": "Сбер · 6. Многопоточность и JMM"
+        },
+        {
+          "path": "guides/liga.md",
+          "line": 208,
+          "title": "Лига Цифровой Экономики · 5. Многопоточность и JMM"
+        }
+      ],
+      "prompt": "Atomic-классы — как работают без блокировок?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Через внутренний synchronized на значении: compareAndSet захватывает монитор объекта, поэтому блокировка всё же есть, просто очень короткая."
+        },
+        {
+          "id": "b",
+          "text": "Через volatile-поле: оно делает i++ атомарным на уровне JVM."
+        },
+        {
+          "id": "c",
+          "text": "Через CAS (compare-and-swap) — атомарную инструкцию CPU. Lock-free. Классы: AtomicInteger, AtomicLong, AtomicReference."
+        },
+        {
+          "id": "d",
+          "text": "Через спин-лок в цикле: поток крутится, пока не получит эксклюзивный lock на переменную."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "Atomic-классы работают lock-free через аппаратную инструкцию CAS (compare-and-swap): значение меняется только если оно не изменилось с момента чтения, иначе операция повторяется в цикле. Ловушки: volatile сам по себе даёт лишь видимость, а не атомарность i++; никакого монитора или спин-лока с эксклюзивной блокировкой здесь нет — в этом и смысл отсутствия блокировок.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-cap-теорема-в-финтехе-что-важнее-082",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "system-design"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 348,
+          "title": "Сбер · 9. Микросервисы и архитектура"
+        }
+      ],
+      "prompt": "CAP-теорема. В финтехе что важнее?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "CAP гарантирует, что при правильной архитектуре можно одновременно держать Consistency, Availability и Partition tolerance, поэтому в финтехе настраивают кластер так, чтобы не жертвовать ничем."
+        },
+        {
+          "id": "b",
+          "text": "Партиционирование — редкость, в норме платёжная система всегда выбирает Availability."
+        },
+        {
+          "id": "c",
+          "text": "В финтехе всегда важнее Availability: сервис обязан отвечать, а расхождения балансов потом чинит автоматический merge."
+        },
+        {
+          "id": "d",
+          "text": "При партиционировании выбираем между Consistency и Availability. В платежах обычно C > A (лучше отказать, чем списать дважды)."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "CAP утверждает, что при сетевом разделении (Partition) нельзя одновременно держать строгую согласованность и доступность — приходится выбирать одно. В платёжных системах ценнее Consistency: лучше отказать в операции, чем допустить двойное списание или рассинхрон баланса. Ловушка вариантов — в идее, что можно получить все три свойства сразу или что разделение можно игнорировать.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-circuit-breaker-зачем-088",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "kafka"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 366,
+          "title": "Сбер · 9. Микросервисы и архитектура"
+        }
+      ],
+      "prompt": "Circuit Breaker — зачем?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Circuit Breaker нужен, чтобы ускорять медленные сервисы: при росте задержек он переключает запросы на резервный, более быстрый инстанс того же сервиса и держит latency низким, размыканий и отклонений в нём нет."
+        },
+        {
+          "id": "b",
+          "text": "Circuit Breaker буферизует запросы в очереди и повторяет их, пока получатель не поднимется."
+        },
+        {
+          "id": "c",
+          "text": "Защита от каскадных падений. При N ошибках подряд «размыкается» — запросы сразу отклоняются, сервис получает время оправиться."
+        },
+        {
+          "id": "d",
+          "text": "Circuit Breaker нужен для контроля доступа: при подозрительной активности он «размыкает» соединение и блокирует клиента от DDoS."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "Главная цель Circuit Breaker — не дать сбою одного зависимого сервиса каскадно положить остальные: после серии ошибок он размыкается и мгновенно отклоняет запросы, давая проблемному сервису время восстановиться и не накапливая зависшие вызовы. Ловушки подменяют это смежными задачами — ускорением, гарантированной доставкой (Retry/очереди) и защитой от DDoS, которыми Circuit Breaker не занимается.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-classloader-parent-delegation-model-037",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "jvm",
+        "system-design"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 195,
+          "title": "Сбер · 5. JVM, память, GC"
+        }
+      ],
+      "prompt": "Classloader: parent delegation model?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Application → Platform (ext) → Bootstrap: родительский загрузчик сначала спрашивает дочерний и грузит класс сам, только если тот не нашёл."
+        },
+        {
+          "id": "b",
+          "text": "Все три загрузчика работают параллельно: класс грузит тот, кто первым найдёт его."
+        },
+        {
+          "id": "c",
+          "text": "Bootstrap → Platform (ext) → Application. Дочерний сначала делегирует родителю, потом грузит сам."
+        },
+        {
+          "id": "d",
+          "text": "Bootstrap → Platform → Application, но делегирование идёт снизу вверх: каждый сначала пробует сам."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "Правильная иерархия — Bootstrap (корень) → Platform/ext → Application, а делегирование идёт сверху: дочерний сначала просит родителя загрузить класс и берётся за это сам только при неудаче родителя. Ловушка в перевёрнутом направлении делегирования или классов — на самом деле именно родитель имеет приоритет, что защищает системные классы от подмены.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-completablefuture-thenapply-vs-thencompose-vs-thencombine-054",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "concurrency",
+        "devops"
+      ],
+      "companies": [
+        "sber",
+        "liga"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 250,
+          "title": "Сбер · 6. Многопоточность и JMM"
+        },
+        {
+          "path": "guides/liga.md",
+          "line": 220,
+          "title": "Лига Цифровой Экономики · 5. Многопоточность и JMM"
+        }
+      ],
+      "prompt": "В чём разница: CompletableFuture: thenApply vs thenCompose vs thenCombine?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "thenApply — flatMap для CompletableFuture (когда лямбда сама возвращает CF), thenCompose — простое преобразование результата, thenCombine — обработка исключения двух стадий."
+        },
+        {
+          "id": "b",
+          "text": "thenApply объединяет два независимых CompletableFuture, thenCompose преобразует результат, а thenCombine разворачивает вложенный CF<CF<R>> в плоский CF<R>."
+        },
+        {
+          "id": "c",
+          "text": "thenApply и thenCompose взаимозаменяемы: оба принимают лямбду T→R, разница лишь в том, что thenCompose выполняется в отдельном потоке, а thenCombine — это просто синоним thenCompose для двух стадий."
+        },
+        {
+          "id": "d",
+          "text": "thenApply — преобразование результата. thenCompose — flatMap для CompletableFuture (нужен, когда лямбда возвращает CompletableFuture). thenCombine — объединение двух."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "Правильно: thenApply — преобразование результата (T→R), thenCompose — flatMap, когда лямбда возвращает CompletableFuture (T→CF<R>), thenCombine — объединение результатов двух независимых CF. Ловушка — перепутать местами роли thenApply и thenCompose: если внутри thenApply вернуть CF, получится вложенный CF<CF<R>>, который как раз и разворачивает thenCompose.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-covering-index-что-это-074",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "sql"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 322,
+          "title": "Сбер · 8. Базы данных и SQL"
+        }
+      ],
+      "prompt": "Covering index — что это?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Составной индекс по всем столбцам таблицы целиком, который СУБД создаёт автоматически при ANALYZE для ускорения любых произвольных запросов к этой таблице."
+        },
+        {
+          "id": "b",
+          "text": "Кластерный индекс, переупорядочивающий строки физически."
+        },
+        {
+          "id": "c",
+          "text": "Индекс с частичным условием (WHERE), который покрывает лишь подмножество строк таблицы и потому занимает меньше места на диске, чем полный индекс по столбцу."
+        },
+        {
+          "id": "d",
+          "text": "Индекс, который содержит все поля запроса (через INCLUDE в PostgreSQL 11+). Позволяет Index Only Scan — без обращения к таблице."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "Covering index содержит все столбцы, нужные запросу (в ключе или через INCLUDE в PostgreSQL 11+), что позволяет выполнить Index Only Scan без обращения к самой таблице (heap). Ловушки: это не кластерный индекс (тот меняет физический порядок строк), не автоматически создаваемый индекс по всем полям и не частичный индекс (partial index с WHERE — другое понятие).",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-deadlock-livelock-starvation-в-чем-разница-057",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "concurrency",
+        "algorithms"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 259,
+          "title": "Сбер · 6. Многопоточность и JMM"
+        }
+      ],
+      "prompt": "Deadlock, livelock, starvation — в чём разница?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Deadlock: потоки активны, но не прогрессируют. Livelock: поток не получает ресурс. Starvation: два потока ждут друг друга по кругу."
+        },
+        {
+          "id": "b",
+          "text": "Deadlock: нехватка CPU. Livelock: блокировка на мониторах."
+        },
+        {
+          "id": "c",
+          "text": "Deadlock: два потока пишут в общую переменную без синхронизации. Livelock: поток навсегда заблокирован в ожидании. Starvation: потоки взаимно уступают друг другу и оба не двигаются вперёд."
+        },
+        {
+          "id": "d",
+          "text": "Deadlock: два потока ждут друг друга. Livelock: потоки активны, но не прогрессируют. Starvation: поток не получает ресурс."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "Различие в том, заблокирован поток или активен, и в причине простоя. Deadlock — взаимное циклическое ожидание (потоки спят на мониторах), livelock — потоки работают, но из-за реакций друг на друга не продвигаются, starvation — поток надолго лишён ресурса или CPU. Дистракторы переставляют эти определения местами, что и создаёт правдоподобную, но неверную картину: каждое из трёх описаний привязано не к своему термину.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-dirty-non-repeatable-phantom-read-пример-каждого-072",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "spring"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 316,
+          "title": "Сбер · 8. Базы данных и SQL"
+        }
+      ],
+      "prompt": "Dirty / non-repeatable / phantom read — пример каждого?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Dirty: T1 видит строку, которую T2 ещё не успела вставить в таблицу. Non-repeatable: T1 дважды считает COUNT(*) и получает разные числа из-за вставок T2. Phantom: T1 повторно перечитывает одну строку, уже изменённую закоммиченной транзакцией T2, и видит новое значение."
+        },
+        {
+          "id": "b",
+          "text": "Dirty: T1 читает данные T2 уже после её ROLLBACK. Non-repeatable: T1 видит разный порядок строк при двух SELECT. Phantom: T1 теряет своё изменение из-за T2."
+        },
+        {
+          "id": "c",
+          "text": "Dirty: две транзакции меняют одну строку. Non-repeatable: повторный SELECT вернул удалённую строку. Phantom: T1 читает старое значение."
+        },
+        {
+          "id": "d",
+          "text": "Dirty: чтение незакоммиченных данных. Non-repeatable: два чтения одной строки дают разный результат. Phantom: два чтения с WHERE возвращают разное число строк."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "Правильные примеры строго различают, что меняется между двумя чтениями: dirty — чтение незакоммиченных изменений, non-repeatable — другое значение в той же строке, phantom — другое количество строк под условием. Ловушка дистракторов в том, что они меняют феномены местами: пример с COUNT(*) и вставками — это как раз phantom, а не non-repeatable; чтение после ROLLBACK или ситуация lost update вообще не относятся к dirty read.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-escape-analysis-что-это-дает-039",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "jvm",
+        "java-core"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 201,
+          "title": "Сбер · 5. JVM, память, GC"
+        }
+      ],
+      "prompt": "Escape analysis — что это даёт?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "JIT анализирует время жизни объекта и, если тот не «сбегает», немедленно удаляет его сборщиком мусора прямо в той же точке метода, минуя Eden и полный цикл GC, что снижает нагрузку на молодое поколение."
+        },
+        {
+          "id": "b",
+          "text": "Это анализ точек выхода метода (return/throw), на основе которого JIT решает, можно ли заинлайнить вызов и развернуть цикл."
+        },
+        {
+          "id": "c",
+          "text": "JIT определяет, «сбегает» ли объект из метода. Если нет — может аллоцировать на стеке вместо heap (scalar replacement)."
+        },
+        {
+          "id": "d",
+          "text": "Escape analysis помечает поля объекта как thread-local и убирает барьеры памяти."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "Escape analysis устанавливает, не «утекает» ли объект за пределы метода/потока; если нет — применяются stack allocation и scalar replacement (разбиение на отдельные поля-скаляры), а также lock elision. Дистракторы подменяют суть: это не досрочный GC, не анализ точек return и не пометка полей thread-local — оптимизации касаются размещения объекта и устранения синхронизации.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-fail-fast-vs-fail-safe-итераторы-027",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "collections"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 163,
+          "title": "Сбер · 4. Collections Framework"
+        }
+      ],
+      "prompt": "В чём разница: Fail-fast vs fail-safe итераторы?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Fail-fast (HashMap, ArrayList) кидают ConcurrentModificationException при изменении коллекции. Fail-safe (ConcurrentHashMap, CopyOnWriteArrayList) работают со снимком."
+        },
+        {
+          "id": "b",
+          "text": "Fail-fast итераторы бросают ConcurrentModificationException только при доступе из нескольких потоков, а в одном потоке изменение во время обхода полностью безопасно; fail-safe же на время всего обхода захватывают мьютекс и блокируют коллекцию от любых записей."
+        },
+        {
+          "id": "c",
+          "text": "Fail-fast работают по копии и потому всегда консистентны, а fail-safe обходят живые данные и могут кинуть ConcurrentModificationException."
+        },
+        {
+          "id": "d",
+          "text": "Fail-safe гарантируют, что обход увидит элементы, добавленные после создания итератора, а fail-fast их просто игнорируют."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "Fail-fast (HashMap, ArrayList) при структурном изменении коллекции не через итератор бросают ConcurrentModificationException; fail-safe (ConcurrentHashMap, CopyOnWriteArrayList) работают со снимком/слабо-консистентно и исключения не кидают. Дистракторы переставляют свойства местами: именно fail-safe работают по снимку, а не fail-fast; CME бывает и в одном потоке; и fail-safe как раз могут не увидеть последующих изменений.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-generics-pecs-что-означает-extends-t-и-super-t-016",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "java-core"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 124,
+          "title": "Сбер · 3. Java Core & ООП · Типовые вопросы"
+        }
+      ],
+      "prompt": "Generics: PECS. Что означает ? extends T и ? super T?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Producer Extends, Consumer Super. Из ? extends T можно писать любой подтип T, но нельзя читать; из ? super T, наоборот, можно безопасно читать значения как T, а вот добавлять туда подтипы компилятор запрещает напрочь."
+        },
+        {
+          "id": "b",
+          "text": "Producer Extends, Consumer Super. И из ? extends T, и из ? super T можно читать T, но писать нельзя ни туда, ни туда."
+        },
+        {
+          "id": "c",
+          "text": "Producer Extends, Consumer Super. extends — можно читать, нельзя писать; super — наоборот."
+        },
+        {
+          "id": "d",
+          "text": "Producer Extends, Consumer Super. ? extends T позволяет писать T, а ? super T — читать как T."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "PECS: из ? extends T (producer) безопасно читать (как T), но нельзя писать, кроме null; в ? super T (consumer) безопасно писать T и его подтипы, но читать можно только как Object. Дистракторы переворачивают чтение и запись либо ошибочно утверждают, что читать как T можно из обоих видов wildcard.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-hashmap-vs-concurrenthashmap-ключевые-различия-023",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "collections"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 151,
+          "title": "Сбер · 4. Collections Framework"
+        }
+      ],
+      "prompt": "В чём разница: HashMap vs ConcurrentHashMap — ключевые различия?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Оба класса потокобезопасны, но HashMap синхронизирует только запись, а ConcurrentHashMap — и чтение, и запись. null-ключ запрещён в обоих, начиная с Java 8."
+        },
+        {
+          "id": "b",
+          "text": "HashMap допускает null, ConcurrentHashMap — нет. При этом ConcurrentHashMap в Java 8+ перешёл на единый ReentrantLock на всю таблицу, отказавшись от сегментов ради простоты."
+        },
+        {
+          "id": "c",
+          "text": "Главное различие в том, что ConcurrentHashMap всегда возвращает отсортированные по ключу записи и хранит данные в красно-чёрном дереве, тогда как HashMap не гарантирует порядок. Потокобезопасность здесь вторична."
+        },
+        {
+          "id": "d",
+          "text": "HashMap не потокобезопасен, допускает null-ключ/значение. ConcurrentHashMap потокобезопасен, не допускает null, в Java 7 использовал сегментную блокировку, в Java 8+ — CAS + synchronized на головах бакетов."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "HashMap не потокобезопасен и допускает null-ключ/значение; ConcurrentHashMap потокобезопасен и null запрещает. В Java 7 применялась сегментная блокировка, в Java 8+ — CAS и synchronized на головах бакетов, без единого глобального лока. Дистракторы либо приписывают HashMap потокобезопасность, либо вводят несуществующий глобальный ReentrantLock, либо путают с TreeMap.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-hashmap-vs-treemap-vs-linkedhashmap-когда-что-024",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "collections"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 154,
+          "title": "Сбер · 4. Collections Framework"
+        }
+      ],
+      "prompt": "HashMap vs TreeMap vs LinkedHashMap — когда что?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "HashMap выбирают, когда нужна сортировка ключей за O(1) на каждую операцию доступа. TreeMap берут для быстрого доступа без какого-либо порядка элементов. LinkedHashMap нужен прежде всего тогда, когда требуется потокобезопасность прямо из коробки без внешней синхронизации."
+        },
+        {
+          "id": "b",
+          "text": "HashMap — быстрый доступ без порядка. TreeMap — сортировка ключей, O(log n). LinkedHashMap — сохраняет порядок вставки или access order."
+        },
+        {
+          "id": "c",
+          "text": "TreeMap подходит для самого быстрого доступа, так как использует хэширование. LinkedHashMap нужен для сортировки по компаратору, а HashMap — для порядка вставки."
+        },
+        {
+          "id": "d",
+          "text": "HashMap берут ради порядка вставки, а TreeMap — когда порядок неважен."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "HashMap даёт быстрый доступ O(1) без какого-либо порядка. TreeMap держит ключи отсортированными (по natural ordering или компаратору) ценой O(log n). LinkedHashMap сохраняет порядок вставки или access order (удобно для LRU). Дистракторы перетасовывают сценарии применения между тремя коллекциями.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-idempotency-key-зачем-в-платежах-084",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "kafka"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 354,
+          "title": "Сбер · 9. Микросервисы и архитектура"
+        }
+      ],
+      "prompt": "Idempotency Key — зачем в платежах?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Токен, которым сервер симметрично шифрует тело платежа и ответ клиенту, чтобы перехватчик не смог расшифровать и повторно использовать данные транзакции дважды подряд."
+        },
+        {
+          "id": "b",
+          "text": "Ключ строгого порядка: сервер обрабатывает платежи по возрастанию ключа."
+        },
+        {
+          "id": "c",
+          "text": "Случайный id, новый на каждой попытке; сервер его лишь логирует."
+        },
+        {
+          "id": "d",
+          "text": "Клиент шлёт повтор — сервер распознаёт по ключу и не выполняет операцию дважды."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "Idempotency Key — это стабильный (одинаковый при ретраях) идентификатор операции: сервер сохраняет результат по ключу и при повторе с тем же ключом возвращает прежний результат, не выполняя списание дважды. Дистракторы подменяют суть: это не ключ шифрования, не механизм упорядочивания и не просто лог — ключ должен быть постоянным для одной логической операции, иначе защита от дублей не сработает.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-jvm-jre-jdk-в-чем-разница-030",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "jvm",
+        "java-core"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 174,
+          "title": "Сбер · 5. JVM, память, GC"
+        }
+      ],
+      "prompt": "JVM, JRE, JDK — в чём разница?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "JDK — виртуальная машина, JRE = JDK + javac, JVM = JRE + библиотеки."
+        },
+        {
+          "id": "b",
+          "text": "JVM включает компилятор javac и отладчик jdb, JRE — это та же JVM без библиотек, а JDK добавляет лишь графические библиотеки Swing и AWT для построения пользовательского интерфейса."
+        },
+        {
+          "id": "c",
+          "text": "JRE содержит виртуальную машину и инструменты разработки, JDK — это набор библиотек без JVM, а сама JVM нужна только для компиляции исходников в байт-код."
+        },
+        {
+          "id": "d",
+          "text": "JVM — виртуальная машина. JRE = JVM + библиотеки. JDK = JRE + инструменты разработки (javac, jdb)."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "Иерархия вложенная: JVM — это виртуальная машина, JRE = JVM + стандартные библиотеки времени выполнения, JDK = JRE + инструменты разработки (javac, jdb). Дистракторы меняют уровни местами (делают JDK или JRE самым внутренним), приписывают JVM компилятор или сужают JDK до одних только UI-библиотек. JVM исполняет байт-код, а не компилирует исходники.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-kafka-partition-offset-consumer-group-086",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "kafka"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 360,
+          "title": "Сбер · 9. Микросервисы и архитектура"
+        }
+      ],
+      "prompt": "Kafka: partition, offset, consumer group?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Partition — шард топика. Offset — позиция в partition. Consumer group — каждый partition читает один consumer из группы."
+        },
+        {
+          "id": "b",
+          "text": "Partition — реплика топика для отказоустойчивости, offset — общий счётчик по всему топику, а consumer group гарантирует, что каждое сообщение прочитают все consumer'ы группы без исключения."
+        },
+        {
+          "id": "c",
+          "text": "Partition — копия топика, offset — глобальный ID во всём кластере."
+        },
+        {
+          "id": "d",
+          "text": "Partition — отдельный топик внутри брокера, offset хранится у producer'а и сбрасывается при перезапуске, а consumer group объединяет producer'ов для балансировки записи."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "Partition — это шард (а не реплика) топика и единица параллелизма; offset — позиция сообщения внутри конкретной партиции, а не глобальный счётчик; в рамках одной consumer group каждую партицию читает ровно один consumer, что и обеспечивает распределение нагрузки без дублей. Дистракторы путают партицию с репликой/топиком, делают offset глобальным и нарушают правило один-partition-один-consumer.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-list-of-1-2-3-vs-new-arraylist-в-чем-разница-028",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "collections",
+        "algorithms"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 166,
+          "title": "Сбер · 4. Collections Framework"
+        }
+      ],
+      "prompt": "List.of(1,2,3) vs new ArrayList<>() — в чём разница?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "List.of возвращает список фиксированного размера, допускающий замену элементов через set; add/remove недоступны, а new ArrayList<>() поддерживает все операции изменения."
+        },
+        {
+          "id": "b",
+          "text": "List.of возвращает неизменяемый список. add/remove бросают UnsupportedOperationException."
+        },
+        {
+          "id": "c",
+          "text": "List.of — неизменяемая обёртка над массивом."
+        },
+        {
+          "id": "d",
+          "text": "List.of возвращает потокобезопасный синхронизированный список, а new ArrayList<>() требует ручной синхронизации."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "Правильно: List.of создаёт полностью неизменяемый список — add, remove и set бросают UnsupportedOperationException, тогда как new ArrayList<>() изменяем. Ловушки ошибочно разрешают set, выдают List.of за изменяемую обёртку Arrays.asList или приписывают ему потокобезопасность.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-mvcc-в-postgresql-как-работает-076",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "sql"
+      ],
+      "companies": [
+        "sber",
+        "liga"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 328,
+          "title": "Сбер · 8. Базы данных и SQL"
+        },
+        {
+          "path": "guides/liga.md",
+          "line": 355,
+          "title": "Лига Цифровой Экономики · 8. SQL и PostgreSQL"
+        }
+      ],
+      "prompt": "MVCC в PostgreSQL — как работает?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Каждая транзакция работает с глобальной копией базы под общей блокировкой: пока кто-то пишет, остальные читают предыдущий коммит из кэша, версии строк не множатся, а изменения применяются на месте после захвата lock."
+        },
+        {
+          "id": "b",
+          "text": "MVCC ведёт журнал прежних значений в WAL и при чтении старой транзакцией восстанавливает нужную версию строки прямо оттуда, не трогая таблицу."
+        },
+        {
+          "id": "c",
+          "text": "Транзакция фиксирует версию схемы на старте, а строки читает всегда актуальные."
+        },
+        {
+          "id": "d",
+          "text": "Каждая транзакция видит snapshot базы. Вместо изменений — новые версии строк с xmin/xmax. Старые версии чистит VACUUM."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "Суть MVCC: каждой транзакции выдаётся snapshot, видимость строк определяется их xmin/xmax относительно этого snapshot, а изменение порождает новую версию строки вместо правки на месте. Главная ошибка дистракторов — будто старые версии берутся из WAL или общей копии: на деле они физически лежат в той же таблице как dead tuples, и убирает их именно VACUUM.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-n-1-в-jpa-как-диагностировать-078",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "hibernate"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 334,
+          "title": "Сбер · 8. Базы данных и SQL"
+        }
+      ],
+      "prompt": "N+1 в JPA — как диагностировать?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Включить логи SQL (spring.jpa.show-sql=true), смотреть количество запросов на эндпоинт, использовать p6spy или Hibernate Statistics."
+        },
+        {
+          "id": "b",
+          "text": "Достаточно один раз включить show-sql: если в логе виден хотя бы один JOIN, проблема N+1 исключена."
+        },
+        {
+          "id": "c",
+          "text": "Единственный надёжный путь — профилировщик JVM: всплеск аллокаций прокси-объектов и рост времени GC однозначно указывают на N+1, а вот само количество выполненных SQL-запросов о наличии проблемы не говорит ничего."
+        },
+        {
+          "id": "d",
+          "text": "Выставить open-in-view=false и ждать LazyInitializationException: его появление и есть единственный признак N+1, других способов обнаружения у Hibernate нет."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "N+1 диагностируется по числу выполненных SQL-запросов на один эндпоинт: логирование (show-sql), p6spy/datasource-proxy или Hibernate Statistics (generate_statistics) показывают, что вместо одного запроса уходят десятки. Ловушки: одиночный лог-запрос не гарантирует отсутствия N+1 (доп. запросы идут позже при обращении к lazy-связям), а LazyInitializationException и нагрузка на GC — это про другие проблемы, не про подсчёт запросов.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-n-1-проблема-в-spring-data-jpa-068",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "hibernate",
+        "spring"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 296,
+          "title": "Сбер · 7. Spring и Spring Boot"
+        }
+      ],
+      "prompt": "Что такое N+1 проблема в Spring Data JPA?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "При fetch = EAGER Spring Data на каждую сущность шлёт отдельный SELECT за связью уже при загрузке списка; лишние запросы убирают переводом связи в LAZY."
+        },
+        {
+          "id": "b",
+          "text": "Проблема возникает из-за пагинации: Pageable."
+        },
+        {
+          "id": "c",
+          "text": "При fetch = LAZY на связи, при итерации по списку делается +1 запрос за каждую связанную сущность. Решения: JOIN FETCH, @EntityGraph, BatchSize."
+        },
+        {
+          "id": "d",
+          "text": "Это N запросов из-за выключенного кэша первого уровня; включение @Cacheable на репозитории кэширует результат и сводит N+1 к одному обращению к базе данных, поэтому повторные обращения за той же связью уже не уходят в БД."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "В Spring Data JPA N+1 проявляется при LAZY-связи: при проходе по списку для каждой сущности уходит +1 запрос за связанными данными, а решают это JOIN FETCH, @EntityGraph или @BatchSize. Дистракторы путают LAZY с EAGER (именно LAZY провоцирует проблему), приписывают её Pageable/Slice и подменяют механизм кэшированием — кэш первого уровня работает в пределах одной сессии и сам по себе N+1 не убирает.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-pessimistic-vs-optimistic-locking-077",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "hibernate"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 331,
+          "title": "Сбер · 8. Базы данных и SQL"
+        }
+      ],
+      "prompt": "В чём разница: Pessimistic vs optimistic locking?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Pessimistic: SELECT ... FOR UPDATE блокирует строку. Optimistic: версия (@Version) — при commit проверяется, изменилась ли она."
+        },
+        {
+          "id": "b",
+          "text": "Pessimistic: добавляется поле @Version, и при коммите проверяется его изменение. Optimistic: выполняется SELECT ... FOR UPDATE, физически блокирующий строку."
+        },
+        {
+          "id": "c",
+          "text": "Pessimistic блокирует строку в приложении через synchronized."
+        },
+        {
+          "id": "d",
+          "text": "Optimistic locking блокирует строку на чтение сразу при загрузке сущности, не давая другим транзакциям её прочитать, а pessimistic, наоборот, откладывает любую проверку конфликта до момента commit."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "Pessimistic locking берёт блокировку строки в БД заранее (SELECT ... FOR UPDATE), не давая другим менять её. Optimistic не блокирует, а добавляет @Version и при commit проверяет, не изменилась ли версия — если изменилась, бросает OptimisticLockException. Первый дистрактор меняет два подхода местами, второй подменяет механизм блокировки на synchronized и SERIALIZABLE, третий приписывает optimistic несуществующую блокировку на чтение.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-propagation-уровни-транзакций-064",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "spring",
+        "sql"
+      ],
+      "companies": [
+        "sber",
+        "liga"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 284,
+          "title": "Сбер · 7. Spring и Spring Boot"
+        },
+        {
+          "path": "guides/liga.md",
+          "line": 260,
+          "title": "Лига Цифровой Экономики · 6. Spring и Spring Boot"
+        }
+      ],
+      "prompt": "Что такое Propagation-уровни транзакций?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "REQUIRED (default) — присоединяется или создаёт. REQUIRES_NEW — всегда новая, приостанавливает текущую. NESTED — savepoint. SUPPORTS, MANDATORY, NOT_SUPPORTED, NEVER."
+        },
+        {
+          "id": "b",
+          "text": "REQUIRED по умолчанию всегда открывает новую транзакцию. REQUIRES_NEW переиспользует текущую без приостановки. MANDATORY создаёт транзакцию, если её нет, а NEVER требует обязательного наличия активной транзакции."
+        },
+        {
+          "id": "c",
+          "text": "NESTED — это синоним REQUIRES_NEW и работает через отдельное соединение. SUPPORTS бросает исключение, если транзакция уже есть, а NOT_SUPPORTED, наоборот, требует наличия активной транзакции для выполнения."
+        },
+        {
+          "id": "d",
+          "text": "Всего существует три уровня: REQUIRED, REQUIRES_NEW и NESTED. SUPPORTS, MANDATORY, NOT_SUPPORTED и NEVER относятся не к propagation, а к уровням изоляции транзакций."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "REQUIRED присоединяется или создаёт транзакцию; REQUIRES_NEW всегда создаёт новую с приостановкой текущей; NESTED работает через savepoint. Существует семь уровней распространения: REQUIRED, REQUIRES_NEW, NESTED, SUPPORTS, MANDATORY, NOT_SUPPORTED, NEVER. Нельзя путать семантику MANDATORY/NEVER или называть NESTED синонимом REQUIRES_NEW: NESTED зависит от внешней транзакции через точку сохранения.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-records-java-16-можно-ли-от-них-наследоваться-014",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "java-core"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 118,
+          "title": "Сбер · 3. Java Core & ООП · Типовые вопросы"
+        }
+      ],
+      "prompt": "Records (Java 16+): можно ли от них наследоваться?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Да, но только от sealed-записи и только классам из секции permits."
+        },
+        {
+          "id": "b",
+          "text": "Да, можно объявить запись абстрактной (abstract record) и наследовать конкретные подклассы, доопределяющие недостающие компоненты, — это штатный путь строить иерархии записей в Java, аналогично абстрактным классам."
+        },
+        {
+          "id": "c",
+          "text": "Нет, потому что record под капотом компилируется в enum, а константы enum уже финальны."
+        },
+        {
+          "id": "d",
+          "text": "Нет. Record неявно наследуется от java.lang.Record, а Java не поддерживает множественное наследование классов."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "Record неявно final и неявно расширяет java.lang.Record, поэтому от него нельзя унаследоваться, а сам он не может наследовать другой класс — Java не поддерживает множественное наследование классов. Запись нельзя сделать abstract или sealed-родителем, и она не компилируется в enum: это отдельная разновидность класса с фиксированной семантикой.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-rest-vs-grpc-когда-что-085",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "spring"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 357,
+          "title": "Сбер · 9. Микросервисы и архитектура"
+        }
+      ],
+      "prompt": "REST vs gRPC — когда что?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "gRPC — для публичных API в браузере и простой ручной отладки, так как он работает поверх обычного текстового HTTP/1.1 и человекочитаемого JSON, тогда как REST стоит оставить для внутренних высоконагруженных бинарных вызовов."
+        },
+        {
+          "id": "b",
+          "text": "gRPC синхронный, а REST асинхронный."
+        },
+        {
+          "id": "c",
+          "text": "Они равны по производительности: REST использует protobuf и кодогенерацию, а gRPC — OpenAPI/Swagger и JSON, выбор зависит лишь от инструментария."
+        },
+        {
+          "id": "d",
+          "text": "REST — публичные API, простая отладка. gRPC — внутренний inter-service (быстрее, типизация через protobuf, streaming)."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "REST поверх HTTP с JSON удобен для публичных API и ручной отладки, а gRPC (HTTP/2, бинарный protobuf, строгая типизация и кодогенерация, поддержка streaming) обычно быстрее и применяется для внутреннего межсервисного взаимодействия. Ловушки в дистракторах: именно gRPC использует protobuf и streaming на HTTP/2, а REST проще отлаживать — характеристики в неверных вариантах перепутаны местами.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-scopes-бина-какой-default-061",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "spring"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 275,
+          "title": "Сбер · 7. Spring и Spring Boot"
+        }
+      ],
+      "prompt": "Scopes бина. Какой default?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "По умолчанию prototype: Spring создаёт новый экземпляр на каждый getBean(), а для общего бина нужно явно указать singleton в аннотации @Scope или конфигурации."
+        },
+        {
+          "id": "b",
+          "text": "Дефолтного scope нет вообще."
+        },
+        {
+          "id": "c",
+          "text": "Дефолт зависит от контекста: request в web-приложениях и singleton в обычных."
+        },
+        {
+          "id": "d",
+          "text": "singleton (default), prototype, request, session, application, websocket."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "Дефолтный scope в Spring — всегда singleton (один экземпляр на контейнер), независимо от типа контекста. Остальные скоупы — prototype, request, session, application, websocket — задаются явно. Ловушка: новички часто думают, что по умолчанию prototype или что scope обязателен, тогда как при отсутствии @Scope бин молча становится singleton.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-sealed-classes-зачем-015",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "java-core"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 121,
+          "title": "Сбер · 3. Java Core & ООП · Типовые вопросы"
+        }
+      ],
+      "prompt": "Sealed classes — зачем?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Чтобы полностью запретить наследование, заменяя final."
+        },
+        {
+          "id": "b",
+          "text": "Ограничение иерархии наследования. Хорошо работает с pattern matching."
+        },
+        {
+          "id": "c",
+          "text": "Для усиленной инкапсуляции состояния: sealed скрывает поля и методы от подклассов сильнее, чем private, и обеспечивает иммутабельность всей иерархии по умолчанию без дополнительных модификаторов."
+        },
+        {
+          "id": "d",
+          "text": "Для оптимизации: JVM агрессивнее инлайнит методы, зная полный список реализаций на этапе компиляции."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "Sealed-классы нужны, чтобы ограничить (а не запретить) круг наследников известным списком permits, делая иерархию замкнутой и контролируемой; это особенно полезно для exhaustive-проверок в pattern matching и switch. Ловушки: это не аналог final (наследование разрешено избранным), не про инкапсуляцию/иммутабельность полей и не про JIT-оптимизации, а про моделирование закрытого набора типов.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-sequenced-collections-java-21-что-это-029",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "collections"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 169,
+          "title": "Сбер · 4. Collections Framework"
+        }
+      ],
+      "prompt": "Sequenced Collections (Java 21) — что это?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Новый интерфейс с методами getFirst, getLast, addFirst, addLast, reversed. Унифицирует работу с упорядоченными коллекциями."
+        },
+        {
+          "id": "b",
+          "text": "Это новый тип коллекции на основе двусвязного списка, который автоматически сортирует элементы при добавлении и отдаёт getFirst и getLast для границ диапазона."
+        },
+        {
+          "id": "c",
+          "text": "Это интерфейс потокобезопасного доступа через nextElement и previousElement."
+        },
+        {
+          "id": "d",
+          "text": "Это маркерный интерфейс без методов, который лишь гарантирует стабильный порядок итерации для HashSet и HashMap, не добавляя коллекциям никаких новых операций для работы с концами."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "SequencedCollection (Java 21) — это новый интерфейс для коллекций с чётко определённым порядком элементов, дающий единый API: getFirst, getLast, addFirst, addLast и reversed (плюс SequencedSet и SequencedMap). Он не сортирует элементы и не относится к HashSet/HashMap, у которых порядок не гарантирован. Главная цель — унифицировать доступ к началу и концу упорядоченных коллекций (List, Deque, LinkedHashSet и т.п.).",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-solid-разобрать-каждый-принцип-081",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "system-design",
+        "kafka"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 345,
+          "title": "Сбер · 9. Микросервисы и архитектура"
+        }
+      ],
+      "prompt": "SOLID — разобрать каждый принцип?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "SRP (один публичный метод на класс), OCP (классы должны быть final), LSP (родитель заменяем потомком), ISP (один интерфейс на модуль), DIP (модули зависят от деталей)."
+        },
+        {
+          "id": "b",
+          "text": "SRP (один поток на класс), OCP (open для модификации, closed для расширения), LSP (подтипы переопределяют все методы базового класса), ISP (интерфейсы наследуют друг друга), DIP (инверсия зависимостей через рефлексию во время выполнения программы)."
+        },
+        {
+          "id": "c",
+          "text": "SRP (одна причина для изменения), OCP (расширение без модификации), LSP (подтипы взаимозаменяемы), ISP (мелкие интерфейсы), DIP (зависимость от абстракций)."
+        },
+        {
+          "id": "d",
+          "text": "SRP — класс на весь слой, OCP — правка исходника, LSP — клиент знает тип, ISP — зависимость от лишних методов, DIP — от реализаций."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "SOLID: SRP — у класса одна причина для изменения; OCP — открыт для расширения, закрыт для модификации; LSP — объекты подтипа взаимозаменяемы с базовым без нарушения корректности; ISP — много узких интерфейсов лучше одного широкого; DIP — зависимость от абстракций, а не от конкретных реализаций. Дистракторы инвертируют формулировки (например, OCP «closed для расширения», DIP «зависимость от деталей») или подменяют принципы случайными правилами вроде «один поток на класс».",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-spring-boot-auto-configuration-как-устроен-067",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "spring"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 293,
+          "title": "Сбер · 7. Spring и Spring Boot"
+        }
+      ],
+      "prompt": "Spring Boot auto-configuration — как устроен?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Spring сканирует classpath во время компиляции, и Maven-плагин генерирует жёстко зашитый конфиг-класс, поэтому добавить свою автоконфигурацию без пересборки самого Spring Boot нельзя, а условия @Conditional при этом игнорируются."
+        },
+        {
+          "id": "b",
+          "text": "Контекст перебирает все бины приложения и создаёт недостающие, ориентируясь только на @Autowired."
+        },
+        {
+          "id": "c",
+          "text": "Все автоконфигурации применяются безусловно при @EnableAutoConfiguration, отключить нельзя."
+        },
+        {
+          "id": "d",
+          "text": "@EnableAutoConfiguration + @Conditional. Конфиги описаны в META- INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports (ранее — spring.factories)."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "Auto-configuration строится на @EnableAutoConfiguration, который через SpringFactoriesLoader подтягивает список классов конфигурации (раньше из spring.factories, теперь из META-INF/spring/...AutoConfiguration.imports), и каждая конфигурация применяется условно через семейство @Conditional (@ConditionalOnClass, @ConditionalOnMissingBean и т.д.). Ловушка дистракторов: всё происходит в рантайме, а не на этапе компиляции, конфиги расширяемы сторонними стартерами, применение именно условное, а реальное свойство для отключения — spring.autoconfigure.exclude, а не выдуманное disabled.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-stream-api-промежуточные-vs-терминальные-операции-что-такое-ленивость-011",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "java-core"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 109,
+          "title": "Сбер · 3. Java Core & ООП · Типовые вопросы"
+        }
+      ],
+      "prompt": "Stream API: промежуточные vs терминальные операции. Что такое ленивость?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Промежуточные (filter, map) не выполняются до вызова терминальной (collect, forEach)."
+        },
+        {
+          "id": "b",
+          "text": "Ленивость означает, что промежуточные операции выполняются в отдельном фоновом потоке и не блокируют основной поток до полного завершения всей цепочки обработки."
+        },
+        {
+          "id": "c",
+          "text": "Ленивость — это кэширование результата стрима после первого прохода filter и map."
+        },
+        {
+          "id": "d",
+          "text": "Ленивость означает, что терминальные операции откладываются, а промежуточные выполняются сразу."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "Ленивость значит, что промежуточные операции (filter, map) только формируют конвейер и не обрабатывают элементы, пока не вызвана терминальная (collect, forEach). Это даёт оптимизации вроде short-circuit (findFirst, limit) и обход элементов за один проход. Ловушка: ленивость не про потоки и не про кэширование результата — стрим одноразовый и повторно не используется.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-threadlocal-где-пригождается-и-где-опасен-053",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "concurrency"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 247,
+          "title": "Сбер · 6. Многопоточность и JMM"
+        }
+      ],
+      "prompt": "ThreadLocal — где пригождается и где опасен?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Хранит одно значение, общее для всех потоков, поэтому удобен как глобальный кэш; запись нужно защищать synchronized."
+        },
+        {
+          "id": "b",
+          "text": "Полезен для контекста, но в пулах потоков полностью безопасен: при возврате потока в пул executor сам сбрасывает все ThreadLocal, поэтому ручной вызов remove() давно считается устаревшей практикой и не нужен."
+        },
+        {
+          "id": "c",
+          "text": "Удобен для контекста (например, SecurityContext). Опасен при использовании с пулами потоков — значение «протекает» между задачами. Обязательно remove() в finally."
+        },
+        {
+          "id": "d",
+          "text": "Удобен для контекста запроса; опасность в том, что значения хранятся в ThreadLocalMap по слабым ссылкам, из-за чего сборщик мусора может удалить их прямо посреди выполнения задачи и вернуть null при следующем get()."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "ThreadLocal удобен для контекста (например, SecurityContext), потому что каждый поток видит свою копию, а не общее значение. В пулах потоков значение «протекает» между задачами, так как поток переиспользуется, поэтому обязателен remove() в finally — executor сам ничего не чистит. Слабые ссылки в ThreadLocalMap относятся к ключам (самим ThreadLocal), а не к значениям, поэтому значения как раз и удерживаются, создавая утечку.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-try-with-resources-какой-интерфейс-нужен-009",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "java-core"
+      ],
+      "companies": [
+        "sber",
+        "liga"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 103,
+          "title": "Сбер · 3. Java Core & ООП · Типовые вопросы"
+        },
+        {
+          "path": "guides/liga.md",
+          "line": 114,
+          "title": "Лига Цифровой Экономики · 3. Java Core — что точно спросят · Базовые вопросы"
+        }
+      ],
+      "prompt": "try-with-resources — какой интерфейс нужен?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "AutoCloseable (или Closeable). Ресурсы закрываются автоматически в обратном порядке объявления."
+        },
+        {
+          "id": "b",
+          "text": "Нужен Closeable, но не AutoCloseable."
+        },
+        {
+          "id": "c",
+          "text": "Достаточно реализовать любой интерфейс с методом close() либо пометить класс аннотацией @Resource; компилятор сам найдёт метод по имени через reflection, и явный контракт интерфейса не требуется."
+        },
+        {
+          "id": "d",
+          "text": "Требуется интерфейс Disposable из java.lang; он закрывает ресурсы в порядке объявления."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "Класс ресурса должен реализовывать AutoCloseable (Closeable — его наследник, специализированный на IOException), и ресурсы закрываются в обратном порядке объявления. AutoCloseable как раз позволяет close() бросать любое исключение, а Closeable сужает до IOException — поэтому утверждение об обязательности именно Closeable неверно. Никакого подбора метода по имени через reflection или интерфейса Disposable в java.lang не существует.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-virtual-threads-чем-отличаются-от-обычных-055",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "concurrency"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 253,
+          "title": "Сбер · 6. Многопоточность и JMM"
+        }
+      ],
+      "prompt": "Virtual Threads — чем отличаются от обычных?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Управляются JVM, а не ОС. Лёгкие (несколько KB против ~1 MB у platform). Можно писать блокирующий код, который масштабируется как асинхронный."
+        },
+        {
+          "id": "b",
+          "text": "Это те же потоки ОС, но с пониженным приоритетом — стек и стоимость создания у них те же."
+        },
+        {
+          "id": "c",
+          "text": "Главное отличие в том, что виртуальные потоки нельзя блокировать: любой блокирующий вызов в них бросает исключение, поэтому масштабируются они лишь при чисто неблокирующем реактивном коде."
+        },
+        {
+          "id": "d",
+          "text": "Виртуальные потоки живут в отдельном пуле фиксированного размера, и при его исчерпании новые задачи отклоняются, тогда как обычные потоки создаются почти неограниченно по запросу приложения."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "Ключевое отличие — управление: виртуальные потоки планирует JVM, а не ОС, они лёгкие (несколько KB против ~1 MB у platform) и позволяют писать привычный блокирующий код, масштабирующийся как асинхронный. Ловушка: их сила именно в том, что блокирующий вызов разрешён и при нём JVM отпарковывает поток, освобождая carrier, — а не в запрете блокировок.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-wait-notify-notifyall-правила-использования-045",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "concurrency"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 223,
+          "title": "Сбер · 6. Многопоточность и JMM"
+        }
+      ],
+      "prompt": "wait / notify / notifyAll — правила использования?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Вызывать только внутри synchronized на том же объекте. wait() освобождает монитор и засыпает. notify будит один поток, notifyAll — все."
+        },
+        {
+          "id": "b",
+          "text": "Вызывать внутри synchronized, но допустимо и из обычного метода, если переменная final; wait() приостанавливает поток, не отпуская монитор, notify будит один, notifyAll — все, причём в порядке постановки в очередь FIFO."
+        },
+        {
+          "id": "c",
+          "text": "Только внутри synchronized на любом объекте; wait() освобождает монитор, notify будит один поток, notifyAll — все."
+        },
+        {
+          "id": "d",
+          "text": "Внутри synchronized; notifyAll опаснее notify — отдаёт монитор всем сразу и вызывает гонку."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "Эти методы требуют владения монитором именно того объекта, на котором synchronized; иначе IllegalMonitorStateException. wait() освобождает монитор и засыпает, notify будит один поток, notifyAll — все. Дистракторы неверны: нельзя вызывать вне synchronized или на чужом объекте, порядок пробуждения не гарантирован (нет очереди FIFO), а notifyAll не отдаёт монитор всем сразу — проснувшиеся потоки всё равно по очереди его перезахватывают.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-young-old-generation-как-работает-поколенческая-сборка-032",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "jvm",
+        "java-core"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 180,
+          "title": "Сбер · 5. JVM, память, GC"
+        }
+      ],
+      "prompt": "Young / Old generation — как работает поколенческая сборка?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Young состоит из Eden и двух Survivor; объект сразу создаётся в одном из Survivor, а после первого же minor GC копируется в Old. Eden используется только для крупных объектов, которые не помещаются в Survivor."
+        },
+        {
+          "id": "b",
+          "text": "Young: Eden и два Survivor. Пережившие несколько minor GC объекты остаются в Survivor навсегда, а в Old идут лишь аллоцированные напрямую."
+        },
+        {
+          "id": "c",
+          "text": "Young: Eden + 2 Survivor. После нескольких переживаний minor GC — объект попадает в Old."
+        },
+        {
+          "id": "d",
+          "text": "Young: один Eden и один Survivor; в Old объекты идут при каждом full GC."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "Новые объекты аллоцируются в Eden, при minor GC выжившие копируются в активный Survivor, и только пережив несколько сборок (достигнув порога tenuring), объект продвигается в Old generation. Ловушка — неверные детали: объекты не создаются в Survivor, в Young два Survivor (а не один), и продвижение в Old определяется возрастом объекта, а не привязано к full GC или large object allocation.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-в-чем-разница-между-композицией-и-агрегацией-002",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "java-core"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 82,
+          "title": "Сбер · 3. Java Core & ООП · Типовые вопросы"
+        }
+      ],
+      "prompt": "В чём разница между композицией и агрегацией?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Композиция — это слабая связь через ссылку, при которой части свободно переживают целое и могут существовать самостоятельно, а агрегация, наоборот, означает жёсткое владение с общим жизненным циклом, когда удаление контейнера автоматически уничтожает все вложенные объекты вместе с ним."
+        },
+        {
+          "id": "b",
+          "text": "Композиция = владение (жизненные циклы связаны), агрегация = ссылка."
+        },
+        {
+          "id": "c",
+          "text": "Композиция возможна только через наследование (extends), а агрегация — исключительно через реализацию интерфейсов объектом."
+        },
+        {
+          "id": "d",
+          "text": "Разница в кратности: композиция всегда один к одному, агрегация — один ко многим."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "При композиции целое владеет частью и их жизненные циклы связаны (часть не существует без целого), при агрегации объект лишь ссылается на другой, который может жить самостоятельно. Дистракторы меняют определения местами, подменяют ассоциацию наследованием и сводят различие к кратности связи, хотя суть — во владении и жизненном цикле.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-виды-outofmemoryerror-035",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "jvm"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 189,
+          "title": "Сбер · 5. JVM, память, GC"
+        }
+      ],
+      "prompt": "Что такое Виды OutOfMemoryError?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "StackOverflowError, NullPointerException на куче, переполнение PermGen в Java 17, а также утечка прямых байт-буферов — все эти ошибки JVM считает разновидностями OutOfMemoryError и выбрасывает их при переполнении соответствующих областей памяти, когда сборщик мусора уже не способен освободить достаточный объём для продолжения работы."
+        },
+        {
+          "id": "b",
+          "text": "Java heap space, переполнение стека, голодание потоков, утечка загрузчика классов — четыре вида, возникающие при исчерпании памяти."
+        },
+        {
+          "id": "c",
+          "text": "Фрагментация кучи, переполнение Young и Old, нехватка Survivor — по ошибке на регион."
+        },
+        {
+          "id": "d",
+          "text": "Java heap space, Metaspace, Unable to create new native thread, GC overhead limit exceeded."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "Стандартные виды OutOfMemoryError: «Java heap space», «Metaspace» (с Java 8 вместо PermGen), «unable to create new native thread» и «GC overhead limit exceeded». Ловушки: StackOverflowError и NullPointerException вообще не относятся к OOM, PermGen убран в Java 8, а отдельных OOM по young/old/survivor регионам JVM не выбрасывает — это всё «Java heap space».",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-виды-пулов-потоков-в-executors-051",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "concurrency"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 241,
+          "title": "Сбер · 6. Многопоточность и JMM"
+        }
+      ],
+      "prompt": "Что такое Виды пулов потоков в Executors?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "newFixedThreadPool, newCachedThreadPool, newSingleThreadExecutor, newScheduledThreadPool и newForkJoinPool, причём последний создаёт общий разделяемый пул специально для рекурсивных задач типа RecursiveTask и автоматически дробит их на подзадачи, распределяя нагрузку между всеми доступными потоками пула по принципу разделяй-и-властвуй."
+        },
+        {
+          "id": "b",
+          "text": "newFixedThreadPool, newCachedThreadPool, newSingleThreadExecutor, newScheduledThreadPool, newWorkStealingPool. Для прода обычно создают ThreadPoolExecutor вручную, чтобы контролировать очередь."
+        },
+        {
+          "id": "c",
+          "text": "newFixedThreadPool, newElasticThreadPool, newSingleThreadExecutor, newScheduledThreadPool и newParallelStreamPool — пять фабричных методов начиная с Java 8."
+        },
+        {
+          "id": "d",
+          "text": "newWorkStealingPool создаёт пул из одного потока с FIFO-очередью задач."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "Корректный набор: newFixedThreadPool, newCachedThreadPool, newSingleThreadExecutor, newScheduledThreadPool и newWorkStealingPool (последний с Java 8, основан на ForkJoinPool с work-stealing). Ловушки: метода newForkJoinPool в Executors нет, newElasticThreadPool/newParallelStreamPool выдуманы, а newWorkStealingPool — это многопоточный work-stealing пул, а не однопоточный FIFO.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-жизненный-цикл-бина-060",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "spring"
+      ],
+      "companies": [
+        "sber",
+        "alfa-bank",
+        "vk",
+        "yandex-travel",
+        "liga"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 272,
+          "title": "Сбер · 7. Spring и Spring Boot"
+        },
+        {
+          "path": "guides/alfa-bank.md",
+          "line": 224,
+          "title": "Альфа-Банк · 6. Spring и Spring Boot"
+        },
+        {
+          "path": "guides/vk.md",
+          "line": 236,
+          "title": "VK · 6. Spring и Spring Boot"
+        },
+        {
+          "path": "guides/yandex-travel.md",
+          "line": 216,
+          "title": "Яндекс Путешествия · 6. Spring и Spring Boot"
+        },
+        {
+          "path": "guides/liga.md",
+          "line": 239,
+          "title": "Лига Цифровой Экономики · 6. Spring и Spring Boot"
+        }
+      ],
+      "prompt": "Что такое Жизненный цикл бина?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "BeanDefinition → инстанцирование → DI → Aware-интерфейсы → BPP.postProcessBefore → @PostConstruct → InitializingBean → init-method → BPP.postProcessAfter → ГОТОВ → @PreDestroy → DisposableBean → destroy-method..."
+        },
+        {
+          "id": "b",
+          "text": "Сначала @PostConstruct, потом DI."
+        },
+        {
+          "id": "c",
+          "text": "Сначала вызывается @PostConstruct, и лишь затем выполняется внедрение зависимостей (DI): Spring должен сперва полностью настроить бин методом инициализации, а уже после этого подставить в него ссылки на все остальные требуемые бины."
+        },
+        {
+          "id": "d",
+          "text": "BeanPostProcessor применяется только к init-методам и не оборачивает сам бин прокси; postProcessBeforeInitialization идёт уже после @PostConstruct и afterPropertiesSet()."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "Корректный порядок: создание экземпляра → внедрение зависимостей → Aware-интерфейсы → BPP.postProcessBeforeInitialization → @PostConstruct → InitializingBean.afterPropertiesSet → init-method → BPP.postProcessAfterInitialization → бин готов; при уничтожении @PreDestroy → DisposableBean.destroy → destroy-method. Ловушки: DI всегда раньше инициализации, @PostConstruct/@PreDestroy идут раньше соответствующих интерфейсных методов, а именно postProcessAfterInitialization оборачивает бин в прокси (AOP).",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-жизненный-цикл-потока-042",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "concurrency"
+      ],
+      "companies": [
+        "sber",
+        "liga"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 214,
+          "title": "Сбер · 6. Многопоточность и JMM"
+        },
+        {
+          "path": "guides/liga.md",
+          "line": 190,
+          "title": "Лига Цифровой Экономики · 5. Многопоточность и JMM"
+        }
+      ],
+      "prompt": "Что такое Жизненный цикл потока?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "NEW → RUNNING → RUNNABLE → DEAD."
+        },
+        {
+          "id": "b",
+          "text": "NEW → RUNNABLE → (BLOCKED / WAITING / TIMED_WAITING) → TERMINATED."
+        },
+        {
+          "id": "c",
+          "text": "NEW → RUNNING → RUNNABLE → SLEEPING → DEAD; при этом состояния BLOCKED и WAITING — это вовсе не отдельные значения enum Thread.State, а внутренние флаги планировщика операционной системы, недоступные напрямую из кода на Java."
+        },
+        {
+          "id": "d",
+          "text": "NEW → STARTED → ACTIVE → SUSPENDED → STOPPED; перевод в SUSPENDED делается методом Thread.suspend(), а возврат — Thread.resume(), это штатный способ приостановки."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "Перечисление Thread.State содержит ровно шесть значений: NEW, RUNNABLE, BLOCKED, WAITING, TIMED_WAITING, TERMINATED. Ловушки: отдельного RUNNING нет (выполнение входит в RUNNABLE), состояний SUSPENDED/SLEEPING в enum не существует, а методы suspend/resume устарели и небезопасны.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-зачем-нужен-volatile-047",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "concurrency"
+      ],
+      "companies": [
+        "sber",
+        "itk-academy"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 229,
+          "title": "Сбер · 6. Многопоточность и JMM"
+        },
+        {
+          "path": "guides/itk-academy.md",
+          "line": 205,
+          "title": "ITK Academy · 5. Исключения и многопоточность (база) · Многопоточность — база"
+        }
+      ],
+      "prompt": "Зачем нужен volatile?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "volatile делает i++ атомарным."
+        },
+        {
+          "id": "b",
+          "text": "volatile нужен, чтобы сделать составные операции атомарными: например, счётчик с модификатором volatile якобы можно безопасно инкрементировать из нескольких потоков, ведь его чтение и запись выполняются как единая неделимая операция."
+        },
+        {
+          "id": "c",
+          "text": "volatile обеспечивает взаимное исключение, как synchronized: пока один поток пишет в поле, остальные блокируются на нём до конца записи, и гонок не возникает."
+        },
+        {
+          "id": "d",
+          "text": "Гарантирует видимость изменений переменной между потоками (без кэширования в регистрах). НЕ гарантирует атомарность операций типа i++."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "volatile гарантирует видимость изменений между потоками (чтение/запись идут напрямую в основную память) и устанавливает барьеры памяти, запрещающие reordering. Ловушка: он не даёт ни атомарности составных операций (i++), ни взаимного исключения — для этого нужны synchronized или Atomic-классы.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-как-диагностировать-утечку-памяти-036",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "jvm",
+        "java-core"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 192,
+          "title": "Сбер · 5. JVM, память, GC"
+        }
+      ],
+      "prompt": "Как диагностировать утечку памяти?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Включить -verbose:gc и по частоте Minor GC точно локализовать утечку, не снимая heap dump."
+        },
+        {
+          "id": "b",
+          "text": "Heap dump (jmap, -XX:+HeapDumpOnOutOfMemoryError) → анализ в Eclipse MAT или VisualVM."
+        },
+        {
+          "id": "c",
+          "text": "Запустить async-profiler во flame-graph по CPU и найти самый затратный по процессорному времени метод — именно он удерживает лишние объекты, поэтому heap dump и анализ в MAT не требуются вовсе."
+        },
+        {
+          "id": "d",
+          "text": "Поднять -Xmx до максимума: если OutOfMemoryError исчез, утечки нет."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "Диагностика утечки строится на heap dump (jmap или -XX:+HeapDumpOnOutOfMemoryError) и его анализе в Eclipse MAT/VisualVM — там видно, какие объекты накапливаются и кто держит на них ссылки (dominator tree, GC roots). Ловушка: GC-логи и CPU-профайлер показывают симптомы и нагрузку, но не дерево удержания объектов; увеличение -Xmx лишь отодвигает OOM и не отличает утечку от честной потребности в памяти.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-как-прочитать-explain-analyze-075",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "sql"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 325,
+          "title": "Сбер · 8. Базы данных и SQL"
+        }
+      ],
+      "prompt": "Как прочитать EXPLAIN ANALYZE?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Смотреть только на cost в начале строки: чем он выше, тем медленнее узел в миллисекундах, а Seq Scan всегда значит отсутствие индекса и требует немедленно его создать."
+        },
+        {
+          "id": "b",
+          "text": "Обратите внимание на Seq Scan (плохо на больших таблицах), Index Scan, Bitmap Heap Scan, Nested Loop vs Hash Join, Rows Removed by Filter, разницу estimated vs actual rows."
+        },
+        {
+          "id": "c",
+          "text": "Ориентироваться на planning time и buffers: если shared hit меньше read, план оптимален, а соответствие estimated и actual rows на практике роли не играет, ведь планировщик всё равно сам их подгоняет в процессе выполнения запроса."
+        },
+        {
+          "id": "d",
+          "text": "Проверить, что везде Index Scan вместо Seq Scan: Nested Loop, Hash Join и Bitmap Heap Scan на производительность не влияют."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "EXPLAIN ANALYZE читают, сопоставляя оценки планировщика с фактическими цифрами (estimated vs actual rows), выявляя дорогие узлы вроде Seq Scan на больших таблицах, неудачный выбор типа join и большое Rows Removed by Filter. Ловушки: cost — это абстрактная единица, а не миллисекунды; расхождение estimated и actual rows как раз критично (оно сигналит об устаревшей статистике); а тип join и Bitmap Heap Scan напрямую определяют скорость.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-как-работает-componentscan-066",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "spring"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 290,
+          "title": "Сбер · 7. Spring и Spring Boot"
+        }
+      ],
+      "prompt": "Как работает @ComponentScan?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Сканирует пакеты (по умолчанию — пакет класса с @SpringBootApplication) в поисках @Component, @Service, @Repository, @Controller."
+        },
+        {
+          "id": "b",
+          "text": "По умолчанию @ComponentScan обходит весь classpath, включая подключённые jar-зависимости, поэтому любой класс с @Component из сторонней библиотеки автоматически попадёт в контекст приложения без какой-либо дополнительной настройки фильтров."
+        },
+        {
+          "id": "c",
+          "text": "Сканирование подхватывает только классы с явной @Component; @Service, @Repository и @Controller базовым обходом не находятся."
+        },
+        {
+          "id": "d",
+          "text": "@ComponentScan строит список бинов на этапе компиляции через annotation processing."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "@ComponentScan обходит указанные пакеты (по умолчанию — пакет класса с @SpringBootApplication и вложенные), регистрируя бины со стереотипными аннотациями. Ловушки: сканируется не весь classpath, а заданные базовые пакеты; @Service, @Repository и @Controller — это мета-аннотации над @Component, поэтому подхватываются автоматически; и сканирование происходит в рантайме при поднятии контекста, а не на этапе компиляции.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-как-работает-resize-в-arraylist-026",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "collections",
+        "algorithms"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 160,
+          "title": "Сбер · 4. Collections Framework"
+        }
+      ],
+      "prompt": "Как работает resize в ArrayList?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Новый массив ровно вдвое больше старого, а элементы переносятся через System.arraycopy с обнулением исходного."
+        },
+        {
+          "id": "b",
+          "text": "Capacity растёт на единицу при каждом add()."
+        },
+        {
+          "id": "c",
+          "text": "Внутренний массив расширяется прямо на месте через Arrays.fill, без выделения нового массива и копирования старых элементов."
+        },
+        {
+          "id": "d",
+          "text": "Новый массив в 1.5 раза больше, копирование через Arrays.copyOf."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "В ArrayList при нехватке места создаётся новый массив новой ёмкостью oldCapacity + (oldCapacity >> 1), то есть примерно в 1.5 раза больше, а старые элементы копируются через Arrays.copyOf. Удвоение — это про ArrayDeque/HashMap, рост на единицу убил бы амортизированную O(1), а расширить массив «на месте» в Java нельзя — он всегда выделяется заново.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-как-работает-transactional-под-капотом-062",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "spring"
+      ],
+      "companies": [
+        "sber",
+        "liga"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 278,
+          "title": "Сбер · 7. Spring и Spring Boot"
+        },
+        {
+          "path": "guides/liga.md",
+          "line": 251,
+          "title": "Лига Цифровой Экономики · 6. Spring и Spring Boot"
+        }
+      ],
+      "prompt": "Как работает @Transactional под капотом?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Spring модифицирует байт-код самого класса при загрузке через ByteBuddy, поэтому @Transactional срабатывает и при вызове метода изнутри того же класса."
+        },
+        {
+          "id": "b",
+          "text": "Прокси открывает транзакцию, но коммит идёт, только если метод вернул значение; при любом исключении, включая checked, по умолчанию выполняется откат."
+        },
+        {
+          "id": "c",
+          "text": "Используется ThreadLocal-перехватчик на уровне DataSource: транзакция стартует при первом обращении к соединению внутри метода, и ни прокси, ни CGLIB здесь не участвуют, всё держится на привязке соединения к потоку."
+        },
+        {
+          "id": "d",
+          "text": "Spring создаёт прокси (JDK dynamic proxy для интерфейсов или CGLIB для классов). Прокси открывает транзакцию перед методом, коммитит после или откатывает при исключении."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "@Transactional реализован через прокси (JDK dynamic proxy для интерфейсов, CGLIB для классов), который открывает транзакцию до метода и коммитит/откатывает после. Ловушки: это прокси, а не модификация байт-кода класса, поэтому самовызов внутри класса транзакцию не активирует; по умолчанию откат происходит только на RuntimeException и Error, а checked-исключения коммитятся; и управление транзакцией — это именно прокси поверх TransactionManager.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-как-сделать-потокобезопасный-singleton-056",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "security"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 256,
+          "title": "Сбер · 6. Многопоточность и JMM"
+        }
+      ],
+      "prompt": "Как сделать потокобезопасный singleton?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Хватит вернуть готовый static-объект из getInstance(): eager-инициализация без synchronized сама потокобезопасна, ведь присваивание ссылки атомарно во всех случаях, а класс грузится один раз."
+        },
+        {
+          "id": "b",
+          "text": "Лучшее — enum. Альтернативы: static holder (lazy init via classloader), double-checked locking с volatile."
+        },
+        {
+          "id": "c",
+          "text": "Double-checked locking работает и без volatile."
+        },
+        {
+          "id": "d",
+          "text": "Пометить getInstance() как synchronized с ленивым полем — блокировка на каждом вызове даёт единственный экземпляр без проблем публикации."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "enum-singleton потокобезопасен по спецификации JLS и устойчив к рефлексии и сериализации; static holder использует ленивую инициализацию класса JVM, а DCL обязан иметь volatile, иначе из-за переупорядочивания записей другой поток может увидеть недостроенный объект. Ловушки: synchronized getInstance работает, но не «без накладных расходов» (блокировка на каждом чтении), а DCL без volatile именно из-за reordering небезопасен.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-как-устроен-hashmap-что-такое-bucket-как-разрешаются-коллизии-018",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "collections"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 136,
+          "title": "Сбер · 4. Collections Framework"
+        }
+      ],
+      "prompt": "Как устроен HashMap? Что такое bucket, как разрешаются коллизии?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Массив связных списков (Node[]). Бакет = ячейка массива. Коллизия → цепочка."
+        },
+        {
+          "id": "b",
+          "text": "Массив с открытой адресацией: бакет — ячейка, а коллизия кладётся в ближайшую свободную ячейку (линейное пробирование), полностью без всяких связных списков и цепочек внутри бакета."
+        },
+        {
+          "id": "c",
+          "text": "Это сразу массив красно-чёрных деревьев: бакет — дерево."
+        },
+        {
+          "id": "d",
+          "text": "Бакет — вложенный массив фиксированного размера в ячейке; при коллизии элемент дописывается туда, а при переполнении бакет перехешируется целиком."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "HashMap — это массив Node[], где бакет это одна ячейка массива, а коллизии разрешаются цепочкой (связным списком), которая при достаточной длине и ёмкости превращается в дерево. Ловушки: открытая адресация с пробированием — это другая стратегия, в HashMap её нет; бакеты не являются деревьями изначально (дерево появляется лишь при TREEIFY_THRESHOLD); и вложенных массивов внутри бакета не существует.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-какие-бывают-сборщики-мусора-033",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "jvm"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 183,
+          "title": "Сбер · 5. JVM, память, GC"
+        }
+      ],
+      "prompt": "Какие бывают сборщики мусора?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Serial, Parallel, CMS (default с Java 11), G1, ZGC, Shenandoah. Для минимальных пауз выбирают Serial — он однопоточный."
+        },
+        {
+          "id": "b",
+          "text": "Serial, Parallel, CMS (default с Java 9), G1 (deprecated с Java 9), ZGC, Shenandoah. Для low-latency выбирают Parallel из-за его высокой пропускной способности на больших кучах."
+        },
+        {
+          "id": "c",
+          "text": "Serial, Parallel, CMS (deprecated с Java 9, удалён в Java 14), G1 (default с Java 9), ZGC, Shenandoah. Для low-latency выбирают ZGC/Shenandoah."
+        },
+        {
+          "id": "d",
+          "text": "Serial, Parallel, CMS, G1 (default с Java 8), Epsilon, Shenandoah. ZGC удалён в Java 14 как устаревший, а CMS остаётся рекомендуемым для low-latency задач."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "Сборщики: Serial, Parallel, CMS (deprecated с Java 9, удалён в Java 14), G1 (default с Java 9), ZGC и Shenandoah, причём для low-latency берут именно ZGC/Shenandoah. Ловушки: путаница «кто default» и «кто deprecated» (CMS vs G1), приписывание удаления ZGC вместо CMS, и неверный выбор Parallel/Serial для минимальных пауз — у них как раз заметные stop-the-world паузы.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-какие-области-памяти-в-jvm-что-хранится-в-heap-а-что-в-stack-003",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "jvm",
+        "java-core"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 85,
+          "title": "Сбер · 3. Java Core & ООП · Типовые вопросы"
+        }
+      ],
+      "prompt": "Какие области памяти в JVM? Что хранится в heap, а что в stack?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Heap — объекты и массивы; stack — фреймы методов, примитивы, ссылки."
+        },
+        {
+          "id": "b",
+          "text": "Heap — объекты, массивы и локальные примитивы; stack — ссылки и статические поля."
+        },
+        {
+          "id": "c",
+          "text": "Heap — статические поля, константы и пул строк; stack — все объекты, массивы и фреймы методов, чтобы они автоматически удалялись при выходе из метода."
+        },
+        {
+          "id": "d",
+          "text": "Heap — фреймы методов; stack — сами объекты и массивы."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "Правильно: в heap живут объекты и массивы (общая для всех потоков область), в stack — фреймы методов с локальными примитивами и ссылками (по стеку на поток). Дистракторы меняют местами назначение областей: объекты и массивы не размещаются в стеке, локальные примитивы лежат именно во фрейме на стеке, а статика и пул строк относятся к области класса/heap (Metaspace, строковый пул в куче), а не к стеку.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-какой-способ-внедрения-предпочтительнее-и-почему-059",
+      "type": "scenario",
+      "level": "middle",
+      "topics": [
+        "spring"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 269,
+          "title": "Сбер · 7. Spring и Spring Boot"
+        }
+      ],
+      "prompt": "Какой способ внедрения предпочтительнее и почему?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Setter injection: делает поля final и исключает циклические зависимости."
+        },
+        {
+          "id": "b",
+          "text": "Field injection: минимум кода, Spring сам проставит зависимости рефлексией, класс легко тестируется без мок-контейнера, а поля при этом остаются final и обязательными к заполнению."
+        },
+        {
+          "id": "c",
+          "text": "Внедрение через ApplicationContextAware и ручной getBean даёт явные зависимости и immutable-поля без громоздкого конструктора, при этом надёжно разрывая любые циклические зависимости."
+        },
+        {
+          "id": "d",
+          "text": "Constructor injection: immutable-поля (final), явные обязательные зависимости, удобство в тестах без mock-контейнера, нет циклических зависимостей."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "Constructor injection — это immutable-поля через final, явный контракт обязательных зависимостей, простое тестирование new-ом и ранний отказ при циклах. Setter не даёт final и не защищает от циклов (он их как раз разрешает); field injection не позволяет final и требует рефлексии в тестах; ApplicationContextAware/getBean — это service locator, скрывающий зависимости и подрывающий тестируемость.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-когда-использовать-optional-а-когда-нет-013",
+      "type": "scenario",
+      "level": "middle",
+      "topics": [
+        "java-core"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 115,
+          "title": "Сбер · 3. Java Core & ООП · Типовые вопросы"
+        }
+      ],
+      "prompt": "Когда использовать Optional, а когда — нет?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Для возвращаемых значений. НЕ для полей, параметров методов, коллекций."
+        },
+        {
+          "id": "b",
+          "text": "Optional имеет смысл применять к полям класса, чтобы исключить null прямо внутри объекта и сделать его состояние безопасным, тогда как для возвращаемых из метода значений вполне достаточно обычной ссылки с ручной проверкой на null у вызывающей стороны."
+        },
+        {
+          "id": "c",
+          "text": "Optional оправдан как параметр метода для необязательных аргументов, а вот возвращать его не стоит."
+        },
+        {
+          "id": "d",
+          "text": "Optional нужен для коллекций и Map."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "Корректное правило ровно обратное дистракторам: Optional создавался для возвращаемых значений и именно там поддерживает удобные цепочки map/filter/orElse. Поля, параметры и коллекции — антипаттерны: поля плохо сериализуются, Optional-параметры усложняют сигнатуру, а коллекции возвращают пустыми.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-контракт-equals-hashcode-что-сломается-при-нарушении-006",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "java-core"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 94,
+          "title": "Сбер · 3. Java Core & ООП · Типовые вопросы"
+        }
+      ],
+      "prompt": "Контракт equals/hashCode. Что сломается при нарушении?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "При нарушении HashMap выбрасывает ConcurrentModificationException на любой вставке, обнаружив рассогласование хэшей, и блокирует структуру ради защиты данных; восстановить её можно только полной перезагрузкой."
+        },
+        {
+          "id": "b",
+          "text": "Сломается только TreeMap/TreeSet: они сортируют по hashCode."
+        },
+        {
+          "id": "c",
+          "text": "Объект попадёт сразу во все бакеты — дубли и переполнение при resize."
+        },
+        {
+          "id": "d",
+          "text": "Если a.equals(b), то hashCode совпадают. Иначе HashMap/HashSet теряют объекты."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "При нарушении контракта равные объекты дают разные хэши и попадают в разные бакеты, поэтому get/contains ищут не в том бакете и объект «теряется». Исключения при этом не бросаются — поведение тихо ломается. TreeMap/TreeSet вообще используют Comparable/Comparator, а не hashCode, поэтому ссылка на них ошибочна.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-можно-ли-использовать-как-ключ-изменяемый-объект-например-массив-022",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "collections"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 148,
+          "title": "Сбер · 4. Collections Framework"
+        }
+      ],
+      "prompt": "Можно ли использовать как ключ изменяемый объект (например, массив)?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Нет, компилятор это запрещает: в качестве ключа HashMap принимаются только неизменяемые типы — String, Integer и финальные классы-обёртки, а любой изменяемый объект отвергается ещё на этапе компиляции."
+        },
+        {
+          "id": "b",
+          "text": "Технически можно, но опасно: если изменить объект после добавления — его hashCode может измениться, и найти элемент станет невозможно."
+        },
+        {
+          "id": "c",
+          "text": "Да, без ограничений: хеш ключа пересчитывается при каждом обращении."
+        },
+        {
+          "id": "d",
+          "text": "Можно, но лишь если объект не переопределяет hashCode(): тогда берётся адрес в памяти, неизменный при модификации полей."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "Использовать изменяемый объект ключом технически разрешено, но если после вставки изменить поля, влияющие на hashCode, элемент попадёт «не в тот» бакет и станет недоступен через get(). Ловушка в том, что компилятор не накладывает запретов на тип ключа, а хеш вычисляется в момент put() и не пересчитывается автоматически.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-монолит-vs-микросервисы-когда-что-080",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "kafka"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 342,
+          "title": "Сбер · 9. Микросервисы и архитектура"
+        }
+      ],
+      "prompt": "Монолит vs микросервисы — когда что?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Микросервисы всегда предпочтительнее."
+        },
+        {
+          "id": "b",
+          "text": "Выбор определяется языком: на Java правильнее сразу делать микросервисы из-за Spring Boot, а монолит подходит только для скриптовых языков вроде Python."
+        },
+        {
+          "id": "c",
+          "text": "Это про развёртывание: один и тот же код запускают и так, и так, разница лишь в числе JVM."
+        },
+        {
+          "id": "d",
+          "text": "Монолит проще разрабатывать и деплоить, микросервисы — масштабировать независимо и развивать большими командами. Начинайте с монолита."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "Монолит дешевле и быстрее разрабатывать, тестировать и деплоить на старте, а микросервисы дают независимое масштабирование частей системы и параллельную работу больших команд ценой операционной сложности. Разумная практика — начинать с монолита и выделять сервисы по мере роста нагрузки и команды, а не наоборот.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-области-памяти-jvm-031",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "jvm",
+        "java-core"
+      ],
+      "companies": [
+        "sber",
+        "alfa-bank",
+        "vk",
+        "yandex-travel",
+        "liga"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 177,
+          "title": "Сбер · 5. JVM, память, GC"
+        },
+        {
+          "path": "guides/alfa-bank.md",
+          "line": 74,
+          "title": "Альфа-Банк · 3. Java Core — что точно спросят · Базовые вопросы"
+        },
+        {
+          "path": "guides/vk.md",
+          "line": 100,
+          "title": "VK · 3. Java Core — что точно спросят · Базовые вопросы"
+        },
+        {
+          "path": "guides/yandex-travel.md",
+          "line": 85,
+          "title": "Яндекс Путешествия · 3. Java Core — что точно спросят · Базовые вопросы"
+        },
+        {
+          "path": "guides/liga.md",
+          "line": 90,
+          "title": "Лига Цифровой Экономики · 3. Java Core — что точно спросят · Базовые вопросы"
+        }
+      ],
+      "prompt": "Что такое Области памяти JVM?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Heap — хранение объектов, управляется GC. Stack — фрейм для каждого вызова метода (локальные переменные, ссылки, примитивы). Metaspace (до Java 8 — PermGen) — метаданные классов, пул интернированных строк..."
+        },
+        {
+          "id": "b",
+          "text": "Heap — объекты и фреймы методов; Stack — общий пул потоков с метаданными классов; PermGen в Java 8+ хранит примитивы и интернированные строки."
+        },
+        {
+          "id": "c",
+          "text": "Heap делится на Young и Old, где Stack является частью Young Generation; Metaspace лежит внутри Heap и собирается тем же сборщиком; локальные переменные тоже хранятся в Heap."
+        },
+        {
+          "id": "d",
+          "text": "Stack общий для всех потоков и хранит объекты; Heap приватен для потока."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "Heap — общая для всех потоков область объектов под управлением GC; Stack — приватный для каждого потока стек фреймов с локальными переменными, ссылками и примитивами; Metaspace (в Java 8+ вместо PermGen) хранит метаданные классов в нативной памяти. Главная ловушка — путаница: Stack приватен для потока, а Heap общий (а не наоборот), и Metaspace не входит в Heap. Фреймы методов и локальные переменные живут в Stack, а не в Heap.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-почему-transactional-не-работает-при-вызове-метода-того-же-класса-063",
+      "type": "scenario",
+      "level": "middle",
+      "topics": [
+        "spring"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 281,
+          "title": "Сбер · 7. Spring и Spring Boot"
+        }
+      ],
+      "prompt": "Почему @Transactional не работает при вызове метода того же класса?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Транзакция Spring привязана к пулу потоков AOP, а при self-invocation поток не меняется и контекст теряется. Решение — вызывать метод асинхронно через @Async, чтобы создался новый поток с прокси."
+        },
+        {
+          "id": "b",
+          "text": "Self-invocation идёт минуя прокси. Решение: вынести метод в отдельный бин или inject self."
+        },
+        {
+          "id": "c",
+          "text": "@Transactional внутреннего метода коммитит внешнюю. Решение: убрать аннотацию внутри."
+        },
+        {
+          "id": "d",
+          "text": "Аннотация считывается рефлексией один раз при старте."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "Причина та же, что и при любом self-invocation: вызов метода того же класса идёт напрямую к объекту, а не через транзакционный прокси, поэтому advice не отрабатывает. Корректное решение — вынести метод в другой бин или внедрить self-ссылку. Дистракторы апеллируют к потокам, propagation и кешированию рефлексии, но ни одно из этих объяснений не описывает реальный механизм прокси.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-почему-wait-нужно-проверять-в-while-а-не-if-046",
+      "type": "scenario",
+      "level": "middle",
+      "topics": [
+        "concurrency"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 226,
+          "title": "Сбер · 6. Многопоточность и JMM"
+        }
+      ],
+      "prompt": "Почему wait() нужно проверять в while, а не if?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Из-за spurious wakeup — поток может проснуться сам по себе. После пробуждения условие может быть уже невалидным."
+        },
+        {
+          "id": "b",
+          "text": "Потому что if проверяет условие лишь один раз, а while гарантирует, что wait() вызовется минимум дважды для надёжности."
+        },
+        {
+          "id": "c",
+          "text": "Из-за того, что notify() будит сразу все потоки одновременно, и while нужен, чтобы лишние потоки без нужного состояния снова ушли в wait()."
+        },
+        {
+          "id": "d",
+          "text": "Потому что внутри if вызвать wait() нельзя: компилятор требует цикла."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "Ключ — spurious wakeup: поток может проснуться без notify, поэтому после пробуждения условие нужно перепроверить, и только while это обеспечивает. Дополнительно while защищает от ситуации, когда между пробуждением и повторным захватом монитора другой поток уже изменил условие. Дистракторы путают: notify() будит один поток (это notifyAll() — всех), компилятор не запрещает wait() в if, а про «минимум дважды» — выдумка.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-почему-опасно-использовать-executors-newcachedthreadpool-в-проде-052",
+      "type": "scenario",
+      "level": "middle",
+      "topics": [
+        "concurrency"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 244,
+          "title": "Сбер · 6. Многопоточность и JMM"
+        }
+      ],
+      "prompt": "Почему опасно использовать Executors.newCachedThreadPool() в проде?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Unbounded очередь и неограниченное количество потоков — при всплеске нагрузки можно положить JVM OutOfMemoryError."
+        },
+        {
+          "id": "b",
+          "text": "newCachedThreadPool создаёт ровно один поток и ставит все задачи в неограниченную очередь, из-за чего они копятся и приводят к OOM."
+        },
+        {
+          "id": "c",
+          "text": "Простаивающие потоки в нём никогда не завершаются и держатся вечно."
+        },
+        {
+          "id": "d",
+          "text": "Он использует фиксированный размер пула, равный числу ядер, и при всплеске нагрузки лишние задачи отбрасываются с RejectedExecutionException, что приводит к молчаливой потере данных и необработанных запросов."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "newCachedThreadPool использует SynchronousQueue и не ограничивает количество потоков: при всплеске нагрузки он создаёт практически неограниченное число потоков, что может привести к OutOfMemoryError. Дистракторы перевирают механику: пул не однопоточный (это newSingleThreadExecutor) и не фиксированного размера (это newFixedThreadPool), а простаивающие потоки как раз завершаются через keep-alive 60 секунд.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-разница-между-checked-и-unchecked-исключениями-008",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "collections"
+      ],
+      "companies": [
+        "sber",
+        "itk-academy",
+        "liga"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 100,
+          "title": "Сбер · 3. Java Core & ООП · Типовые вопросы"
+        },
+        {
+          "path": "guides/itk-academy.md",
+          "line": 107,
+          "title": "ITK Academy · 3. Java Core & ООП · Типовые вопросы"
+        },
+        {
+          "path": "guides/liga.md",
+          "line": 111,
+          "title": "Лига Цифровой Экономики · 3. Java Core — что точно спросят · Базовые вопросы"
+        }
+      ],
+      "prompt": "Что такое Разница между checked и unchecked исключениями?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Checked наследуются от RuntimeException и проверяются компилятором, а unchecked — от Exception; Error относят к checked."
+        },
+        {
+          "id": "b",
+          "text": "Разница в скорости: checked дороже, так как наполняют stack trace, а unchecked создаются без трассировки стека и потому считаются необязательными к обработке компилятором даже в публичных методах API."
+        },
+        {
+          "id": "c",
+          "text": "Checked обязательны только в публичных методах, а unchecked — в приватных; компилятор смотрит на модификатор доступа."
+        },
+        {
+          "id": "d",
+          "text": "Checked наследуются от Exception (но не RuntimeException) — компилятор требует обработки или throws. Unchecked — от RuntimeException и Error — обрабатывать необязательно."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "Checked наследуются от Exception, но не от RuntimeException, и компилятор требует их обработки или объявления через throws; unchecked — это RuntimeException и Error, обработка которых необязательна. Дистракторы путают иерархию (Error не checked, RuntimeException — unchecked), подменяют критерий компилятора скоростью или модификатором доступа метода.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-разница-между-map-и-flatmap-012",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "collections"
+      ],
+      "companies": [
+        "sber",
+        "liga"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 112,
+          "title": "Сбер · 3. Java Core & ООП · Типовые вопросы"
+        },
+        {
+          "path": "guides/liga.md",
+          "line": 123,
+          "title": "Лига Цифровой Экономики · 3. Java Core — что точно спросят · Базовые вопросы"
+        }
+      ],
+      "prompt": "Что такое Разница между map и flatMap?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "map применяет функцию T → Stream<R> и затем уплощает вложенные стримы, а flatMap лишь меняет тип элемента T → R без изменения структуры потока."
+        },
+        {
+          "id": "b",
+          "text": "flatMap фильтрует поток по предикату T → boolean."
+        },
+        {
+          "id": "c",
+          "text": "map уплощает Stream<Stream<R>>, flatMap — нет."
+        },
+        {
+          "id": "d",
+          "text": "map: T → R. flatMap: T → Stream с уплощением результата."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "map — это преобразование один-к-одному T → R, сохраняющее число элементов; flatMap отображает каждый элемент в Stream и склеивает все полученные стримы в один плоский поток. Дистракторы меняют операции местами, подменяют flatMap фильтрацией или ложно утверждают, что результат остаётся вложенным Stream<Stream<R>>.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-разница-между-synchronized-методом-и-synchronized-блоком-044",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "concurrency"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 220,
+          "title": "Сбер · 6. Многопоточность и JMM"
+        }
+      ],
+      "prompt": "Что такое Разница между synchronized-методом и synchronized-блоком?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "synchronized-метод и блок захватывают один монитор this, разница синтаксическая."
+        },
+        {
+          "id": "b",
+          "text": "synchronized-метод захватывает монитор объекта или класса, а synchronized-блок всегда блокирует весь класс целиком вне зависимости от указанного объекта, поэтому метод эффективнее."
+        },
+        {
+          "id": "c",
+          "text": "Блок захватывает монитор автоматически без указания объекта, а метод требует задавать монитор аргументом; блок медленнее из-за проверки."
+        },
+        {
+          "id": "d",
+          "text": "Метод захватывает this (для static — Class-объект). Блок — любой указанный объект. Блок обычно эффективнее."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "Нестатический synchronized-метод неявно захватывает монитор this, статический — монитор Class-объекта; synchronized-блок позволяет явно указать любой объект-монитор и сузить критическую секцию, поэтому обычно эффективнее. Ловушка в утверждениях, что блок блокирует весь класс или что метод и блок всегда берут один и тот же монитор — выбор монитора в блоке произволен.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-разница-между-и-equals-что-вернет-someobj-equals-null-005",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "java-core"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 91,
+          "title": "Сбер · 3. Java Core & ООП · Типовые вопросы"
+        }
+      ],
+      "prompt": "Разница между == и equals(). Что вернёт someObj.equals(null)?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "== сравнивает ссылки; equals(null) по контракту должен бросать NullPointerException."
+        },
+        {
+          "id": "b",
+          "text": "== сравнивает ссылки; equals(null) вернёт true."
+        },
+        {
+          "id": "c",
+          "text": "== сравнивает ссылки; equals(null) по контракту должен возвращать false."
+        },
+        {
+          "id": "d",
+          "text": "== сравнивает содержимое, а equals() — ссылки; equals(null) вернёт false лишь без переопределения, иначе результат зависит от реализации."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "По контракту Object.equals для любого ненулевого x вызов x.equals(null) обязан вернуть false, а не бросать исключение. Если someObj сам равен null, то это уже NPE при разыменовании, а не результат метода; == же всегда сравнивает ссылки, а не содержимое.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-распределенные-транзакции-2pc-vs-saga-083",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "kafka",
+        "sql"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 351,
+          "title": "Сбер · 9. Микросервисы и архитектура"
+        }
+      ],
+      "prompt": "В чём разница: Распределённые транзакции: 2PC vs Saga?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "2PC использует цепочку локальных транзакций с компенсациями и масштабируется без блокировок, а Saga опирается на единый координатор, держащий блокировки на всех участниках до фазы commit."
+        },
+        {
+          "id": "b",
+          "text": "2PC и Saga оба дают строгую ACID-атомарность."
+        },
+        {
+          "id": "c",
+          "text": "2PC — координатор + участники, блокировки, плохо масштабируется. Saga — цепочка локальных транзакций с компенсирующими действиями. Хореография vs оркестрация."
+        },
+        {
+          "id": "d",
+          "text": "В 2PC координатор сначала делает commit, а затем спрашивает участников о готовности (prepare идёт второй), а Saga отличается тем, что откат происходит автоматическим rollback каждой локальной транзакции без написания компенсаций вручную."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "2PC координирует участников в две фазы (prepare, затем commit), удерживая блокировки и плохо масштабируясь; Saga разбивает операцию на последовательность локальных транзакций, а откат выполняется явными компенсирующими действиями (через хореографию или оркестрацию). Ловушки: перепутать местами механизмы 2PC и Saga, приписать Saga строгую ACID-атомарность или думать, что компенсации в Saga — это обычный rollback.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-расскажите-про-ооп-инкапсуляция-наследование-полиморфизм-001",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "java-core"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 79,
+          "title": "Сбер · 3. Java Core & ООП · Типовые вопросы"
+        }
+      ],
+      "prompt": "Расскажите про ООП: инкапсуляция, наследование, полиморфизм?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Полиморфизм бывает лишь статическим."
+        },
+        {
+          "id": "b",
+          "text": "Будьте готовы объяснить полиморфизм пятикласснику."
+        },
+        {
+          "id": "c",
+          "text": "Инкапсуляция — сокрытие реализации за приватными полями и геттерами, наследование — переиспользование через extends, а полиморфизм — это возможность класса реализовать несколько интерфейсов сразу."
+        },
+        {
+          "id": "d",
+          "text": "Инкапсуляция и наследование — одно свойство через protected, а полиморфизм сводится к перегрузке методов."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "Три кита ООП: инкапсуляция (сокрытие состояния и доступ через методы), наследование (расширение типа через extends) и полиморфизм (один интерфейс — разное поведение; при динамическом полиморфизме переопределённый метод выбирается по реальному типу объекта в рантайме). Ловушки подменяют полиморфизм перегрузкой или интерфейсами, отрицают динамическую диспетчеризацию и смешивают инкапсуляцию с наследованием.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-сложность-операций-hashmap-put-get-remove-020",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "collections",
+        "algorithms"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 142,
+          "title": "Сбер · 4. Collections Framework"
+        }
+      ],
+      "prompt": "Сложность операций HashMap: put, get, remove?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Строго O(1) для всех трёх операций при любых данных."
+        },
+        {
+          "id": "b",
+          "text": "Амортизированная O(log n) для put, get и remove, поскольку начиная с Java 8 каждый бакет всегда хранит свои элементы в виде сбалансированного красно-чёрного дерева вне зависимости от количества коллизий."
+        },
+        {
+          "id": "c",
+          "text": "Амортизированная O(1), в худшем случае O(log n) (Java 8+) или O(n) (Java 7)."
+        },
+        {
+          "id": "d",
+          "text": "В среднем O(1), но в худшем случае O(n²) из-за рехеширования при коллизиях."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "В среднем благодаря равномерному распределению хешей операции выполняются за амортизированную O(1); деградация наступает при множестве коллизий в одном бакете. В Java 8+ длинная цепочка превращается в дерево, давая O(log n) в худшем случае, а в Java 7 оставался связный список с O(n). Гарантии строгого O(1) нет: коллизии существуют, а деревизация включается лишь при превышении порога (8 элементов), не сразу.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-способы-создать-поток-в-java-041",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "concurrency",
+        "collections"
+      ],
+      "companies": [
+        "sber",
+        "itk-academy"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 211,
+          "title": "Сбер · 6. Многопоточность и JMM"
+        },
+        {
+          "path": "guides/itk-academy.md",
+          "line": 199,
+          "title": "ITK Academy · 5. Исключения и многопоточность (база) · Многопоточность — база"
+        }
+      ],
+      "prompt": "Что такое Способы создать поток в Java?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "extends Thread, implements Runnable и через Callable; ExecutorService потоки не создаёт, а Virtual Threads — это лишь синтаксический сахар над платформенными потоками без отдельного механизма."
+        },
+        {
+          "id": "b",
+          "text": "Виртуальные потоки появились ещё в Java 8 вместе с лямбдами и работают поверх ForkJoinPool, полностью заменяя платформенные потоки."
+        },
+        {
+          "id": "c",
+          "text": "extends Thread, implements Runnable, через Callable + ExecutorService, через CompletableFuture. На Java 21+ — Virtual Threads."
+        },
+        {
+          "id": "d",
+          "text": "implements Callable можно запустить напрямую вызовом start(), как и Runnable, без участия ExecutorService или FutureTask."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "Базовые способы — extends Thread и implements Runnable, для задач с результатом Callable вместе с ExecutorService, удобная обёртка CompletableFuture, а в Java 21 стабилизированы Virtual Threads. Ловушки: виртуальные потоки стали финальной фичей именно в Java 21 (не в Java 8) и являются полноценными лёгкими потоками поверх carrier-потоков, а Callable нельзя передать в start() — его исполняют через submit() у executor или FutureTask.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-типы-индексов-в-postgresql-073",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "sql"
+      ],
+      "companies": [
+        "sber",
+        "liga"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 319,
+          "title": "Сбер · 8. Базы данных и SQL"
+        },
+        {
+          "path": "guides/liga.md",
+          "line": 337,
+          "title": "Лига Цифровой Экономики · 8. SQL и PostgreSQL"
+        }
+      ],
+      "prompt": "Что такое Типы индексов в PostgreSQL?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "B-tree (только =), Hash (=, <, >, BETWEEN, ORDER BY), GIN для геометрии, GiST для массивов и JSONB, BRIN для full-text, SP-GiST для упорядоченных таблиц."
+        },
+        {
+          "id": "b",
+          "text": "B-tree по умолчанию для =, <, >; Hash для full-text и JSONB; GIN для геометрии и диапазонов; GiST для массивов; BRIN для уникальных значений; SP-GiST в PostgreSQL отсутствует."
+        },
+        {
+          "id": "c",
+          "text": "Hash по умолчанию для = и ORDER BY, B-tree только для массивов, GIN для геометрии, GiST для full-text."
+        },
+        {
+          "id": "d",
+          "text": "B-tree (default — =, <, >, BETWEEN, ORDER BY), Hash (только =), GIN (массивы, JSONB, full-text), GiST (геометрия), BRIN (большие таблицы с порядком), SP-GiST."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "B-tree — индекс по умолчанию для =, <, >, BETWEEN, ORDER BY; Hash — только =; GIN — массивы, JSONB, full-text; GiST — геометрия; BRIN — большие упорядоченные таблицы; SP-GiST реально существует. Ловушки дистракторов — подмена индекса по умолчанию (это B-tree, не Hash) и перестановка назначений GIN/GiST и B-tree/Hash.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-уровни-изоляции-и-какие-проблемы-решают-071",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "sql"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 313,
+          "title": "Сбер · 8. Базы данных и SQL"
+        }
+      ],
+      "prompt": "Что такое Уровни изоляции и какие проблемы решают?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "READ_UNCOMMITTED — dirty read. READ_COMMITTED — non-repeatable read. REPEATABLE_READ — phantom read. SERIALIZABLE — полная сериализация."
+        },
+        {
+          "id": "b",
+          "text": "READ_UNCOMMITTED решает фантомные чтения, READ_COMMITTED — грязное, REPEATABLE_READ — неповторяющееся, а SERIALIZABLE убирает только потерянные обновления, не затрагивая фантомы."
+        },
+        {
+          "id": "c",
+          "text": "READ_COMMITTED устраняет фантомное чтение, REPEATABLE_READ — грязное, а неповторяющееся не решается ничем."
+        },
+        {
+          "id": "d",
+          "text": "Каждый уровень решает ровно одну проблему: SERIALIZABLE борется только с фантомами, но снова допускает грязное и неповторяющееся чтение."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "Порядок устранения аномалий по нарастанию: READ_COMMITTED убирает грязное чтение, REPEATABLE_READ — неповторяющееся, SERIALIZABLE — фантомное (и наследует все гарантии ниже). Ловушка в том, что более высокий уровень не теряет, а добавляет гарантии, и грязное чтение убирается уже на READ_COMMITTED, а не остаётся нерешаемым.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-уровни-изоляции-транзакций-065",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "sql"
+      ],
+      "companies": [
+        "sber",
+        "itk-academy"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 287,
+          "title": "Сбер · 7. Spring и Spring Boot"
+        },
+        {
+          "path": "guides/itk-academy.md",
+          "line": 322,
+          "title": "ITK Academy · 8. Базы данных и SQL"
+        }
+      ],
+      "prompt": "Что такое Уровни изоляции транзакций?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "READ_UNCOMMITTED, READ_COMMITTED (default в PostgreSQL), REPEATABLE_READ, SERIALIZABLE. От низкого к высокому: больше консистентности, меньше параллелизма."
+        },
+        {
+          "id": "b",
+          "text": "READ_UNCOMMITTED, READ_COMMITTED, REPEATABLE_READ, SERIALIZABLE — по умолчанию в PostgreSQL стоит SERIALIZABLE; от низкого к высокому растёт параллелизм и снижается консистентность."
+        },
+        {
+          "id": "c",
+          "text": "Стандартных уровней три: READ_COMMITTED, REPEATABLE_READ, SERIALIZABLE; READ_UNCOMMITTED не входит в стандарт SQL."
+        },
+        {
+          "id": "d",
+          "text": "READ_UNCOMMITTED, READ_COMMITTED (default в PostgreSQL), REPEATABLE_READ, SERIALIZABLE; от низкого к высокому растут и консистентность, и параллелизм."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "Стандарт SQL определяет четыре уровня, по умолчанию в PostgreSQL — READ_COMMITTED; рост уровня усиливает консистентность ценой снижения параллелизма. Дистракторы ошибочны: PostgreSQL по умолчанию не SERIALIZABLE, READ_UNCOMMITTED входит в стандарт, а параллелизм с ростом изоляции падает, а не растёт.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-чем-async-может-удивить-069",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "spring"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 299,
+          "title": "Сбер · 7. Spring и Spring Boot"
+        }
+      ],
+      "prompt": "Чем @Async может удивить?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Не работает self-invocation (как у @Transactional). Нужен @EnableAsync. Default executor может быть неподходящим — часто настраивают свой."
+        },
+        {
+          "id": "b",
+          "text": "Метод с @Async всегда выполняется в потоке вызывающего при возврате void; асинхронным он становится только при возврате CompletableFuture."
+        },
+        {
+          "id": "c",
+          "text": "@Async включается автоматически со Spring Boot starter, @EnableAsync не нужен; беда лишь в потере исключений у void-методов."
+        },
+        {
+          "id": "d",
+          "text": "@Async требует, чтобы метод был static, иначе прокси не создаётся; вдобавок по умолчанию Spring создаёт новый поток на каждый вызов без пула, исчерпывая ресурсы."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "@Async работает через Spring-прокси, поэтому вызов асинхронного метода изнутри того же бина (self-invocation) идёт мимо прокси и выполняется синхронно, как и у @Transactional; нужен @EnableAsync, а дефолтный SimpleAsyncTaskExecutor часто заменяют своим пулом. Ловушки в дистракторах — выдуманные правила про static, тип возврата и автоматическое включение.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-чем-процесс-отличается-от-потока-040",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "concurrency",
+        "collections"
+      ],
+      "companies": [
+        "sber",
+        "itk-academy",
+        "liga"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 208,
+          "title": "Сбер · 6. Многопоточность и JMM"
+        },
+        {
+          "path": "guides/itk-academy.md",
+          "line": 196,
+          "title": "ITK Academy · 5. Исключения и многопоточность (база) · Многопоточность — база"
+        },
+        {
+          "path": "guides/liga.md",
+          "line": 184,
+          "title": "Лига Цифровой Экономики · 5. Многопоточность и JMM"
+        }
+      ],
+      "prompt": "Чем процесс отличается от потока?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Процесс и поток на уровне ОС — одно и то же, отличается лишь уровень привилегий."
+        },
+        {
+          "id": "b",
+          "text": "Поток — изолированная единица со своим адресным пространством и таблицей страниц, а процесс — это лёгкая единица планирования внутри потока, которая делит с ним стек и регистры."
+        },
+        {
+          "id": "c",
+          "text": "Процесс — изолированная единица ОС со своей памятью. Поток — единица исполнения внутри процесса, память общая."
+        },
+        {
+          "id": "d",
+          "text": "Процессы делят общую кучу JVM, а потоки полностью изолированы и общаются только через сокеты."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "Процесс — изолированная единица ОС с собственным адресным пространством, поток — единица исполнения внутри процесса, разделяющая память (куча, статика) с другими потоками, но имеющая свой стек. Ловушка во всех вариантах — перевёртыш: именно процессы изолированы по памяти, а потоки её разделяют, а не наоборот.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-что-будет-если-hashcode-всегда-возвращает-одну-константу-007",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "java-core"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 97,
+          "title": "Сбер · 3. Java Core & ООП · Типовые вопросы"
+        }
+      ],
+      "prompt": "Что будет, если hashCode() всегда возвращает одну константу?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "В Java 8+ бакет превращается в красно-чёрное дерево уже при первой же коллизии, поэтому деградации практически нет — сложность остаётся O(log n) с самого начала, и точно так же ведёт себя Java 7 без падения до O(n)."
+        },
+        {
+          "id": "b",
+          "text": "В Java 7 — деградация HashMap до связного списка O(n). В Java 8+ при 8 коллизиях в бакете он превращается в red-black tree, O(log n). В обоих случаях производительность резко падает."
+        },
+        {
+          "id": "c",
+          "text": "HashMap увидит, что хеш одинаков, и перейдёт на сравнение по equals для всей карты, давая стабильное O(1)."
+        },
+        {
+          "id": "d",
+          "text": "В Java 7 бакет хранится как массив с бинарным поиском по equals, поэтому деградация будет лишь до O(log n)."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "Treeification в Java 8 включается не при первой коллизии, а при достижении порога (TREEIFY_THRESHOLD = 8) и достаточном размере таблицы; до этого бакет остаётся связным списком. В Java 7 коллизионная цепочка — это односвязный список с линейным перебором O(n), бинарный поиск там невозможен.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-что-поменялось-в-hashmap-с-java-8-019",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "collections"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 139,
+          "title": "Сбер · 4. Collections Framework"
+        }
+      ],
+      "prompt": "Что поменялось в HashMap с Java 8?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "При 8 элементах в бакете список превращается в AVL-дерево."
+        },
+        {
+          "id": "b",
+          "text": "С Java 8 HashMap перешла от метода цепочек к открытой адресации с линейным пробированием, поэтому коллизии разрешаются поиском следующего свободного слота."
+        },
+        {
+          "id": "c",
+          "text": "При 8 элементах в бакете и размере таблицы ≥ 64 список превращается в red-black tree. Поиск становится O(log n) вместо O(n) в худшем случае."
+        },
+        {
+          "id": "d",
+          "text": "С Java 8 при превышении load factor таблица сразу удваивается и одновременно все бакеты переводятся в red-black tree, что снижает сложность поиска до O(log n) по всей карте независимо от числа коллизий."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "В Java 8 длинная цепочка в бакете (TREEIFY_THRESHOLD = 8) при размере таблицы не меньше 64 превращается в красно-чёрное дерево, давая O(log n) вместо O(n) в худшем случае коллизий. Дистракторы искажают детали: подменяют тип дерева и условие (AVL без порога таблицы), приписывают переход на открытую адресацию или утверждают о тотальной treeify-фикации всей карты при ресайзе.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-что-такое-aba-проблема-050",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "concurrency"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 238,
+          "title": "Сбер · 6. Многопоточность и JMM"
+        }
+      ],
+      "prompt": "Что такое ABA-проблема?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Это когда два потока одновременно делают CAS на одну переменную, оба получают true, и одно обновление теряется без отката, потому что версия значения нигде не проверяется и оба считают себя победителями гонки."
+        },
+        {
+          "id": "b",
+          "text": "Это дедлок: поток A ждёт ресурс B, поток B ждёт A, а CAS зацикливается."
+        },
+        {
+          "id": "c",
+          "text": "Это потеря видимости изменений между потоками из-за отсутствия volatile: один меняет значение с A на B, а другой продолжает видеть старое A в кэше процессора."
+        },
+        {
+          "id": "d",
+          "text": "Значение сменилось с A на B и обратно на A. CAS это не видит. Решение: AtomicStampedReference с версией."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "ABA возникает, когда значение успело смениться A→B→A между чтением и CAS: операция compareAndSet видит прежнее A и ошибочно считает, что ничего не менялось, хотя промежуточные изменения были. Лечится привязкой версии/метки к значению (AtomicStampedReference) или AtomicMarkableReference. Ловушка дистракторов — подмена ABA на гонку записи, дедлок или проблему видимости, которые относятся к другим аспектам конкурентности.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-что-такое-functional-interface-приведите-3-примера-из-java-util-function-010",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "java-core"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 106,
+          "title": "Сбер · 3. Java Core & ООП · Типовые вопросы"
+        }
+      ],
+      "prompt": "Что такое functional interface? Приведите 3 примера из java.util.function?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Интерфейс с ровно одним методом и обязательной аннотацией @FunctionalInterface, без которой лямбду к нему присвоить нельзя. Примеры из java.util.function: Runnable, Callable, Comparator."
+        },
+        {
+          "id": "b",
+          "text": "Интерфейс только с default- и static-методами. Примеры: Optional, Stream."
+        },
+        {
+          "id": "c",
+          "text": "Интерфейс с одним абстрактным методом. Примеры: Function<T,R>, Predicate<T>, Consumer<T>, Supplier<T>."
+        },
+        {
+          "id": "d",
+          "text": "Интерфейс с не более чем двумя абстрактными методами, один из которых может быть переопределён лямбдой. Примеры: Predicate<T>, Stream<T>, Iterable<T>."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "Функциональный интерфейс — это интерфейс ровно с одним абстрактным методом (default/static не считаются); из java.util.function подходят Function, Predicate, Consumer, Supplier. Аннотация @FunctionalInterface необязательна; Runnable/Callable/Comparator/Optional/Stream не лежат в java.util.function, а интерфейс с двумя абстрактными методами уже не функциональный.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-что-такое-happens-before-048",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "concurrency"
+      ],
+      "companies": [
+        "sber",
+        "liga"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 232,
+          "title": "Сбер · 6. Многопоточность и JMM"
+        },
+        {
+          "path": "guides/liga.md",
+          "line": 205,
+          "title": "Лига Цифровой Экономики · 5. Многопоточность и JMM"
+        }
+      ],
+      "prompt": "Что такое happens-before?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Отношение в JMM, которое гарантирует строгий порядок выполнения инструкций: если A happens-before B, то A физически всегда исполняется раньше B и компилятор не вправе их переупорядочивать."
+        },
+        {
+          "id": "b",
+          "text": "Гарантия атомарности операций: если действие A happens-before B, то оба выполняются как единая неделимая транзакция, защищённая от прерывания другими потоками."
+        },
+        {
+          "id": "c",
+          "text": "Свойство, по которому захват любого lock автоматически делает видимыми все изменения всех потоков программы, независимо от того, на каком мониторе они синхронизировались."
+        },
+        {
+          "id": "d",
+          "text": "Отношение в JMM, гарантирующее видимость. Примеры: synchronized release → acquire, volatile write → read, Thread.start() → действия потока, final-поля после конструктора."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "Happens-before — это отношение видимости в JMM (synchronized release→acquire, volatile write→read, Thread.start(), final-поля после конструктора): если A happens-before B, эффекты A видны в B. Оно не про физический порядок инструкций и не про атомарность; видимость даёт только согласованная пара действий на одном мониторе/переменной, а не любой lock для всех потоков.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-что-такое-ioc-и-di-058",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "spring"
+      ],
+      "companies": [
+        "sber",
+        "itk-academy",
+        "liga"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 266,
+          "title": "Сбер · 7. Spring и Spring Boot"
+        },
+        {
+          "path": "guides/itk-academy.md",
+          "line": 223,
+          "title": "ITK Academy · 6. Spring и Spring Boot · Базовые вопросы"
+        },
+        {
+          "path": "guides/liga.md",
+          "line": 233,
+          "title": "Лига Цифровой Экономики · 6. Spring и Spring Boot"
+        }
+      ],
+      "prompt": "Что такое IoC и DI?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "IoC — это внедрение зависимостей через конструктор или сеттер, а DI — более общий принцип, при котором контейнер управляет жизненным циклом бинов; то есть DI шире и включает в себя IoC."
+        },
+        {
+          "id": "b",
+          "text": "IoC и DI — синонимы, обозначающие один и тот же механизм автоматического создания объектов контейнером Spring через аннотацию @Autowired на полях."
+        },
+        {
+          "id": "c",
+          "text": "IoC — принцип: контейнер сам управляет жизненным циклом объектов. DI — реализация: зависимости в объект внедряются извне (через конструктор / сеттер / поле)."
+        },
+        {
+          "id": "d",
+          "text": "IoC — это способ внедрения зависимостей исключительно через поля с рефлексией, а DI — внедрение строго через конструктор; различаются они только техникой инъекции."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "IoC — это общий принцип (контейнер управляет жизненным циклом объектов), а DI — его конкретная реализация: зависимости внедряются извне через конструктор/сеттер/поле. Ошибки дистракторов — перевернуть отношение (сделать DI шире IoC), приравнять понятия или свести их различие к технике инъекции, тогда как DI — лишь один из способов реализовать IoC.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-что-такое-jit-компиляция-038",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "jvm"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 198,
+          "title": "Сбер · 5. JVM, память, GC"
+        }
+      ],
+      "prompt": "Что такое JIT-компиляция?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Оптимизация «горячего» кода в нативный. C1 — быстрый прогрев, C2 — агрессивная оптимизация."
+        },
+        {
+          "id": "b",
+          "text": "JIT заранее, на этапе сборки проекта, переводит весь байт-код в нативный машинный код, чтобы при запуске JVM не тратила время на интерпретацию и сразу выполняла готовые инструкции процессора без прогрева."
+        },
+        {
+          "id": "c",
+          "text": "JIT компилирует исходники .java в байт-код во время выполнения."
+        },
+        {
+          "id": "d",
+          "text": "JIT профилирует код и для «горячих» участков переключается обратно на интерпретатор, считая её быстрее компиляции."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "JIT во время выполнения компилирует часто исполняемый («горячий») байт-код в нативный код: C1 даёт быстрый прогрев, C2 — агрессивные оптимизации. Ловушка — спутать JIT с AOT-компиляцией (заранее, на этапе сборки) или с работой javac (исходники → байт-код); JIT работает в рантайме и переводит байт-код в машинный, а не наоборот.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-что-такое-load-factor-021",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "collections"
+      ],
+      "companies": [
+        "sber",
+        "sberseasons",
+        "itk-academy",
+        "liga"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 145,
+          "title": "Сбер · 4. Collections Framework"
+        },
+        {
+          "path": "guides/sber-internship.md",
+          "line": 339,
+          "title": "SberSeasons · 4. Коллекции · HashMap (самый частый вопрос)"
+        },
+        {
+          "path": "guides/itk-academy.md",
+          "line": 149,
+          "title": "ITK Academy · 4. Коллекции"
+        },
+        {
+          "path": "guides/liga.md",
+          "line": 156,
+          "title": "Лига Цифровой Экономики · 4. Коллекции"
+        }
+      ],
+      "prompt": "Что такое load factor?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Это фиксированное число элементов (по умолчанию 16), при достижении которого HashMap создаёт новый бакет; capacity при этом не меняется, перераспределяются только коллизии."
+        },
+        {
+          "id": "b",
+          "text": "Соотношение size / capacity, при котором происходит расширение таблицы. По умолчанию 0.75. То есть когда size превышает 75% от capacity, таблица расширяется в 2 раза и все элементы перехэшируются..."
+        },
+        {
+          "id": "c",
+          "text": "Это соотношение size / capacity по умолчанию 0.75, при превышении которого таблица расширяется в 2 раза, но элементы при этом не перехэшируются, а просто переносятся в новые бакеты по старым индексам."
+        },
+        {
+          "id": "d",
+          "text": "Это коэффициент, определяющий длину связного списка внутри одного бакета (по умолчанию 0.75), при превышении которого список преобразуется в красно-чёрное дерево."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "Load factor — это пороговое соотношение size/capacity (по умолчанию 0.75), при превышении которого таблица расширяется вдвое и все элементы перехэшируются под новую capacity. Ловушки: это не фиксированное число элементов, а коэффициент; при resize именно происходит rehash; а порог 0.75 не имеет отношения к преобразованию бакета в дерево (там фигурируют пороги TREEIFY_THRESHOLD=8 и др., а не load factor).",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-что-такое-stop-the-world-034",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "jvm",
+        "java-core"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 186,
+          "title": "Сбер · 5. JVM, память, GC"
+        }
+      ],
+      "prompt": "Что такое Stop-the-World?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Режим JVM, при котором весь heap временно переносится в нативную память ОС, чтобы освободить место под новые объекты; современные сборщики вроде ZGC устраняют такие паузы полностью."
+        },
+        {
+          "id": "b",
+          "text": "Блокировка сборщика на потоке-демоне без остановки прикладных потоков."
+        },
+        {
+          "id": "c",
+          "text": "Состояние при переполнении heap перед OutOfMemoryError: все потоки заморожены до перезапуска."
+        },
+        {
+          "id": "d",
+          "text": "Пауза приложения для сборки мусора. У ZGC и Shenandoah паузы < 10 мс даже на огромных heap'ах."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "Stop-the-World — это пауза, во время которой JVM останавливает все прикладные потоки, чтобы безопасно выполнить фазы сборки мусора. Ловушка дистракторов: GC не переносит heap в ОС и не работает полностью без остановки потоков (даже ZGC и Shenandoah делают короткие STW-паузы), а STW не связан с OutOfMemoryError.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-что-такое-string-pool-почему-string-immutable-004",
+      "type": "scenario",
+      "level": "middle",
+      "topics": [
+        "java-core"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 88,
+          "title": "Сбер · 3. Java Core & ООП · Типовые вопросы"
+        }
+      ],
+      "prompt": "Что такое String Pool? Почему String immutable?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Класс String помечен final, а его поле value объявлено volatile — это и даёт неизменяемость и видимость между потоками."
+        },
+        {
+          "id": "b",
+          "text": "Чтобы сборщик мусора переиспользовал строки."
+        },
+        {
+          "id": "c",
+          "text": "Ради экономии: при конкатенации JVM меняет исходную строку на месте, не создавая новых объектов, поэтому многопоточный доступ к ней всегда оказывается безопасным сам по себе."
+        },
+        {
+          "id": "d",
+          "text": "Безопасность, потокобезопасность, кэширование hashCode, работа String Pool."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "String неизменяем для безопасности (нельзя подменить путь/хост/SQL после проверки), потокобезопасности без синхронизации, кэширования hashCode и корректной работы String Pool (литералы можно безопасно разделять). Ловушки: final у класса запрещает наследование, но сам по себе не делает объект immutable, а value не volatile; неизменяемость не про перемещение объектов GC; и конкатенация как раз создаёт новые объекты, а не меняет строку на месте.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-что-такое-type-erasure-017",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "java-core"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 127,
+          "title": "Сбер · 3. Java Core & ООП · Типовые вопросы"
+        }
+      ],
+      "prompt": "Что такое type erasure?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Для каждого использования List<String>, List<Integer> и т.д. компилятор генерирует отдельный специализированный класс с подставленным конкретным типом — это и есть стирание."
+        },
+        {
+          "id": "b",
+          "text": "Удаление типов при загрузке класса в JVM рантаймом."
+        },
+        {
+          "id": "c",
+          "text": "Параметры типа заменяются на Object независимо от ограничений, поэтому даже для <T extends Number> в байткоде окажется Object, а не Number, что и приводит к ряду ограничений дженериков."
+        },
+        {
+          "id": "d",
+          "text": "Стирание дженериков во время компиляции. Последствия: нельзя new T(), нельзя instanceof T, нельзя создать массив T[]."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "Type erasure — это стирание параметров типа на этапе компиляции: List<String> и List<Integer> в рантайме являются одним типом List, а параметр заменяется на свою верхнюю границу (Object по умолчанию, но Number для <T extends Number>). Отсюда запреты на new T(), instanceof T и new T[]. Ловушка дистракторов: Java не делает специализацию как C++ templates, и стирание происходит при компиляции, а не при загрузке класса.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-что-такое-монитор-объекта-как-работает-synchronized-043",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "concurrency"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 217,
+          "title": "Сбер · 6. Многопоточность и JMM"
+        }
+      ],
+      "prompt": "Что такое монитор объекта? Как работает synchronized?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "У каждого объекта есть монитор. synchronized захватывает его при входе, освобождает при выходе (включая исключения)."
+        },
+        {
+          "id": "b",
+          "text": "synchronized захватывает монитор при входе, но освобождает только при штатном return; при выбросе исключения монитор остаётся занятым навсегда, пока его не освободит сборщик мусора объекта."
+        },
+        {
+          "id": "c",
+          "text": "Монитор есть только у объектов Class, поэтому synchronized над методом экземпляра блокирует весь класс."
+        },
+        {
+          "id": "d",
+          "text": "synchronized не захватывает монитор физически, а выставляет volatile-флаг занятости; потоки сами его проверяют."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "synchronized гарантированно освобождает монитор при выходе из блока в любом случае — и при нормальном завершении, и при выбросе исключения (через monitorenter/monitorexit в байткоде). Главные ловушки: монитор есть у каждого экземпляра, а не только у Class; synchronized-метод экземпляра блокирует this, а не класс; и освобождение не зависит от GC.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-шардирование-vs-репликация-079",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "sql"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 337,
+          "title": "Сбер · 8. Базы данных и SQL"
+        }
+      ],
+      "prompt": "В чём разница: Шардирование vs репликация?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Репликация делит данные на части по узлам для ускорения записи, а шардирование хранит полные копии набора данных на нескольких серверах ради отказоустойчивости и масштабирования чтения."
+        },
+        {
+          "id": "b",
+          "text": "Репликация — копия данных для отказоустойчивости и масштабирования чтения. Шардирование — разделение данных по узлам для масштабирования записи."
+        },
+        {
+          "id": "c",
+          "text": "Это одно и то же горизонтальное масштабирование, разница лишь в терминологии СУБД."
+        },
+        {
+          "id": "d",
+          "text": "Шардирование синхронно копирует все записи на резервный узел для failover, а репликация распределяет данные по хеш-ключу."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "Репликация — это полные копии данных на нескольких узлах (отказоустойчивость и масштабирование чтения), а шардирование — разбиение данных на непересекающиеся части по узлам (масштабирование записи и объёма). Ловушки: первый и третий варианты меняют определения местами, а второй ошибочно отождествляет два разных подхода.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "curated-concurrency-volatile-i-plus-plus",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "concurrency"
+      ],
+      "companies": [
+        "sber",
+        "alfa-bank",
+        "t1-innotech",
+        "vk"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/alfa-bank.md",
+          "line": 190,
+          "title": "Альфа-Банк · Многопоточность"
+        }
+      ],
+      "prompt": "Почему volatile не делает операцию i++ потокобезопасной?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "volatile даёт видимость и порядок вокруг volatile-доступа, но i++ остаётся последовательностью read-increment-write."
+        },
+        {
+          "id": "b",
+          "text": "volatile работает только для boolean, а для int JVM игнорирует этот модификатор."
+        },
+        {
+          "id": "c",
+          "text": "volatile гарантирует атомарность, но только если переменная объявлена внутри synchronized-блока."
+        },
+        {
+          "id": "d",
+          "text": "i++ потокобезопасен всегда, если значение переменной помещается в один машинный word."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "i++ состоит из нескольких операций. Для атомарного счётчика используют AtomicInteger или LongAdder.",
+      "reviewLinks": [
+        {
+          "label": "Повторить JMM",
+          "href": "../guides/alfa-bank/"
+        }
+      ]
+    },
+    {
+      "id": "curated-java-core-equals-hashcode-contract",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "java-core",
+        "collections"
+      ],
+      "companies": [
+        "sber",
+        "alfa-bank",
+        "liga",
+        "vk",
+        "yandex-travel"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 78,
+          "title": "Сбер · Java Core"
+        }
+      ],
+      "prompt": "Что сломается в HashMap/HashSet, если equals переопределён, а hashCode оставлен от Object?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Объекты могут считаться равными через equals, но попадать в разные bucket и не находиться при поиске."
+        },
+        {
+          "id": "b",
+          "text": "Код не скомпилируется, потому что Java требует переопределять оба метода одновременно."
+        },
+        {
+          "id": "c",
+          "text": "HashMap автоматически перейдёт в TreeMap и сохранит корректность поиска без деградации."
+        },
+        {
+          "id": "d",
+          "text": "Проблема возникнет только при сериализации, а коллекции продолжат работать корректно."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "Контракт требует: если a.equals(b), то hashCode должен совпадать. Иначе hash-коллекции ищут объект не в том bucket.",
+      "reviewLinks": [
+        {
+          "label": "Повторить Java Core",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "curated-spring-transactional-self-invocation",
+      "type": "scenario",
+      "level": "middle",
+      "topics": [
+        "spring"
+      ],
+      "companies": [
+        "sber",
+        "alfa-bank",
+        "t1-innotech",
+        "liga"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/liga.md",
+          "line": 254,
+          "title": "Лига · Spring"
+        }
+      ],
+      "prompt": "Сервис вызывает свой метод с @Transactional через this.save(). Что произойдёт с транзакцией?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Вызов обойдёт Spring proxy, поэтому transactional advice не применится к внутреннему вызову."
+        },
+        {
+          "id": "b",
+          "text": "Spring создаст новый proxy на каждый self-call и откроет независимую транзакцию."
+        },
+        {
+          "id": "c",
+          "text": "Транзакция откроется только если метод private; для public методов self-call не работает."
+        },
+        {
+          "id": "d",
+          "text": "Поведение зависит только от базы данных, Spring proxy на это не влияет."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "@Transactional обычно работает через proxy. Внутренний вызов this.method() не проходит через proxy.",
+      "reviewLinks": [
+        {
+          "label": "Повторить @Transactional",
+          "href": "../guides/liga/"
+        }
+      ]
+    }
+  ]
+}

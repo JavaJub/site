@@ -1,0 +1,28 @@
+---
+import Base from '../../layouts/Base.astro';
+import '../../styles/quiz.css';
+const title = 'Тесты и флешкарды по Java-собеседованиям — проверь готовность | JavaJub';
+const description = 'Бесплатные тесты и флешкарды по Java-собеседованиям: вопросы по темам и компаниям, режимы express/standard/interview, флешкарды на вспоминание и слабые темы. Без регистрации.';
+---
+<Base title={title} description={description}>
+  <section class="section">
+    <div class="container">
+      <nav class="crumbs mono"><a href="/">главная</a> <span>/</span> <b>тесты</b></nav>
+      <div class="accent-bar"></div>
+      <h1>Тесты и флешкарды</h1>
+      <p class="lead">Проверь готовность к собесу: вопросы с вариантами или флешкарды на вспоминание. Прогресс и слабые темы — прямо на сайте, без регистрации.</p>
+
+      <div id="quiz-app" data-catalog="/quizzes/catalog.json">
+        <div class="quiz-panel"><p class="muted">Загружаем тесты…</p></div>
+      </div>
+    </div>
+  </section>
+</Base>
+<script>
+  import '../../islands/quiz.js';
+</script>
+<style>
+  .crumbs { color: var(--text-faint); font-size: .82rem; margin-bottom: 1rem; }
+  .crumbs a:hover { color: var(--accent-light); }
+  .crumbs span { opacity: .5; } .crumbs b { color: var(--text-soft); }
+</style>

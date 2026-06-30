@@ -1,0 +1,90 @@
+---
+import Logo from './Logo.astro';
+import TelegramIcon from './icons/TelegramIcon.astro';
+import { NAV, tg } from '../lib/site';
+const path = Astro.url.pathname;
+const links = NAV.filter((i) => i.href !== '/pro/');
+const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+---
+<header class="hdr">
+  <div class="hdr__rule" aria-hidden="true"></div>
+  <div class="container hdr__inner">
+    <Logo />
+    <nav class="hdr__nav" aria-label="Основная навигация">
+      {links.map((item) => (
+        <a href={item.href} class:list={["hdr__link", { 'is-active': isActive(item.href) }]}>{item.label}</a>
+      ))}
+    </nav>
+    <div class="hdr__actions">
+      <button class="hdr__theme" data-theme-toggle type="button" aria-label="Переключить тему">
+        <svg class="ic-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="ic-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+      </button>
+      <a class:list={["hdr__pro", { 'is-active': isActive('/pro/') }]} href="/pro/">Pro</a>
+      <a class="btn btn--tg hdr__tg" href={tg('header')} target="_blank" rel="noreferrer">
+        <TelegramIcon /> Telegram
+      </a>
+      <button class="hdr__burger" aria-label="Меню" data-burger type="button">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+  <nav class="hdr__mobile" data-mobile-nav hidden aria-label="Мобильная навигация">
+    {NAV.map((item) => (
+      <a href={item.href} class:list={["hdr__link", { 'is-active': isActive(item.href) }]}>{item.label}</a>
+    ))}
+    <a class="btn btn--tg" href={tg('header_mobile')} target="_blank" rel="noreferrer"><TelegramIcon /> Telegram-канал</a>
+  </nav>
+</header>
+<style>
+  .hdr { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--bg) 86%, transparent);
+    backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
+  .hdr__rule { height: 3px; background: linear-gradient(90deg, var(--accent), var(--accent-light) 28%, transparent 78%); }
+  .hdr__inner { display: flex; align-items: center; gap: 1.1rem; min-height: 62px; }
+  .hdr__nav { display: flex; gap: 0.15rem; margin-left: 1.4rem; }
+  .hdr__link { position: relative; padding: 0.5rem 0.7rem; border-radius: 8px; font-weight: 600; font-size: 0.95rem; color: var(--text-soft); transition: color 0.14s ease; }
+  .hdr__link:hover { color: var(--text); }
+  .hdr__link.is-active { color: var(--text); }
+  .hdr__link.is-active::after { content: ""; position: absolute; left: 0.7rem; right: 0.7rem; bottom: 0.05rem;
+    height: 2px; border-radius: 2px; background: linear-gradient(90deg, var(--accent), var(--accent-light)); }
+
+  .hdr__actions { display: flex; align-items: center; gap: 0.55rem; margin-left: auto; }
+  .hdr__theme { display: inline-grid; place-items: center; width: 38px; height: 38px; flex: none; cursor: pointer;
+    background: transparent; border: 1px solid var(--border); border-radius: 9px; color: var(--text-soft); transition: color 0.14s ease, border-color 0.14s ease; }
+  .hdr__theme:hover { color: var(--accent-light); border-color: var(--accent); }
+  .hdr__theme .ic-moon { display: none; }
+  :global(:root[data-theme="light"]) .hdr__theme .ic-sun { display: none; }
+  :global(:root[data-theme="light"]) .hdr__theme .ic-moon { display: block; }
+
+  .hdr__pro { padding: 0.45rem 0.85rem; border-radius: 9px; font-weight: 800; font-size: 0.92rem; letter-spacing: 0.01em;
+    color: var(--accent-light); border: 1px solid var(--border-strong); background: var(--accent-soft); transition: all 0.14s ease; }
+  .hdr__pro:hover, .hdr__pro.is-active { color: var(--contrast); background: var(--accent); border-color: var(--accent); }
+  .hdr__tg { padding: 0.5rem 0.9rem; }
+
+  .hdr__burger { display: none; place-items: center; background: none; border: 1px solid var(--border); color: var(--text);
+    border-radius: 9px; width: 40px; height: 40px; cursor: pointer; }
+  .hdr__mobile { display: none; flex-direction: column; gap: 0.3rem; padding: 0.8rem var(--gut) 1.2rem; border-bottom: 1px solid var(--border); }
+  .hdr__mobile .hdr__link { padding: 0.6rem 0.5rem; font-size: 1rem; }
+  .hdr__mobile[hidden] { display: none; }
+
+  @media (max-width: 880px) {
+    .hdr__nav, .hdr__pro, .hdr__tg { display: none; }
+    .hdr__burger { display: inline-grid; }
+    .hdr__mobile:not([hidden]) { display: flex; }
+  }
+</style>
+<script>
+  const burger = document.querySelector('[data-burger]');
+  const menu = document.querySelector('[data-mobile-nav]');
+  burger?.addEventListener('click', () => menu?.toggleAttribute('hidden'));
+
+  const root = document.documentElement;
+  const setMeta = (t: string) => document.querySelector('meta[name="theme-color"]')
+    ?.setAttribute('content', t === 'light' ? '#fbf6f2' : '#0e0c0b');
+  document.querySelector('[data-theme-toggle]')?.addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    root.setAttribute('data-theme', next);
+    setMeta(next);
+    try { localStorage.setItem('jj-theme', next); } catch (e) { /* ignore */ }
+  });
+</script>

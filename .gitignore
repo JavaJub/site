@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.astro/
+.DS_Store
+*.log
+.env
+.env.*
+!.env.example
+# NOTE: src/data/*.generated.json ARE committed so Docker/CI builds are
+# self-contained (the external source base/DB isn't available there).
+# Refresh them locally with `npm run data` and commit.

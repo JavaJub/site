@@ -1,0 +1,2256 @@
+{
+  "id": "devops",
+  "title": "Docker / Kubernetes / CI/CD",
+  "kind": "topic",
+  "description": "Самопроверка по теме: Docker / Kubernetes / CI/CD.",
+  "telegramUrl": "https://t.me/+vDYjUmPrBYZmMTAy",
+  "questionCount": 46,
+  "questions": [
+    {
+      "id": "auto-allure-зачем-и-основные-аннотации-567",
+      "type": "single",
+      "level": "junior",
+      "topics": [
+        "devops",
+        "testing-aqa"
+      ],
+      "companies": [
+        "mts-bank-aqa"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/mts-bank-aqa.md",
+          "line": 425,
+          "title": "МТС Банк AQA · 12. Docker, Linux и ELK"
+        }
+      ],
+      "prompt": "Allure: зачем и основные аннотации?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Генерация тестовых данных и моков: @Mock, @Given/@When/@Then, Allure.mock()."
+        },
+        {
+          "id": "b",
+          "text": "Наглядные отчёты с историей, вложениями, ретраями. @Step — шаг теста в отчёте. @Description — описание. @Severity — приоритет. @Epic/@Feature/@Story — иерархия. Allure.addAttachment — прикрепить запрос/ответ/скриншот."
+        },
+        {
+          "id": "c",
+          "text": "Запуск тестов в несколько потоков и параллельный сбор покрытия кода. @Test — пометить тест для Allure. @Parallel — параллельный запуск. @Coverage — измерение покрытия строк. @Retry — число повторов упавшего теста. Метод Allure.run() стартует прогон сразу всех тестов."
+        },
+        {
+          "id": "d",
+          "text": "Отчёты по нагрузочному тестированию с графиками RPS. @Load — сценарий нагрузки. @Threads — число пользователей. @Assertion — проверка SLA. Allure.metric() добавляет метрику производительности."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "Allure нужен для наглядных отчётов с историей, шагами, вложениями и иерархией: @Step, @Description, @Severity, @Epic/@Feature/@Story, Allure.addAttachment. Ловушка — Allure не запускает тесты параллельно, не измеряет покрытие, не генерирует данные и не делает нагрузочное тестирование; это инструмент отчётности, а не движок выполнения. Аннотаций @Parallel, @Coverage, @Load в Allure нет.",
+      "reviewLinks": [
+        {
+          "label": "МТС Банк AQA",
+          "href": "../guides/mts-bank-aqa/"
+        }
+      ]
+    },
+    {
+      "id": "auto-ci-cd-pipeline-488",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "devops"
+      ],
+      "companies": [
+        "yandex-travel"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/yandex-travel.md",
+          "line": 484,
+          "title": "Яндекс Путешествия · 11. Docker, Kubernetes, CI/CD"
+        }
+      ],
+      "prompt": "Что такое CI/CD pipeline?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "CI/CD pipeline — это набор конфигурационных файлов в репозитории, описывающих зависимости проекта; сам он ничего не запускает, а служит манифестом для Maven, который потом вручную выполняет каждый шаг."
+        },
+        {
+          "id": "b",
+          "text": "CI/CD pipeline — это только стадия сборки и упаковки в Docker-образ."
+        },
+        {
+          "id": "c",
+          "text": "checkout → build → test → docker build → push registry → deploy staging → (approval) → prod. В Яндексе: Arcadia CI + Nanny для деплоя."
+        },
+        {
+          "id": "d",
+          "text": "CI/CD pipeline сначала деплоит код на прод, а уже на работающем окружении прогоняет тесты: deploy → test → build → checkout."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "Pipeline — автоматизированная последовательность стадий: checkout → build → test → docker build → push в registry → деплой в staging → (опциональный approval) → prod, запускаемая по событию (например, push). Ловушки: pipeline активно выполняет шаги, а не просто описывает зависимости; тесты идут до деплоя, а не после выкатки на прод; и в pipeline входят тесты, публикация и деплой, а не только сборка образа.",
+      "reviewLinks": [
+        {
+          "label": "Яндекс Путешествия",
+          "href": "../guides/yandex-travel/"
+        }
+      ]
+    },
+    {
+      "id": "auto-ci-vs-cd-373",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "devops"
+      ],
+      "companies": [
+        "alfa-bank"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/alfa-bank.md",
+          "line": 344,
+          "title": "Альфа-Банк · 10. Docker, Kubernetes, CI/CD"
+        }
+      ],
+      "prompt": "В чём разница: CI vs CD?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "CI — автосборка+тесты при push. CD — Delivery (ручной деплой) или Deployment (автодеплой). Pipeline: checkout → build → test → docker build → push registry → deploy staging → (approval) → prod."
+        },
+        {
+          "id": "b",
+          "text": "CI (Continuous Integration) — это автодеплой собранного артефакта на прод, а CD (Continuous Development) — практика частых коммитов в общую ветку с прогоном тестов; pipeline стартует с деплоя и заканчивается сборкой."
+        },
+        {
+          "id": "c",
+          "text": "CI и CD — два названия одного процесса сборки и тестов, разница чисто терминологическая."
+        },
+        {
+          "id": "d",
+          "text": "CI — непрерывная доставка артефактов в Nexus, а CD — Continuous Documentation, автогенерация доков к релизу; деплой делается вручную отдельно."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "CI (Continuous Integration) — частые слияния в общую ветку с автоматической сборкой и тестами при каждом push; CD расшифровывается как Continuous Delivery (артефакт готов к релизу, деплой по кнопке) или Continuous Deployment (автодеплой на прод). Ловушки: перепутаны расшифровки и порядок стадий, выдуманы значения «Continuous Development» и «Continuous Documentation», а также неверно, что CI и CD — синонимы одного шага.",
+      "reviewLinks": [
+        {
+          "label": "Альфа-Банк",
+          "href": "../guides/alfa-bank/"
+        }
+      ]
+    },
+    {
+      "id": "auto-cmd-vs-entrypoint-697",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "devops"
+      ],
+      "companies": [
+        "liga"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/liga.md",
+          "line": 411,
+          "title": "Лига Цифровой Экономики · 10. Docker, Jenkins, Linux · Docker"
+        }
+      ],
+      "prompt": "В чём разница: CMD vs ENTRYPOINT?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "ENTRYPOINT задаёт аргументы по умолчанию, легко переопределяемые в docker run, а CMD — основную команду, которую переопределить нельзя."
+        },
+        {
+          "id": "b",
+          "text": "ENTRYPOINT — основная исполняемая команда, сложно переопределить. CMD — аргументы по умолчанию, легко переопределить в docker run."
+        },
+        {
+          "id": "c",
+          "text": "CMD исполняется при сборке как RUN, ENTRYPOINT — при запуске."
+        },
+        {
+          "id": "d",
+          "text": "ENTRYPOINT и CMD полностью эквивалентны и взаимозаменяемы: разница лишь синтаксическая — exec-форма против shell-формы, и на поведение при запуске контейнера это никак не влияет."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "ENTRYPOINT задаёт главную команду контейнера и не переопределяется аргументами docker run (только через --entrypoint), а CMD задаёт аргументы/команду по умолчанию, легко заменяемые при запуске. Ловушка — перепутать их роли местами или решить, что CMD исполняется при сборке; при совместном использовании CMD передаёт аргументы в ENTRYPOINT.",
+      "reviewLinks": [
+        {
+          "label": "Лига Цифровой Экономики",
+          "href": "../guides/liga/"
+        }
+      ]
+    },
+    {
+      "id": "auto-completablefuture-thenapply-vs-thencompose-vs-thencombine-054",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "concurrency",
+        "devops"
+      ],
+      "companies": [
+        "sber",
+        "liga"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 250,
+          "title": "Сбер · 6. Многопоточность и JMM"
+        },
+        {
+          "path": "guides/liga.md",
+          "line": 220,
+          "title": "Лига Цифровой Экономики · 5. Многопоточность и JMM"
+        }
+      ],
+      "prompt": "В чём разница: CompletableFuture: thenApply vs thenCompose vs thenCombine?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "thenApply — flatMap для CompletableFuture (когда лямбда сама возвращает CF), thenCompose — простое преобразование результата, thenCombine — обработка исключения двух стадий."
+        },
+        {
+          "id": "b",
+          "text": "thenApply объединяет два независимых CompletableFuture, thenCompose преобразует результат, а thenCombine разворачивает вложенный CF<CF<R>> в плоский CF<R>."
+        },
+        {
+          "id": "c",
+          "text": "thenApply и thenCompose взаимозаменяемы: оба принимают лямбду T→R, разница лишь в том, что thenCompose выполняется в отдельном потоке, а thenCombine — это просто синоним thenCompose для двух стадий."
+        },
+        {
+          "id": "d",
+          "text": "thenApply — преобразование результата. thenCompose — flatMap для CompletableFuture (нужен, когда лямбда возвращает CompletableFuture). thenCombine — объединение двух."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "Правильно: thenApply — преобразование результата (T→R), thenCompose — flatMap, когда лямбда возвращает CompletableFuture (T→CF<R>), thenCombine — объединение результатов двух независимых CF. Ловушка — перепутать местами роли thenApply и thenCompose: если внутри thenApply вернуть CF, получится вложенный CF<CF<R>>, который как раз и разворачивает thenCompose.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-configmap-vs-secret-465",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "devops"
+      ],
+      "companies": [
+        "vk"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/vk.md",
+          "line": 372,
+          "title": "VK · 10. Docker, Kubernetes, CI/CD"
+        }
+      ],
+      "prompt": "В чём разница: ConfigMap vs Secret?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "ConfigMap хранит данные зашифрованными в etcd, а Secret — в открытом виде, поэтому Secret годится только для несекретных параметров вроде имён хостов и портов."
+        },
+        {
+          "id": "b",
+          "text": "Secret монтируется только как env, ConfigMap — только как файлы."
+        },
+        {
+          "id": "c",
+          "text": "ConfigMap и Secret идентичны по хранению, отличие лишь в лимите размера: у Secret до 10 МБ против 1 МБ у ConfigMap, поэтому крупные конфиги кладут именно в Secret."
+        },
+        {
+          "id": "d",
+          "text": "ConfigMap — не-секретная конфигурация. Secret — base64-encoded чувствительные данные. Оба монтируются как volumes или env vars."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "ConfigMap предназначен для несекретной конфигурации, Secret — для чувствительных данных, которые хранятся в base64 (это кодирование, а не шифрование). Оба объекта можно монтировать и как volume, и как переменные окружения. Ловушка: base64 часто путают с шифрованием, а способы монтирования у обоих типов одинаковы.",
+      "reviewLinks": [
+        {
+          "label": "VK",
+          "href": "../guides/vk/"
+        }
+      ]
+    },
+    {
+      "id": "auto-declarative-vs-scripted-pipeline-701",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "devops"
+      ],
+      "companies": [
+        "liga"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/liga.md",
+          "line": 428,
+          "title": "Лига Цифровой Экономики · 10. Docker, Jenkins, Linux · Jenkins и CI/CD"
+        }
+      ],
+      "prompt": "В чём разница: Declarative vs Scripted Pipeline?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Declarative исполняется на master-узле Jenkins, а Scripted всегда на отдельных агентах: различие в месте запуска, а не в синтаксисе, поэтому Declarative якобы не умеет в параллельные stage."
+        },
+        {
+          "id": "b",
+          "text": "Declarative пишется на YAML, Scripted — на Groovy."
+        },
+        {
+          "id": "c",
+          "text": "Declarative — устаревший формат ранних версий Jenkins без блока stages, а Scripted — пришедшая ему на смену замена, и новые проекты Jenkins якобы советует переводить со Scripted на Declarative."
+        },
+        {
+          "id": "d",
+          "text": "Declarative — более структурированный, с фиксированным синтаксисом (pipeline { agent, stages }). Scripted — Groovy-код, более гибкий."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "Главное отличие — в синтаксисе и гибкости: Declarative задаёт жёсткую структуру (pipeline { agent; stages { ... } }) и проще читается, а Scripted — это произвольный Groovy-код с полной программной логикой. Оба исполняются на агентах и поддерживают shared libraries. Дистракторы выдумывают мнимое различие по месту исполнения, ложный YAML-формат (Declarative — это Groovy DSL, а не YAML) и переворачивают историю появления форматов.",
+      "reviewLinks": [
+        {
+          "label": "Лига Цифровой Экономики",
+          "href": "../guides/liga/"
+        }
+      ]
+    },
+    {
+      "id": "auto-docker-compose-699",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "devops"
+      ],
+      "companies": [
+        "liga"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/liga.md",
+          "line": 417,
+          "title": "Лига Цифровой Экономики · 10. Docker, Jenkins, Linux · Docker"
+        }
+      ],
+      "prompt": "Что такое docker-compose?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Оркестратор для управления кластером из множества узлов: распределяет контейнеры по серверам, обеспечивает автомасштабирование и self-healing через yaml-манифесты."
+        },
+        {
+          "id": "b",
+          "text": "Инструмент для запуска нескольких связанных контейнеров одной командой через yaml. Типовой сценарий: приложение + БД + Redis + Kafka."
+        },
+        {
+          "id": "c",
+          "text": "Инструмент для сборки многослойных образов из нескольких Dockerfile одной командой и публикации их в реестр."
+        },
+        {
+          "id": "d",
+          "text": "Плагин для объединения нескольких контейнеров в один образ, чтобы приложение, БД и Redis запускались как единый процесс внутри одного контейнера."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "docker-compose описывает в yaml набор связанных сервисов (приложение, БД, Redis, Kafka) и поднимает их вместе одной командой на одном хосте. Главная ловушка — спутать его с оркестратором уровня кластера (Kubernetes/Swarm): compose не управляет множеством узлов и не делает автомасштабирование/self-healing. Также неверно, что он собирает образы из нескольких Dockerfile или склеивает контейнеры в один — каждый сервис остаётся отдельным контейнером.",
+      "reviewLinks": [
+        {
+          "label": "Лига Цифровой Экономики",
+          "href": "../guides/liga/"
+        }
+      ]
+    },
+    {
+      "id": "auto-docker-образ-vs-контейнер-cmd-vs-entrypoint-564",
+      "type": "single",
+      "level": "junior",
+      "topics": [
+        "devops"
+      ],
+      "companies": [
+        "mts-bank-aqa"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/mts-bank-aqa.md",
+          "line": 416,
+          "title": "МТС Банк AQA · 12. Docker, Linux и ELK"
+        }
+      ],
+      "prompt": "В чём разница: Docker: образ vs контейнер. CMD vs ENTRYPOINT?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Образ: запущенный экземпляр (объект). Контейнер: шаблон только для чтения (класс). CMD: основная неизменяемая команда запуска. ENTRYPOINT: всего лишь аргументы по умолчанию, которые при необходимости легко переопределить флагами в команде docker run без изменения самого образа."
+        },
+        {
+          "id": "b",
+          "text": "Образ: шаблон (класс). Контейнер: запущенный экземпляр (объект). CMD: аргументы по умолчанию (легко переопределить). ENTRYPOINT: основная команда (сложнее)..."
+        },
+        {
+          "id": "c",
+          "text": "Образ: шаблон с записываемым слоем. Контейнер: неизменяемый снимок. CMD и ENTRYPOINT идентичны и задают команду запуска."
+        },
+        {
+          "id": "d",
+          "text": "Образ: шаблон (класс). Контейнер: экземпляр (объект). CMD: команда на этапе сборки. ENTRYPOINT: команда при остановке."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "Образ — это неизменяемый шаблон (как класс), а контейнер — его запущенный экземпляр с записываемым слоем (как объект). CMD задаёт аргументы по умолчанию и легко переопределяется в docker run, тогда как ENTRYPOINT фиксирует основную команду. Ловушки: перепутать образ и контейнер местами, считать CMD/ENTRYPOINT синонимами или приписать им выполнение на этапе сборки (это делает RUN), а не при старте контейнера.",
+      "reviewLinks": [
+        {
+          "label": "МТС Банк AQA",
+          "href": "../guides/mts-bank-aqa/"
+        }
+      ]
+    },
+    {
+      "id": "auto-dockerfile-основные-инструкции-696",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "devops"
+      ],
+      "companies": [
+        "liga"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/liga.md",
+          "line": 408,
+          "title": "Лига Цифровой Экономики · 10. Docker, Jenkins, Linux · Docker"
+        }
+      ],
+      "prompt": "Dockerfile: основные инструкции?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "FROM (базовый образ), COPY/ADD, RUN, WORKDIR, EXPOSE, ENV, CMD/ENTRYPOINT, VOLUME, USER."
+        },
+        {
+          "id": "b",
+          "text": "IMPORT (базовый образ), MOVE, EXEC, CD, PORT, SET, START/MAIN, MOUNT, ROLE."
+        },
+        {
+          "id": "c",
+          "text": "FROM (базовый образ), COPY/ADD, RUN, WORKDIR, EXPOSE, ENV, CMD/ENTRYPOINT, а также LOOP, IF и FUNCTION для условной логики сборки."
+        },
+        {
+          "id": "d",
+          "text": "FROM (базовый образ), COPY/ADD, RUN, EXPOSE, ENV, CMD/ENTRYPOINT, где EXPOSE реально публикует порт на хосте, а RUN выполняется при каждом старте контейнера."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "Правильный набор — это реальные инструкции Dockerfile (FROM, COPY/ADD, RUN, WORKDIR, EXPOSE, ENV, CMD/ENTRYPOINT, VOLUME, USER). Ловушки: выдуманные ключевые слова (IMPORT, MOVE, EXEC) не существуют; в Dockerfile нет управляющих конструкций LOOP/IF/FUNCTION; EXPOSE лишь документирует порт, а не пробрасывает его на хост (для этого нужен -p у docker run), и RUN выполняется на этапе сборки, а не при каждом старте.",
+      "reviewLinks": [
+        {
+          "label": "Лига Цифровой Экономики",
+          "href": "../guides/liga/"
+        }
+      ]
+    },
+    {
+      "id": "auto-elk-как-искать-логи-теста-566",
+      "type": "single",
+      "level": "junior",
+      "topics": [
+        "devops",
+        "testing-aqa"
+      ],
+      "companies": [
+        "mts-bank-aqa"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/mts-bank-aqa.md",
+          "line": 422,
+          "title": "МТС Банк AQA · 12. Docker, Linux и ELK"
+        }
+      ],
+      "prompt": "ELK: как искать логи теста?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Logstash хранит и индексирует логи, Elasticsearch — это UI для построения дашбордов. Поиск идёт по SQL-запросам, а traceId генерируется самим Kibana при открытии страницы поиска."
+        },
+        {
+          "id": "b",
+          "text": "Elasticsearch хранит/индексирует, Kibana — UI для поиска. Фильтр: traceId + временной диапазон. KQL: level:ERROR AND service:payment. MDC: Mapped Diagnostic Context — traceId пробрасывается через потоки..."
+        },
+        {
+          "id": "c",
+          "text": "Kibana хранит и индексирует логи, Elasticsearch — лишь UI для поиска. Фильтровать по traceId нельзя, так как он уникален в каждом потоке; искать нужно по тексту сообщения, а MDC применяется только для логов уровня DEBUG."
+        },
+        {
+          "id": "d",
+          "text": "Elasticsearch выступает брокером сообщений между сервисами, Kibana собирает логи с хостов агентом Beats. KQL — это язык запросов к реляционной БД, а MDC хранит логи на диске каждого пода."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "В стеке ELK именно Elasticsearch хранит и индексирует логи, а Kibana даёт UI и язык запросов KQL для фильтрации (например, level:ERROR AND service:payment). Сквозной traceId через MDC одинаков для всего запроса и проброшен между потоками, поэтому по нему как раз и удобно искать все логи одного теста. Ловушки: перепутать роли компонентов (Kibana и Elasticsearch местами, Logstash/Beats — это сбор и доставка, а не хранение/UI), утверждать, что по traceId искать нельзя, или назвать KQL языком к реляционной БД.",
+      "reviewLinks": [
+        {
+          "label": "МТС Банк AQA",
+          "href": "../guides/mts-bank-aqa/"
+        }
+      ]
+    },
+    {
+      "id": "auto-jenkins-pipeline-что-это-700",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "devops"
+      ],
+      "companies": [
+        "liga"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/liga.md",
+          "line": 425,
+          "title": "Лига Цифровой Экономики · 10. Docker, Jenkins, Linux · Jenkins и CI/CD"
+        }
+      ],
+      "prompt": "Jenkins Pipeline — что это?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Декларативный или scripted pipeline, описан в Jenkinsfile в корне репозитория. Этапы (stages): checkout, build, test, deploy."
+        },
+        {
+          "id": "b",
+          "text": "Jenkins Pipeline — это графический редактор задач в веб-интерфейсе, где этапы настраиваются мышью и хранятся только в базе Jenkins, без отдельного файла в репозитории проекта."
+        },
+        {
+          "id": "c",
+          "text": "Jenkins Pipeline — плагин параллельных сборок, описывается в pom.xml через профили Maven."
+        },
+        {
+          "id": "d",
+          "text": "Jenkins Pipeline — это YAML в .github/workflows, который Jenkins импортирует из GitHub Actions ради совместимости этапов build и deploy."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "Jenkins Pipeline — это процесс CI/CD как код, описанный в Jenkinsfile в корне репозитория, в декларативном или scripted стиле, с этапами stages (checkout, build, test, deploy). Ловушка в подмене источника конфигурации: pipeline хранится в Jenkinsfile в репозитории, а не в веб-GUI, не в pom.xml и не в YAML GitHub Actions.",
+      "reviewLinks": [
+        {
+          "label": "Лига Цифровой Экономики",
+          "href": "../guides/liga/"
+        }
+      ]
+    },
+    {
+      "id": "auto-kubernetes-pod-deployment-service-371",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "devops",
+        "spring"
+      ],
+      "companies": [
+        "alfa-bank",
+        "vk",
+        "yandex-travel"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/alfa-bank.md",
+          "line": 338,
+          "title": "Альфа-Банк · 10. Docker, Kubernetes, CI/CD"
+        },
+        {
+          "path": "guides/vk.md",
+          "line": 363,
+          "title": "VK · 10. Docker, Kubernetes, CI/CD"
+        },
+        {
+          "path": "guides/yandex-travel.md",
+          "line": 478,
+          "title": "Яндекс Путешествия · 11. Docker, Kubernetes, CI/CD"
+        }
+      ],
+      "prompt": "Kubernetes: Pod, Deployment, Service?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Pod — узел кластера (машина), Deployment задаёт лимиты нод, Service делает rolling update."
+        },
+        {
+          "id": "b",
+          "text": "Pod — 1+ контейнер, общий network. Deployment — управляет ReplicaSet: реплики, rolling update, rollback. Service — стабильный IP/DNS: ClusterIP (внутренний), NodePort, LoadBalancer. Ingress — L7 маршрутизация."
+        },
+        {
+          "id": "c",
+          "text": "Deployment управляет stateful-приложениями с устойчивыми сетевыми именами и томами на каждую реплику, а Service типа ClusterIP выдаёт внешний публичный IP для прямого доступа из интернета, минуя Ingress."
+        },
+        {
+          "id": "d",
+          "text": "Pod — всегда ровно один контейнер с собственным IP; Deployment создаёт Pod'ы напрямую без ReplicaSet; Service — это L7-прокси, который сам маршрутизирует HTTP по URL вместо Ingress."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "Pod — один или несколько контейнеров с общим network namespace; Deployment управляет ReplicaSet и обеспечивает реплики, rolling update и rollback; Service даёт стабильный IP/DNS (ClusterIP — внутренний, NodePort и LoadBalancer — внешний доступ), а L7-маршрутизацию делает Ingress. Ловушки: Pod может содержать несколько контейнеров и не равен ноде, ClusterIP внутренний, а rolling update — задача Deployment, не Service.",
+      "reviewLinks": [
+        {
+          "label": "Альфа-Банк",
+          "href": "../guides/alfa-bank/"
+        }
+      ]
+    },
+    {
+      "id": "auto-linux-найти-все-error-за-сегодня-и-посчитать-565",
+      "type": "single",
+      "level": "junior",
+      "topics": [
+        "devops"
+      ],
+      "companies": [
+        "mts-bank-aqa"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/mts-bank-aqa.md",
+          "line": 419,
+          "title": "МТС Банк AQA · 12. Docker, Linux и ELK"
+        }
+      ],
+      "prompt": "Linux: найти все ERROR за сегодня и посчитать?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "grep -c \"$(date +%Y-%m-%d)\" app.log выведет число всех строк за сегодня, включая ERROR; затем find . -name \"*.log\" -mtime +1 даст логи за последние сутки, а grep -E '([0-9]{1,3}\\.){3}' access.log | uniq отберёт уникальные IP."
+        },
+        {
+          "id": "b",
+          "text": "grep \"$(date +%Y-%m-%d)\" app.log | wc -l посчитает именно ошибки за сегодня, find . -name \"*.log\" -ctime +1 найдёт логи за сутки, а grep -oE '([0-9]{1,3}\\.){3}[0-9]{1,3}' access.log | uniq -c выведет уникальные IP без предварительной сортировки."
+        },
+        {
+          "id": "c",
+          "text": "sed -n \"/$(date +%d-%m-%Y)/p\" app.log | grep ERROR посчитает ошибки, find . -name \"*.log\" -atime -1 найдёт логи за день, а grep ERROR app.log | tail -f покажет ошибки в реальном времени."
+        },
+        {
+          "id": "d",
+          "text": "grep \"$(date +%Y-%m-%d)\" app.log | grep -c \"ERROR\". find: find . -name \"*.log\" -mtime -1 (файлы за сутки). Уникальные IP: grep -oE '([0-9]{1,3}\\.){3}[0-9]{1,3}' access.log | sort -u. tail -f app..."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "Правильно: grep по дате, затем grep -c \"ERROR\" считает именно строки с ERROR; find -mtime -1 берёт файлы, изменённые за последние сутки; уникальные IP — через grep -oE + sort -u. Ловушки: grep -c по дате и grep | wc -l считают ВСЕ строки, а не только ERROR; -mtime +1 и -ctime +1 дают файлы старше суток (а не за сутки); uniq без предварительного sort не уберёт неотсортированные дубликаты, формат даты %d-%m-%Y не совпадает с логом, а tail -f несовместим с подсчётом и завершением пайпа.",
+      "reviewLinks": [
+        {
+          "label": "МТС Банк AQA",
+          "href": "../guides/mts-bank-aqa/"
+        }
+      ]
+    },
+    {
+      "id": "auto-liveness-vs-readiness-probe-464",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "devops",
+        "algorithms",
+        "spring"
+      ],
+      "companies": [
+        "vk",
+        "yandex-travel"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/vk.md",
+          "line": 369,
+          "title": "VK · 10. Docker, Kubernetes, CI/CD"
+        },
+        {
+          "path": "guides/yandex-travel.md",
+          "line": 481,
+          "title": "Яндекс Путешествия · 11. Docker, Kubernetes, CI/CD"
+        }
+      ],
+      "prompt": "В чём разница: Liveness vs Readiness probe?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Liveness проверяет готовность контейнера принимать трафик и при провале убирает под из балансировки, а Readiness определяет, жив ли процесс, и при провале перезапускает контейнер."
+        },
+        {
+          "id": "b",
+          "text": "Liveness и Readiness делают одно и то же — проверяют доступность HTTP-эндпоинта; разница лишь в том, что Liveness опрашивается реже, чтобы снизить нагрузку."
+        },
+        {
+          "id": "c",
+          "text": "Liveness: жив ли? Нет → перезапуск. Readiness: готов к трафику? Нет → убирается из балансировки. Spring Boot Actuator: /health/liveness, /health/readiness."
+        },
+        {
+          "id": "d",
+          "text": "При провале Readiness-пробы Kubernetes перезапускает под, а при провале Liveness — лишь временно исключает его из сервиса до восстановления."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "Правильно: Liveness отвечает на вопрос «жив ли процесс» — при провале под перезапускается; Readiness — «готов ли принимать трафик» — при провале под исключается из балансировки, но не перезапускается. Ловушки меняют роли проб местами или стирают разницу между перезапуском и исключением из LB.",
+      "reviewLinks": [
+        {
+          "label": "VK",
+          "href": "../guides/vk/"
+        }
+      ]
+    },
+    {
+      "id": "auto-liveness-vs-readiness-vs-startup-probe-372",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "devops",
+        "algorithms",
+        "spring"
+      ],
+      "companies": [
+        "alfa-bank"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/alfa-bank.md",
+          "line": 341,
+          "title": "Альфа-Банк · 10. Docker, Kubernetes, CI/CD"
+        }
+      ],
+      "prompt": "В чём разница: Liveness vs Readiness vs Startup probe?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Startup-проба после успешного прохождения продолжает периодически опрашивать приложение и при первом же провале немедленно перезапускает под, фактически заменяя собой Liveness, а Readiness в это время полностью отключается из конфигурации пода."
+        },
+        {
+          "id": "b",
+          "text": "Liveness исключает под из балансировки при провале, Readiness перезапускает контейнер, а Startup задаёт начальную задержку перед первым запуском всех остальных проб."
+        },
+        {
+          "id": "c",
+          "text": "Liveness — жив ли? Нет → перезапуск. Readiness — готов к трафику? Нет → убирается из LB. Startup — для медленного старта: пока не пройдёт, остальные не проверяются. Spring Boot Actuator: /actuator/health/liveness..."
+        },
+        {
+          "id": "d",
+          "text": "Все три пробы работают одновременно с самого старта; Startup лишь увеличивает таймаут для Liveness."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "Правильно: Liveness → перезапуск при провале, Readiness → исключение из LB, Startup нужна для медленного старта: пока она не пройдёт, Liveness и Readiness не выполняются; после успеха Startup больше не опрашивается. Ловушки путают роли проб, заставляют Startup работать постоянно или утверждают, что пробы запускаются параллельно с самого начала.",
+      "reviewLinks": [
+        {
+          "label": "Альфа-Банк",
+          "href": "../guides/alfa-bank/"
+        }
+      ]
+    },
+    {
+      "id": "auto-merge-vs-rebase-в-git-570",
+      "type": "single",
+      "level": "junior",
+      "topics": [
+        "devops"
+      ],
+      "companies": [
+        "mts-bank-aqa"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/mts-bank-aqa.md",
+          "line": 436,
+          "title": "МТС Банк AQA · 13. Maven, Git и CI/CD"
+        }
+      ],
+      "prompt": "В чём разница: Merge vs Rebase в Git?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Merge переносит коммиты на вершину целевой ветки и делает историю строго линейной, а Rebase, наоборот, создаёт отдельный коммит-слияние и сохраняет ветвление, поэтому именно merge категорически нельзя выполнять в публичных ветках из-за переписывания истории."
+        },
+        {
+          "id": "b",
+          "text": "Merge: создаёт коммит-слияние, история ветвится (видно откуда пришли изменения). Rebase: перемещает коммиты на вершину целевой ветки, линейная история. Rebase в публичных ветках — не стоит (переписывает историю)..."
+        },
+        {
+          "id": "c",
+          "text": "Rebase и merge физически удаляют исходную ветку после объединения; разница лишь в том, что merge оставляет один общий коммит, а rebase два."
+        },
+        {
+          "id": "d",
+          "text": "Merge объединяет только содержимое файлов без записи в историю, а Rebase лишь переставляет HEAD."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "Merge создаёт коммит-слияние и сохраняет ветвящуюся историю, а rebase переносит коммиты на вершину базовой ветки, давая линейную историю и переписывая SHA коммитов — именно поэтому rebase опасен в публичных ветках. Ловушка в первом варианте — перепутаны роли merge и rebase. Rebase тоже может приводить к конфликтам и точно меняет хэши коммитов.",
+      "reviewLinks": [
+        {
+          "label": "МТС Банк AQA",
+          "href": "../guides/mts-bank-aqa/"
+        }
+      ]
+    },
+    {
+      "id": "auto-multi-stage-build-370",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "devops"
+      ],
+      "companies": [
+        "alfa-bank",
+        "vk",
+        "yandex-travel"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/alfa-bank.md",
+          "line": 335,
+          "title": "Альфа-Банк · 10. Docker, Kubernetes, CI/CD"
+        },
+        {
+          "path": "guides/vk.md",
+          "line": 360,
+          "title": "VK · 10. Docker, Kubernetes, CI/CD"
+        },
+        {
+          "path": "guides/yandex-travel.md",
+          "line": 475,
+          "title": "Яндекс Путешествия · 11. Docker, Kubernetes, CI/CD"
+        }
+      ],
+      "prompt": "Что такое Multi-stage build?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Это разбиение одного Dockerfile на несколько контейнеров, запускаемых параллельно: один с Maven для сборки, другой с JRE для рантайма, и они общаются по сети во время работы приложения."
+        },
+        {
+          "id": "b",
+          "text": "Это техника, где финальный образ содержит и Maven, и JRE, но build-стадия кэшируется как слой, что ускоряет повторную сборку, хотя размер образа остаётся прежним (~800 MB) из-за встроенных инструментов."
+        },
+        {
+          "id": "c",
+          "text": "FROM maven:3.9 → сборка. FROM eclipse-temurin:21-jre → копируем только JAR. Финальный образ ~200 MB вместо ~800 MB. Безопаснее (меньше attack surface), быстрее деплой."
+        },
+        {
+          "id": "d",
+          "text": "Это сборка, где каждый RUN создаёт отдельную стадию, а Docker сам выбирает самую маленькую как финальную."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "Multi-stage build — это один Dockerfile с несколькими стадиями FROM: на первой собираем приложение (с Maven/JDK), а в финальную копируем только готовый JAR в лёгкий JRE-образ через COPY --from. Это даёт компактный образ (~200 MB вместо ~800 MB), без build-инструментов и с меньшей attack surface. Ловушка — спутать это с многоконтейнерным запуском или решить, что размер образа не уменьшается.",
+      "reviewLinks": [
+        {
+          "label": "Альфа-Банк",
+          "href": "../guides/alfa-bank/"
+        }
+      ]
+    },
+    {
+      "id": "auto-multi-stage-build-зачем-698",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "devops"
+      ],
+      "companies": [
+        "liga"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/liga.md",
+          "line": 414,
+          "title": "Лига Цифровой Экономики · 10. Docker, Jenkins, Linux · Docker"
+        }
+      ],
+      "prompt": "Multi-stage build — зачем?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Чтобы запускать сборку и рантайм в разных контейнерах одновременно: Maven компилирует код, а JRE параллельно обслуживает входящие запросы через общий volume между стадиями, экономя оперативную память хоста."
+        },
+        {
+          "id": "b",
+          "text": "Собираешь в одном образе (с Maven/Gradle), а в финальный копируешь только JAR. Финальный образ маленький и без build-инструментов."
+        },
+        {
+          "id": "c",
+          "text": "Чтобы ускорить сборку, закэшировав зависимости в финальном образе: он остаётся большим, зато повторные деплои быстрее."
+        },
+        {
+          "id": "d",
+          "text": "Чтобы Docker сам объединил стадии в один слой."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "Смысл multi-stage build — собрать артефакт в одной стадии (с Maven/Gradle и JDK), а в финальный образ скопировать только JAR, оставив там лишь JRE. В результате финальный образ маленький и не содержит build-инструментов. Ловушка — представить это как параллельные контейнеры или как способ, который не уменьшает образ, а лишь кэширует зависимости.",
+      "reviewLinks": [
+        {
+          "label": "Лига Цифровой Экономики",
+          "href": "../guides/liga/"
+        }
+      ]
+    },
+    {
+      "id": "auto-service-типы-в-k8s-463",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "devops",
+        "spring"
+      ],
+      "companies": [
+        "vk"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/vk.md",
+          "line": 366,
+          "title": "VK · 10. Docker, Kubernetes, CI/CD"
+        }
+      ],
+      "prompt": "Что такое Service типы в K8s?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "ClusterIP открывает порт на каждой ноде для входа снаружи, NodePort балансирует только внутри кластера, а LoadBalancer создаёт DNS-запись для service discovery между подами без публичного IP."
+        },
+        {
+          "id": "b",
+          "text": "Все три типа — сугубо внутрикластерные."
+        },
+        {
+          "id": "c",
+          "text": "Headless Service (ClusterIP: None) выдаёт единый виртуальный IP, NodePort работает только в облаке, а ExternalName поднимает облачный балансировщик с публичным адресом."
+        },
+        {
+          "id": "d",
+          "text": "ClusterIP (внутренний), NodePort (внешний на каждой ноде), LoadBalancer (облачный LB — именно это делает группа балансеров в VK)."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "ClusterIP даёт внутренний виртуальный IP, доступный только внутри кластера; NodePort открывает один и тот же порт (30000–32767) на каждой ноде для внешнего доступа; LoadBalancer запрашивает у облачного провайдера внешний балансировщик с публичным IP. Дистракторы путают назначение типов местами или приписывают им несуществующее поведение — например, NodePort не работает только в облаке, а LoadBalancer как раз даёт внешний вход.",
+      "reviewLinks": [
+        {
+          "label": "VK",
+          "href": "../guides/vk/"
+        }
+      ]
+    },
+    {
+      "id": "auto-surefire-vs-failsafe-разница-569",
+      "type": "single",
+      "level": "junior",
+      "topics": [
+        "devops"
+      ],
+      "companies": [
+        "mts-bank-aqa"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/mts-bank-aqa.md",
+          "line": 433,
+          "title": "МТС Банк AQA · 13. Maven, Git и CI/CD"
+        }
+      ],
+      "prompt": "В чём разница: Surefire vs Failsafe — разница?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Surefire запускает интеграционные тесты (*IT.java) на фазе verify, а Failsafe — unit-тесты (*Test.java) на фазе test; разница сводится лишь к порядку выполнения этих плагинов внутри жизненного цикла сборки."
+        },
+        {
+          "id": "b",
+          "text": "Surefire и Failsafe — два имени одного плагина: Failsafe просто старое название, которое позже переименовали в Surefire."
+        },
+        {
+          "id": "c",
+          "text": "Surefire запускает unit-тесты, а Failsafe повторяет упавшие *Test.java до трёх раз перед фейлом."
+        },
+        {
+          "id": "d",
+          "text": "Surefire: запускает unit-тесты (*Test.java) на фазе test. Failsafe: запускает интеграционные (*IT.java) на фазе verify. Failsafe НЕ падает сразу при ошибке — собирает все результаты, потом fail..."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "Surefire отвечает за unit-тесты (*Test.java) на фазе test, а Failsafe — за интеграционные (*IT.java), разнесённые по фазам integration-test/verify. Ключевая ловушка: Failsafe не валит сборку сразу при падении IT, а доводит post-integration-test до конца (чтобы освободить ресурсы), и только на verify сигнализирует об ошибке. Это разные плагины с разными целями, а не один и тот же.",
+      "reviewLinks": [
+        {
+          "label": "МТС Банк AQA",
+          "href": "../guides/mts-bank-aqa/"
+        }
+      ]
+    },
+    {
+      "id": "auto-testcontainers-377",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "testing-aqa",
+        "devops"
+      ],
+      "companies": [
+        "alfa-bank"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/alfa-bank.md",
+          "line": 360,
+          "title": "Альфа-Банк · 11. Тесты: JUnit, Mockito, TDD"
+        }
+      ],
+      "prompt": "Что такое Testcontainers?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Встроенный в JUnit движок, который эмулирует PostgreSQL/Kafka в памяти JVM без Docker; @Testcontainers разворачивает легковесные in-memory заглушки, идентичные H2, но с диалектом PostgreSQL."
+        },
+        {
+          "id": "b",
+          "text": "Библиотека для мокирования внешних зависимостей: PostgreSQLContainer и KafkaContainer возвращают стаб-объекты, на которых через when/thenReturn задают ответы БД и брокера, не поднимая реальных сервисов."
+        },
+        {
+          "id": "c",
+          "text": "Реальные БД/Kafka в Docker из тестов. @Testcontainers + @Container PostgreSQLContainer. Зачем: тесты на реальной PostgreSQL, а не H2 (которая отличается). Проверка миграций Flyway, SQL, Kafka-consumers."
+        },
+        {
+          "id": "d",
+          "text": "Инструмент, который перед тестами разворачивает приложение в Kubernetes-pod и прогоняет миграции Flyway там; @Container ссылается на удалённый namespace, а не на локальный Docker."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "Testcontainers поднимает реальные сервисы (PostgreSQL, Kafka и др.) в Docker-контейнерах прямо из тестов через @Testcontainers и @Container, давая среду, идентичную проду, а не эмуляцию вроде H2. Смысл — тестировать настоящий SQL-диалект, миграции Flyway и Kafka-consumer'ов на реальной БД. Дистракторы подменяют это in-memory эмуляцией, мокированием (Mockito) или Kubernetes — ни то, ни другое Testcontainers не делает.",
+      "reviewLinks": [
+        {
+          "label": "Альфа-Банк",
+          "href": "../guides/alfa-bank/"
+        }
+      ]
+    },
+    {
+      "id": "auto-testcontainers-что-это-541",
+      "type": "single",
+      "level": "junior",
+      "topics": [
+        "testing-aqa",
+        "devops"
+      ],
+      "companies": [
+        "mts-bank-aqa"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/mts-bank-aqa.md",
+          "line": 308,
+          "title": "МТС Банк AQA · 8. JUnit 5, Mockito и тестирование"
+        }
+      ],
+      "prompt": "Testcontainers — что это?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Библиотека для запуска Docker-контейнеров из Java-тестов. PostgreSQLContainer, KafkaContainer, GenericContainer (WireMock). @Testcontainers + @Container. Для AQA: поднять реальную БД вместо H2..."
+        },
+        {
+          "id": "b",
+          "text": "Встроенная in-memory база на замену H2 с поддержкой PostgreSQL-диалекта: @Container создаёт легковесный экземпляр прямо в JVM без участия Docker и внешних процессов."
+        },
+        {
+          "id": "c",
+          "text": "Maven-плагин, который на фазе verify скачивает official-образы и публикует их в реестр; PostgreSQLContainer и KafkaContainer описывают, какие образы собрать, а тесты к ним не обращаются."
+        },
+        {
+          "id": "d",
+          "text": "Java-обёртка над docker-compose, которая лишь читает существующий compose-файл и подключается к уже запущенным контейнерам; самостоятельно поднять PostgreSQLContainer или KafkaContainer она не умеет."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "Testcontainers — это Java-библиотека, которая сама запускает и останавливает Docker-контейнеры из тестов: PostgreSQLContainer, KafkaContainer, GenericContainer (например, для WireMock), управляемые через @Testcontainers/@Container. Для AQA это способ поднять реальную БД вместо H2. Дистракторы ошибочны: это не in-memory движок без Docker, не Maven-плагин для публикации образов и не пассивная обёртка только над готовым compose — библиотека умеет поднимать контейнеры программно.",
+      "reviewLinks": [
+        {
+          "label": "МТС Банк AQA",
+          "href": "../guides/mts-bank-aqa/"
+        }
+      ]
+    },
+    {
+      "id": "auto-в-чем-разница-между-cmd-и-entrypoint-623",
+      "type": "single",
+      "level": "junior",
+      "topics": [
+        "devops"
+      ],
+      "companies": [
+        "itk-academy"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/itk-academy.md",
+          "line": 289,
+          "title": "ITK Academy · 7. Docker, Git и CI/CD · Docker"
+        }
+      ],
+      "prompt": "В чём разница между CMD и ENTRYPOINT?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "CMD задаёт основную исполняемую команду контейнера, а ENTRYPOINT хранит лишь аргументы по умолчанию к ней, которые при необходимости легко переопределяются прямо в строке docker run без дополнительных флагов. Поэтому неизменяемой частью запуска считается именно CMD, а ENTRYPOINT отвечает за подстановку аргументов."
+        },
+        {
+          "id": "b",
+          "text": "ENTRYPOINT выполняется на этапе сборки образа подобно RUN, а CMD — при старте контейнера, поэтому совместно эти инструкции использовать нельзя."
+        },
+        {
+          "id": "c",
+          "text": "ENTRYPOINT задаёт основную исполняемую команду. CMD — аргументы по умолчанию. CMD легко переопределить при docker run, ENTRYPOINT — сложнее (через --entrypoint)."
+        },
+        {
+          "id": "d",
+          "text": "Разница лишь в синтаксисе: ENTRYPOINT принимает только shell-форму, а CMD — только exec-форму."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "ENTRYPOINT определяет основную команду контейнера, CMD задаёт аргументы по умолчанию; при docker run аргументы после имени образа переопределяют CMD, а ENTRYPOINT меняется только флагом --entrypoint. Дистракторы меняют роли местами, путают CMD/ENTRYPOINT (этап запуска) с RUN (этап сборки) и неверно жёстко привязывают каждую инструкцию к одной форме записи — обе поддерживают и shell-, и exec-форму.",
+      "reviewLinks": [
+        {
+          "label": "ITK Academy",
+          "href": "../guides/itk-academy/"
+        }
+      ]
+    },
+    {
+      "id": "auto-жизненный-цикл-maven-568",
+      "type": "single",
+      "level": "junior",
+      "topics": [
+        "devops"
+      ],
+      "companies": [
+        "mts-bank-aqa"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/mts-bank-aqa.md",
+          "line": 430,
+          "title": "МТС Банк AQA · 13. Maven, Git и CI/CD"
+        }
+      ],
+      "prompt": "Что такое Жизненный цикл Maven?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Порядок фаз: compile → validate → test → package → install → verify → deploy. mvn test запускает и unit-, и интеграционные тесты, а mvn package сначала вызывает install для публикации артефакта в репозиторий."
+        },
+        {
+          "id": "b",
+          "text": "Жизненный цикл — это набор плагинов, которые Maven выполняет в произвольном порядке в зависимости от scope зависимостей; mvn verify прогоняет unit-тесты через Surefire, а mvn test — интеграционные через Failsafe."
+        },
+        {
+          "id": "c",
+          "text": "Фазы: validate → compile → package → test → verify → deploy → install. mvn install публикует артефакт в удалённый репозиторий команды, а mvn deploy лишь кладёт его в локальный ~/.m2."
+        },
+        {
+          "id": "d",
+          "text": "validate → compile → test → package → verify → install → deploy. mvn test: прогоняет unit-тесты (Surefire plugin). mvn verify: прогоняет интеграционные (Failsafe plugin). Scope: compile (по умолчанию)..."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "Стандартный порядок фаз default-цикла: validate → compile → test → package → verify → install → deploy, где каждая фаза выполняет все предыдущие; unit-тесты идут на test через Surefire, интеграционные — на verify через Failsafe. Дистракторы путают порядок фаз, меняют местами Surefire/Failsafe и test/verify, а также инвертируют install (в локальный ~/.m2) и deploy (в удалённый репозиторий).",
+      "reviewLinks": [
+        {
+          "label": "МТС Банк AQA",
+          "href": "../guides/mts-bank-aqa/"
+        }
+      ]
+    },
+    {
+      "id": "auto-зачем-нужны-docker-образы-в-ci-cd-629",
+      "type": "single",
+      "level": "junior",
+      "topics": [
+        "devops"
+      ],
+      "companies": [
+        "itk-academy"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/itk-academy.md",
+          "line": 314,
+          "title": "ITK Academy · 7. Docker, Git и CI/CD · CI/CD"
+        }
+      ],
+      "prompt": "Зачем нужны Docker-образы в CI/CD?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Чтобы ускорять сборку."
+        },
+        {
+          "id": "b",
+          "text": "Чтобы среда сборки была одинаковая на всех машинах. И на проде запускается тот же образ, что был протестирован."
+        },
+        {
+          "id": "c",
+          "text": "Образ собирается заново на каждом окружении — отдельно для тестов, отдельно для прода — из одного Dockerfile, что и гарантирует идентичность сред, ведь Dockerfile описывает все зависимости приложения."
+        },
+        {
+          "id": "d",
+          "text": "Чтобы заменить систему контроля версий: образ хранит историю кода послойно, а откат к прошлой версии делается через git checkout нужного слоя."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "Главная ценность Docker-образа в CI/CD — воспроизводимость: один и тот же неизменяемый артефакт собирается один раз, тестируется и затем без пересборки катится в прод, исключая расхождения сред. Ловушки: образ не нужно пересобирать под каждое окружение (иначе теряется гарантия идентичности), он не оркестратор и не заменяет систему контроля версий.",
+      "reviewLinks": [
+        {
+          "label": "ITK Academy",
+          "href": "../guides/itk-academy/"
+        }
+      ]
+    },
+    {
+      "id": "auto-как-автотесты-встраиваются-в-ci-cd-pipeline-571",
+      "type": "single",
+      "level": "junior",
+      "topics": [
+        "devops",
+        "testing-aqa"
+      ],
+      "companies": [
+        "mts-bank-aqa"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/mts-bank-aqa.md",
+          "line": 439,
+          "title": "МТС Банк AQA · 13. Maven, Git и CI/CD"
+        }
+      ],
+      "prompt": "Как автотесты встраиваются в CI/CD pipeline?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "1) Smoke-тесты: после каждого деплоя (быстрые, 5–10 кейсов). 2) Регрессия: на merge request или ночной запуск (полный набор). 3) Nightly: полная регрессия + отчёт Allure. Jenkins/GitLab CI → mvn verify → Allure report..."
+        },
+        {
+          "id": "b",
+          "text": "Все тесты гоняются в IDE через pre-commit hook."
+        },
+        {
+          "id": "c",
+          "text": "Тесты не встраивают в pipeline отдельными стадиями: всю полную регрессию тестировщики запускают строго вручную уже после релиза на проде, а сам CI/CD при этом отвечает только за сборку готового артефакта и его последующий деплой на серверы."
+        },
+        {
+          "id": "d",
+          "text": "Smoke и регрессию объединяют в один монолитный job, который запускается строго по расписанию раз в неделю, потому что на merge request гонять тесты слишком дорого и слишком долго для команды."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "Корректный подход — разнести тесты по стадиям пайплайна: быстрые smoke после деплоя, регрессия на MR/ночью, полная регрессия с отчётом ночью (mvn verify → Allure в Jenkins/GitLab CI). Ловушка: гонять всю регрессию синхронно на каждом коммите или, наоборот, только вручную после прода ломает идею раннего автоматического фидбэка; пирамида тестов как раз и нужна, чтобы быстрые проверки шли часто, а тяжёлые — реже.",
+      "reviewLinks": [
+        {
+          "label": "МТС Банк AQA",
+          "href": "../guides/mts-bank-aqa/"
+        }
+      ]
+    },
+    {
+      "id": "auto-как-найти-процесс-занявший-порт-703",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "devops"
+      ],
+      "companies": [
+        "liga"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/liga.md",
+          "line": 436,
+          "title": "Лига Цифровой Экономики · 10. Docker, Jenkins, Linux · Linux — базовый минимум"
+        }
+      ],
+      "prompt": "Как найти процесс, занявший порт?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "ps aux | grep 8080 выведет процесс, слушающий порт 8080, вместе с его PID и полными аргументами командной строки запуска."
+        },
+        {
+          "id": "b",
+          "text": "ping localhost:8080 покажет, какой процесс занял порт."
+        },
+        {
+          "id": "c",
+          "text": "telnet localhost 8080: при подключении в заголовке сессии возвращается PID и имя процесса, держащего сокет на этом порту."
+        },
+        {
+          "id": "d",
+          "text": "lsof -i :8080 или ss -tulpn | grep 8080 или netstat -tulpn | grep 8080."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "Нужны инструменты, которые читают таблицу открытых сокетов ядра и сопоставляют их с процессами: lsof -i, ss -tulpn, netstat -tulpn. ps grep'ает по строке запуска, а не по слушаемым портам, и совпадение 8080 случайно; ping/telnet только проверяют доступность порта и никогда не возвращают PID процесса.",
+      "reviewLinks": [
+        {
+          "label": "Лига Цифровой Экономики",
+          "href": "../guides/liga/"
+        }
+      ]
+    },
+    {
+      "id": "auto-как-откатить-последний-коммит-626",
+      "type": "single",
+      "level": "junior",
+      "topics": [
+        "devops"
+      ],
+      "companies": [
+        "itk-academy"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/itk-academy.md",
+          "line": 300,
+          "title": "ITK Academy · 7. Docker, Git и CI/CD · Git"
+        }
+      ],
+      "prompt": "Как откатить последний коммит?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "git reset --soft HEAD~1 (оставит изменения), git reset --hard HEAD~1 (выкинет всё), git revert HEAD (создаст новый коммит, который отменит предыдущий — безопасно для общих веток)."
+        },
+        {
+          "id": "b",
+          "text": "git checkout HEAD~1 переключит HEAD на предыдущий коммит и тем самым отменит последний."
+        },
+        {
+          "id": "c",
+          "text": "git rm --cached HEAD~1 удаляет последний коммит из ветки, оставляя его изменения в рабочей директории как незакоммиченные, и историю при этом не переписывает."
+        },
+        {
+          "id": "d",
+          "text": "git reset --soft HEAD~1 стирает коммит вместе с изменениями, а git reset --hard HEAD~1, наоборот, сохраняет правки в staging."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "Откат делается через git reset (--soft сохраняет изменения в индексе, --hard выбрасывает их) либо git revert HEAD для безопасной отмены в общих ветках новым коммитом. git checkout HEAD~1 лишь переводит в detached HEAD, не двигая саму ветку; git rm --cached удаляет файлы из индекса, а не коммиты; а в последнем варианте перепутаны эффекты --soft и --hard.",
+      "reviewLinks": [
+        {
+          "label": "ITK Academy",
+          "href": "../guides/itk-academy/"
+        }
+      ]
+    },
+    {
+      "id": "auto-как-отправить-сигнал-процессу-704",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "devops"
+      ],
+      "companies": [
+        "liga"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/liga.md",
+          "line": 439,
+          "title": "Лига Цифровой Экономики · 10. Docker, Jenkins, Linux · Linux — базовый минимум"
+        }
+      ],
+      "prompt": "Как отправить сигнал процессу?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "kill PID (SIGTERM, мягкое завершение), kill -9 PID (SIGKILL, жёсткое). Команда pkill/killall — по имени."
+        },
+        {
+          "id": "b",
+          "text": "kill -9 PID посылает SIGTERM для мягкого завершения, а обычный kill PID шлёт SIGKILL, который немедленно и принудительно убивает процесс, минуя его обработчики сигналов."
+        },
+        {
+          "id": "c",
+          "text": "Отправить сигнал можно через nice или renice: они меняют приоритет и заодно доставляют процессу сигнал."
+        },
+        {
+          "id": "d",
+          "text": "kill PID по умолчанию шлёт SIGKILL; для мягкой остановки нужно явно указать kill -0 PID."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "По умолчанию kill PID отправляет SIGTERM (мягкое, с возможностью обработчика), а kill -9 — SIGKILL (жёсткое, без перехвата); pkill/killall работают по имени. В первом варианте номера сигналов перепутаны; nice/renice управляют приоритетом и сигналов не шлют; а kill -0 не завершает процесс вовсе — он лишь проверяет существование PID и право слать ему сигнал.",
+      "reviewLinks": [
+        {
+          "label": "Лига Цифровой Экономики",
+          "href": "../guides/liga/"
+        }
+      ]
+    },
+    {
+      "id": "auto-как-посмотреть-логи-запущенного-java-процесса-702",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "devops"
+      ],
+      "companies": [
+        "liga"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/liga.md",
+          "line": 433,
+          "title": "Лига Цифровой Экономики · 10. Docker, Jenkins, Linux · Linux — базовый минимум"
+        }
+      ],
+      "prompt": "Как посмотреть логи запущенного Java-процесса?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "jps -l стримит логи запущенного Java-процесса в реальном времени, выводя его stdout и содержимое файлов логирования по мере их появления в системе."
+        },
+        {
+          "id": "b",
+          "text": "Подключиться через jstack PID — он непрерывно стримит записи логгера приложения."
+        },
+        {
+          "id": "c",
+          "text": "tail -f /var/log/app.log, или journalctl -u service-name -f, или через docker logs -f container."
+        },
+        {
+          "id": "d",
+          "text": "tail -f /var/log/app.log выведет последние строки один раз и завершится; для непрерывного слежения нужен флаг cat -f."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "Логи смотрят там, куда они пишутся: tail -f по файлу лога, journalctl -u service -f для systemd-сервиса или docker logs -f для контейнера. jps лишь перечисляет JVM-процессы и их PID, jstack снимает дамп стеков потоков (а не логи), а tail -f как раз и обеспечивает непрерывное слежение за файлом — флага -f у cat не существует.",
+      "reviewLinks": [
+        {
+          "label": "Лига Цифровой Экономики",
+          "href": "../guides/liga/"
+        }
+      ]
+    },
+    {
+      "id": "auto-какие-команды-docker-ты-знаешь-621",
+      "type": "single",
+      "level": "junior",
+      "topics": [
+        "devops"
+      ],
+      "companies": [
+        "itk-academy"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/itk-academy.md",
+          "line": 283,
+          "title": "ITK Academy · 7. Docker, Git и CI/CD · Docker"
+        }
+      ],
+      "prompt": "Какие команды Docker ты знаешь?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "docker commit, docker compile, docker deploy, docker scale, docker mount — для запуска и масштабирования."
+        },
+        {
+          "id": "b",
+          "text": "docker build, docker run, docker ps, docker logs, docker exec, docker stop, docker rm, docker images, docker pull/push."
+        },
+        {
+          "id": "c",
+          "text": "docker start, docker pause, docker kill, docker prune, docker swarm — этого достаточно, а docker run и docker build не нужны, ведь образ собирается автоматически при первом запуске контейнера."
+        },
+        {
+          "id": "d",
+          "text": "docker fetch, docker create-image, docker container, docker network-up, docker registry-login — команды CLI для скачивания образов и работы с реестром."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "Реально существующие и часто используемые команды — docker build, run, ps, logs, exec, stop, rm, images, pull/push. В дистракторах смешаны несуществующие (docker compile, deploy, scale, fetch, create-image) и существующие, но поданные с ошибками: docker run и docker build обязательны, образ не собирается «сам» при запуске, а pull/push отвечают за реестр, а не выдуманный registry-login.",
+      "reviewLinks": [
+        {
+          "label": "ITK Academy",
+          "href": "../guides/itk-academy/"
+        }
+      ]
+    },
+    {
+      "id": "auto-образ-image-vs-контейнер-container-695",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "devops"
+      ],
+      "companies": [
+        "liga"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/liga.md",
+          "line": 405,
+          "title": "Лига Цифровой Экономики · 10. Docker, Jenkins, Linux · Docker"
+        }
+      ],
+      "prompt": "В чём разница: Образ (image) vs контейнер (container)?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Образ — неизменяемый шаблон (как класс). Контейнер — запущенный экземпляр образа (как объект). Из одного образа — много контейнеров."
+        },
+        {
+          "id": "b",
+          "text": "Образ — запущенный процесс, контейнер — архив на диске."
+        },
+        {
+          "id": "c",
+          "text": "Образ и контейнер — синонимы одного артефакта; разница лишь в том, что образ лежит в реестре, а после docker pull он автоматически переименовывается в контейнер на хосте."
+        },
+        {
+          "id": "d",
+          "text": "Образ — изменяемая среда с writable-слоем, а контейнер — её неизменяемый снапшот; контейнер всегда один на образ."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "Образ — неизменяемый шаблон (аналог класса), контейнер — его запущенный экземпляр (аналог объекта), и из одного образа можно поднять много контейнеров. Ловушка — в инверсии: именно образ неизменяем, а контейнер добавляет writable-слой; docker run создаёт контейнер из образа, а не наоборот. Образ и контейнер не синонимы: pull загружает образ, а run превращает его в работающий контейнер.",
+      "reviewLinks": [
+        {
+          "label": "Лига Цифровой Экономики",
+          "href": "../guides/liga/"
+        }
+      ]
+    },
+    {
+      "id": "auto-образ-vs-контейнер-369",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "devops"
+      ],
+      "companies": [
+        "alfa-bank",
+        "vk",
+        "yandex-travel"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/alfa-bank.md",
+          "line": 332,
+          "title": "Альфа-Банк · 10. Docker, Kubernetes, CI/CD"
+        },
+        {
+          "path": "guides/vk.md",
+          "line": 357,
+          "title": "VK · 10. Docker, Kubernetes, CI/CD"
+        },
+        {
+          "path": "guides/yandex-travel.md",
+          "line": 472,
+          "title": "Яндекс Путешествия · 11. Docker, Kubernetes, CI/CD"
+        }
+      ],
+      "prompt": "В чём разница: Образ vs контейнер?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Контейнер — неизменяемый набор слоёв, образ — его экземпляр."
+        },
+        {
+          "id": "b",
+          "text": "Образ — единый монолитный бинарник без слоёв, а контейнер добавляет к нему read-only слой; каждая инструкция Dockerfile при этом создаёт отдельный новый контейнер, а не слой образа."
+        },
+        {
+          "id": "c",
+          "text": "Образ — неизменяемый шаблон из слоёв (каждая инструкция Dockerfile — слой). Контейнер — запущенный экземпляр с writable-слоем. docker images → образы, docker ps → контейнеры."
+        },
+        {
+          "id": "d",
+          "text": "Образ — запущенный процесс с writable-слоём, контейнер — шаблон на диске; docker ps выводит образы, а docker images — активные контейнеры."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "Образ — неизменяемый шаблон из read-only слоёв (по слою на инструкцию Dockerfile), контейнер — его запущенный экземпляр с добавленным writable-слоем; docker images перечисляет образы, docker ps — контейнеры. Ловушки: слои образа read-only, а writable-слой принадлежит именно контейнеру; команды перепутаны в дистракторах. Образ состоит из слоёв, а не из одного монолитного бинарника.",
+      "reviewLinks": [
+        {
+          "label": "Альфа-Банк",
+          "href": "../guides/alfa-bank/"
+        }
+      ]
+    },
+    {
+      "id": "auto-чем-component-отличается-от-service-repository-controller-607",
+      "type": "single",
+      "level": "junior",
+      "topics": [
+        "devops",
+        "spring",
+        "hibernate"
+      ],
+      "companies": [
+        "itk-academy",
+        "liga"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/itk-academy.md",
+          "line": 229,
+          "title": "ITK Academy · 6. Spring и Spring Boot · Базовые вопросы"
+        },
+        {
+          "path": "guides/liga.md",
+          "line": 245,
+          "title": "Лига Цифровой Экономики · 6. Spring и Spring Boot"
+        }
+      ],
+      "prompt": "Чем @Component отличается от @Service, @Repository, @Controller?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "@Service регистрирует бин как синглтон, а @Component по умолчанию создаёт prototype-бин; @Repository же дополнительно делает класс транзакционным без @Transactional, оборачивая все его методы в общую транзакцию автоматически."
+        },
+        {
+          "id": "b",
+          "text": "@Component сканируется лишь при явном указании в @ComponentScan, а @Service, @Repository и @Controller подхватываются автоматически независимо от настроек сканирования."
+        },
+        {
+          "id": "c",
+          "text": "Главное отличие — порядок инициализации: @Repository создаётся раньше @Service, а тот раньше @Controller, что Spring гарантирует по типу стереотипа."
+        },
+        {
+          "id": "d",
+          "text": "Технически почти ничем — все они помечают бин для регистрации в контексте. Но семантически: @Service — бизнес-логика, @Repository — работа с БД (плюс перевод исключений в DataAccessException), @Controller — веб-слой."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "Все четыре — стереотипные аннотации, мета-аннотированные @Component, поэтому механически они почти эквивалентны; различие смысловое (слой приложения), а у @Repository добавляется трансляция исключений персистентности в DataAccessException. Неверны выдумки про разный scope, транзакционность @Repository и навязанный порядок инициализации по стереотипу.",
+      "reviewLinks": [
+        {
+          "label": "ITK Academy",
+          "href": "../guides/itk-academy/"
+        }
+      ]
+    },
+    {
+      "id": "auto-чем-merge-отличается-от-rebase-624",
+      "type": "single",
+      "level": "junior",
+      "topics": [
+        "devops"
+      ],
+      "companies": [
+        "itk-academy"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/itk-academy.md",
+          "line": 294,
+          "title": "ITK Academy · 7. Docker, Git и CI/CD · Git"
+        }
+      ],
+      "prompt": "Чем merge отличается от rebase?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "merge создаёт линейную историю без лишних коммитов, а rebase, наоборот, добавляет коммит-слияние и ветвление; поэтому в публичных ветках безопаснее использовать именно rebase."
+        },
+        {
+          "id": "b",
+          "text": "rebase в отличие от merge физически удаляет старые коммиты из репозитория без возможности восстановления, тогда как merge всегда сохраняет обе ветки нетронутыми в reflog."
+        },
+        {
+          "id": "c",
+          "text": "merge переносит коммиты одной ветки поверх другой, переписывая их хэши, а rebase лишь объединяет два указателя веток без изменения идентификаторов коммитов."
+        },
+        {
+          "id": "d",
+          "text": "merge создаёт коммит-слияние, история ветвится. rebase «переносит» коммиты твоей ветки поверх другой, делая историю линейной. Rebase в публичных ветках обычно делать не стоит."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "merge формирует merge-коммит и сохраняет ветвящуюся историю, а rebase переписывает коммиты ветки, накладывая их поверх базовой и делая историю линейной (с новыми хэшами), из-за чего rebase опасен в общих ветках. Дистракторы меняют merge и rebase местами и выдумывают необратимое удаление коммитов.",
+      "reviewLinks": [
+        {
+          "label": "ITK Academy",
+          "href": "../guides/itk-academy/"
+        }
+      ]
+    },
+    {
+      "id": "auto-чем-образ-image-отличается-от-контейнера-container-619",
+      "type": "single",
+      "level": "junior",
+      "topics": [
+        "devops"
+      ],
+      "companies": [
+        "itk-academy"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/itk-academy.md",
+          "line": 277,
+          "title": "ITK Academy · 7. Docker, Git и CI/CD · Docker"
+        }
+      ],
+      "prompt": "Чем образ (image) отличается от контейнера (container)?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Образ — это запущенный процесс с выделенными ресурсами CPU и памяти, а контейнер — это файл на диске с зафиксированным состоянием, из которого образ загружается при старте."
+        },
+        {
+          "id": "b",
+          "text": "Образ и контейнер — это одно и то же, просто «образ» — это термин Docker, а «контейнер» — термин Kubernetes для того же самого артефакта."
+        },
+        {
+          "id": "c",
+          "text": "Образ — шаблон, неизменяемый снимок (как класс). Контейнер — запущенный экземпляр образа (как объект). Из одного образа можно запустить много контейнеров."
+        },
+        {
+          "id": "d",
+          "text": "Образ — изменяемый рабочий слой, в который пишутся данные приложения во время работы, а контейнер — неизменяемый шаблон, который нельзя запустить более одного раза."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "Образ — это неизменяемый шаблон (слои файловой системы плюс метаданные), а контейнер — его запущенный экземпляр с собственным изменяемым слоем; аналогия «класс и объект» точна, из одного образа можно поднять много контейнеров. Типичная ошибка — перепутать, что именно неизменяемо и что именно «запускается»: запускается контейнер, а шаблоном выступает образ.",
+      "reviewLinks": [
+        {
+          "label": "ITK Academy",
+          "href": "../guides/itk-academy/"
+        }
+      ]
+    },
+    {
+      "id": "auto-чем-отличается-component-service-repository-controller-209",
+      "type": "single",
+      "level": "trainee",
+      "topics": [
+        "devops",
+        "spring",
+        "hibernate"
+      ],
+      "companies": [
+        "sberseasons"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber-internship.md",
+          "line": 658,
+          "title": "SberSeasons · 8. Spring и Spring Boot · IoC и DI"
+        }
+      ],
+      "prompt": "Чем отличается @Component, @Service, @Repository, @Controller?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "@Repository и @Service создают синглтоны, а @Controller и @Component по умолчанию работают как прототипы, поэтому весь веб-слой получает новый отдельный экземпляр бина буквально на каждый входящий HTTP-запрос без какой-либо дополнительной настройки."
+        },
+        {
+          "id": "b",
+          "text": "@Component регистрирует бин, а @Service, @Repository и @Controller лишь навешивают AOP-логирование и бина сами не создают."
+        },
+        {
+          "id": "c",
+          "text": "@Repository неявно оборачивает методы в декларативную транзакцию @Transactional, @Service включает кэширование запросов, а @Controller сам сериализует ответ в JSON даже без @ResponseBody на методах."
+        },
+        {
+          "id": "d",
+          "text": "Технически — все создают бин (синглтон по умолчанию). Семантически разные: @Repository — слой доступа к данным, Spring дополнительно оборачивает SQL/JPA исключения в DataAccessException. @Service — бизнес-логика..."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "Все четыре аннотации — специализации @Component: технически создают бин-синглтон, а различаются семантикой слоёв и небольшими добавками, главная из которых — трансляция исключений persistence в DataAccessException у @Repository. Ловушки: все по умолчанию синглтоны (а не прототипы), @Repository не открывает транзакцию сам, а @Controller без @ResponseBody/@RestController не сериализует тело автоматически.",
+      "reviewLinks": [
+        {
+          "label": "SberSeasons",
+          "href": "../guides/sber-internship/"
+        }
+      ]
+    },
+    {
+      "id": "auto-чем-отличаются-soft-link-и-hard-link-705",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "devops"
+      ],
+      "companies": [
+        "liga"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/liga.md",
+          "line": 442,
+          "title": "Лига Цифровой Экономики · 10. Docker, Jenkins, Linux · Linux — базовый минимум"
+        }
+      ],
+      "prompt": "Чем отличаются soft link и hard link?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Hard link хранит абсолютный путь к файлу и ломается при переименовании цели."
+        },
+        {
+          "id": "b",
+          "text": "Оба указывают на один inode, разница лишь в счётчике ссылок: у hard он растёт, у soft равен единице, поэтому soft нельзя создать между разными файловыми системами, а hard можно где угодно."
+        },
+        {
+          "id": "c",
+          "text": "При удалении исходного файла hard link тоже становится битым, как и soft link, потому что оба по сути являются копиями записи каталога."
+        },
+        {
+          "id": "d",
+          "text": "Soft (ln -s) — указатель на путь, работает через каталоги. Hard — второе имя для того же inode, нельзя через каталоги и на другую файловую систему."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "Soft link (ln -s) — отдельный файл с путём к цели, может пересекать файловые системы и каталоги, но ломается, если цель переместить. Hard link — второе имя того же inode, ограничен одной ФС и не работает для каталогов, зато данные живут, пока есть хотя бы одна жёсткая ссылка. Ловушка: ключ -s это именно soft, а битым при удалении цели становится soft, а не hard.",
+      "reviewLinks": [
+        {
+          "label": "Лига Цифровой Экономики",
+          "href": "../guides/liga/"
+        }
+      ]
+    },
+    {
+      "id": "auto-что-делает-git-stash-625",
+      "type": "single",
+      "level": "junior",
+      "topics": [
+        "devops"
+      ],
+      "companies": [
+        "itk-academy"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/itk-academy.md",
+          "line": 297,
+          "title": "ITK Academy · 7. Docker, Git и CI/CD · Git"
+        }
+      ],
+      "prompt": "Что делает git stash?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Создаёт временный коммит с изменениями в отдельной ветке stash, очищает рабочую копию, а восстановить потом можно командой git stash merge из этой ветки в текущую."
+        },
+        {
+          "id": "b",
+          "text": "Откладывает незакоммиченные изменения «на полку», возвращая рабочую копию к чистому состоянию. Потом можно git stash pop."
+        },
+        {
+          "id": "c",
+          "text": "Полностью отменяет незакоммиченные правки, как git checkout -- ., без возможности вернуть."
+        },
+        {
+          "id": "d",
+          "text": "Откладывает только проиндексированные изменения, оставляя рабочие и неотслеживаемые правки на месте; вернуть отложенное затем можно через git stash apply --staged."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "git stash сохраняет незакоммиченные изменения (по умолчанию и staged, и unstaged отслеживаемых файлов) в отдельный стек, очищая рабочую копию; вернуть их можно через git stash pop или apply. Ловушки: stash не создаёт обычный коммит в отдельной ветке, не выкидывает изменения безвозвратно и по умолчанию прячет не только staged-правки.",
+      "reviewLinks": [
+        {
+          "label": "ITK Academy",
+          "href": "../guides/itk-academy/"
+        }
+      ]
+    },
+    {
+      "id": "auto-что-такое-ci-и-cd-627",
+      "type": "single",
+      "level": "junior",
+      "topics": [
+        "devops"
+      ],
+      "companies": [
+        "itk-academy",
+        "liga"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/itk-academy.md",
+          "line": 308,
+          "title": "ITK Academy · 7. Docker, Git и CI/CD · CI/CD"
+        },
+        {
+          "path": "guides/liga.md",
+          "line": 422,
+          "title": "Лига Цифровой Экономики · 10. Docker, Jenkins, Linux · Jenkins и CI/CD"
+        }
+      ],
+      "prompt": "Что такое CI и CD?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "CI (Continuous Integration) — это ручное слияние веток в конце спринта с прогоном тестов на машине разработчика, а CD (Continuous Deployment) — ручная выкладка релиза по расписанию."
+        },
+        {
+          "id": "b",
+          "text": "CI (Continuous Integration) — автоматическая сборка, тесты, статический анализ при каждом push. CD (Continuous Delivery/Deployment) — автоматический деплой в среды."
+        },
+        {
+          "id": "c",
+          "text": "CI отвечает за автоматический деплой собранного артефакта в продакшен при каждом коммите, а CD — за запуск unit-тестов и статического анализа перед сборкой."
+        },
+        {
+          "id": "d",
+          "text": "CI (Configuration Integration) — синхронизация конфигов между серверами, а CD (Configuration Delivery) — раздача переменных окружения приложениям при старте."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "CI (Continuous Integration) автоматизирует сборку, тесты и анализ при каждом изменении, обеспечивая раннее обнаружение конфликтов; CD (Continuous Delivery/Deployment) автоматизирует доставку и развёртывание в среды. Ловушки: подмена автоматизации ручными действиями, перестановка ролей CI и CD местами и ложная расшифровка аббревиатур как Configuration вместо Continuous.",
+      "reviewLinks": [
+        {
+          "label": "ITK Academy",
+          "href": "../guides/itk-academy/"
+        }
+      ]
+    },
+    {
+      "id": "auto-что-такое-docker-compose-622",
+      "type": "single",
+      "level": "junior",
+      "topics": [
+        "devops"
+      ],
+      "companies": [
+        "itk-academy"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/itk-academy.md",
+          "line": 286,
+          "title": "ITK Academy · 7. Docker, Git и CI/CD · Docker"
+        }
+      ],
+      "prompt": "Что такое docker-compose?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Инструмент оркестрации, который распределяет контейнеры по нескольким серверам кластера, следит за их живучестью и автоматически перезапускает упавшие, описывая всё это через декларативные yaml-манифесты."
+        },
+        {
+          "id": "b",
+          "text": "Инструмент для запуска нескольких связанных контейнеров одной командой через yaml-файл. Обычно: приложение + БД + Redis."
+        },
+        {
+          "id": "c",
+          "text": "Утилита для сборки одного образа из многоступенчатого Dockerfile."
+        },
+        {
+          "id": "d",
+          "text": "Формат yaml-файла внутри образа, описывающий, какие процессы запускать при старте контейнера и в каком порядке, заменяя собой инструкцию ENTRYPOINT."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "docker-compose описывает и запускает набор связанных контейнеров на одном хосте одной командой через файл docker-compose.yml (сервисы, сети, тома). Первый дистрактор приписывает ему функции оркестратора уровня кластера (Kubernetes/Swarm), которых у compose нет; второй путает его со сборкой образа из Dockerfile; третий выдумывает несуществующий внутриобразный формат вместо ENTRYPOINT.",
+      "reviewLinks": [
+        {
+          "label": "ITK Academy",
+          "href": "../guides/itk-academy/"
+        }
+      ]
+    },
+    {
+      "id": "auto-что-такое-dockerfile-620",
+      "type": "single",
+      "level": "junior",
+      "topics": [
+        "devops"
+      ],
+      "companies": [
+        "itk-academy"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/itk-academy.md",
+          "line": 280,
+          "title": "ITK Academy · 7. Docker, Git и CI/CD · Docker"
+        }
+      ],
+      "prompt": "Что такое Dockerfile?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Текстовый файл с инструкциями для сборки образа: FROM (базовый образ), COPY, RUN, CMD/ENTRYPOINT и т.д."
+        },
+        {
+          "id": "b",
+          "text": "Файл yaml, описывающий, какие контейнеры поднимать и какие порты пробрасывать."
+        },
+        {
+          "id": "c",
+          "text": "Конфигурационный файл запущенного контейнера, который хранит переменные окружения и команду запуска и перечитывается демоном Docker при каждом старте именно этого контейнера заново."
+        },
+        {
+          "id": "d",
+          "text": "Манифест готового образа, описывающий его слои и метаданные; Docker генерирует его сам при docker build и сверяет с ним целостность образа в реестре."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "Dockerfile — это текстовый скрипт сборки образа с инструкциями FROM, COPY, RUN, CMD/ENTRYPOINT и т.д., который выполняется командой docker build. Первый дистрактор подменяет его на docker-compose.yml (описание запуска нескольких контейнеров), второй — на конфигурацию рантайма контейнера, третий — на автогенерируемый манифест образа; ни одно из этого Dockerfile не является.",
+      "reviewLinks": [
+        {
+          "label": "ITK Academy",
+          "href": "../guides/itk-academy/"
+        }
+      ]
+    },
+    {
+      "id": "auto-что-такое-pipeline-в-gitlab-github-actions-628",
+      "type": "single",
+      "level": "junior",
+      "topics": [
+        "devops"
+      ],
+      "companies": [
+        "itk-academy"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/itk-academy.md",
+          "line": 311,
+          "title": "ITK Academy · 7. Docker, Git и CI/CD · CI/CD"
+        }
+      ],
+      "prompt": "Что такое pipeline в GitLab/GitHub Actions?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Это один скрипт сборки проекта, который компилирует код и упаковывает артефакт; запускается локально разработчиком перед коммитом, не зависит от событий в репозитории и не выполняется на удалённых runner'ах сервера CI."
+        },
+        {
+          "id": "b",
+          "text": "Это очередь сообщений между сервисами CI для обмена результатами."
+        },
+        {
+          "id": "c",
+          "text": "Цепочка job'ов, выполняемых на runner'ах при определённых событиях (push, merge request). Описывается в .gitlab-ci.yml или .github/workflows/*.yml."
+        },
+        {
+          "id": "d",
+          "text": "Это набор pre-commit хуков на стороне разработчика, прогоняющих линтеры и тесты до отправки изменений на сервер и блокирующих коммит."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "Pipeline — это последовательность (и параллельные стадии) job'ов, запускаемых на runner'ах по событиям репозитория и описанных в .gitlab-ci.yml или .github/workflows. Ловушки: pipeline — не один build-скрипт и не локальный запуск; обмен сообщениями между runner'ами тут ни при чём; а pre-commit хуки работают на машине разработчика, а не в CI.",
+      "reviewLinks": [
+        {
+          "label": "ITK Academy",
+          "href": "../guides/itk-academy/"
+        }
+      ]
+    },
+    {
+      "id": "auto-что-такое-pull-request-merge-request-250",
+      "type": "single",
+      "level": "trainee",
+      "topics": [
+        "java-core",
+        "devops"
+      ],
+      "companies": [
+        "sberseasons",
+        "itk-academy"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber-internship.md",
+          "line": 865,
+          "title": "SberSeasons · 11. Git, Maven, Liquibase · Git"
+        },
+        {
+          "path": "guides/itk-academy.md",
+          "line": 303,
+          "title": "ITK Academy · 7. Docker, Git и CI/CD · Git"
+        }
+      ],
+      "prompt": "Что такое Pull Request / Merge Request?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Предложение влить твою ветку в основную (master / main / develop). Коллеги делают код-ревью, оставляют комментарии, требуют изменений. После одобрения — merge. В банках обычно нужно 2 аппрува."
+        },
+        {
+          "id": "b",
+          "text": "Команда системы контроля версий, которая автоматически забирает изменения из удалённого репозитория и сразу сливает их в основную ветку без участия ревьюеров, без отдельной ветки и без какого-либо обсуждения кода участниками команды."
+        },
+        {
+          "id": "c",
+          "text": "Запрос на откат принятых изменений: просьба мейнтейнеру вернуть основную ветку к предыдущему коммиту после неудачного релиза."
+        },
+        {
+          "id": "d",
+          "text": "Локальная операция Git: незакоммиченные изменения уходят в stash."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "Pull Request / Merge Request — это предложение влить твою ветку в основную, которое проходит код-ревью с комментариями и аппрувами и сливается только после одобрения. Ловушка: PR не делает автоматический merge без ревью (это путаница с git pull), не является механизмом отката и не имеет отношения к git stash — это процесс ревью и интеграции изменений через платформу.",
+      "reviewLinks": [
+        {
+          "label": "SberSeasons",
+          "href": "../guides/sber-internship/"
+        }
+      ]
+    },
+    {
+      "id": "auto-что-такое-testcontainers-694",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "testing-aqa",
+        "devops"
+      ],
+      "companies": [
+        "liga"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/liga.md",
+          "line": 398,
+          "title": "Лига Цифровой Экономики · 9. Тесты: JUnit, Mockito, TDD"
+        }
+      ],
+      "prompt": "Что такое Testcontainers?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Библиотека для in-memory заглушек БД и брокеров в JVM без Docker."
+        },
+        {
+          "id": "b",
+          "text": "Фреймворк для контейнеризации самого приложения: оборачивает Spring Boot в Docker-образ и запускает его в тестах вместе с зависимостями через docker-compose, проверяя корректность сборки образа."
+        },
+        {
+          "id": "c",
+          "text": "Библиотека для запуска реальных БД/брокеров в Docker из тестов. Нужна для интеграционных тестов, которые проверяют реальную работу с PostgreSQL/Kafka, а не моки."
+        },
+        {
+          "id": "d",
+          "text": "Расширение JUnit для параметризованного запуска одного теста в нескольких изолированных контекстах Spring, чтобы прогонять сценарии с разными конфигурациями бинов и проверять их."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "Testcontainers поднимает реальные зависимости (PostgreSQL, Kafka и т.д.) в Docker-контейнерах прямо из тестов, давая честные интеграционные тесты против настоящих сервисов вместо моков. Ловушки: это не in-memory заглушки в JVM (смысл как раз в реальном движке в Docker), библиотека контейнеризует зависимости, а не собирает образ приложения, и не имеет отношения к параметризации контекстов Spring.",
+      "reviewLinks": [
+        {
+          "label": "Лига Цифровой Экономики",
+          "href": "../guides/liga/"
+        }
+      ]
+    }
+  ]
+}

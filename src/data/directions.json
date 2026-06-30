@@ -1,0 +1,44 @@
+{
+  "directions": [
+    {
+      "slug": "finteh",
+      "name": "Финтех и банки",
+      "short": "финтех",
+      "stack": "Java 11–21, Spring Boot, Kafka, PostgreSQL, многопоточность, System Design",
+      "intro": "Java-разработка в финтехе и банках — это высокие нагрузки, надёжность и финансовая логика. На собеседованиях спрашивают Spring и транзакции, конкурентность, очереди (Kafka), базы данных, а часто и live-coding с разбором кода.",
+      "companies": ["sberbank", "alfabank", "vtb", "tbank", "gazprombank", "sovkombank", "rayffayzen-bank", "mts-bank", "promsvyazbank", "otp-bank", "alfa-kapital"]
+    },
+    {
+      "slug": "marketplaces",
+      "name": "Маркетплейсы и e-commerce",
+      "short": "маркетплейсы",
+      "stack": "Java, Spring Boot, Kafka, микросервисы, Kubernetes, PostgreSQL, System Design",
+      "intro": "В маркетплейсах и e-commerce Java-разработчику важны масштабируемость, поиск, очереди и микросервисы. На собесах — System Design, Kafka, кеширование и реальные задачи под нагрузку.",
+      "companies": ["ozon-ozon", "wildberries", "avito-avito", "x5tech"]
+    },
+    {
+      "slug": "product",
+      "name": "Продуктовые и big tech",
+      "short": "продуктовые компании",
+      "stack": "Java, алгоритмы, System Design, многопоточность, JVM, gRPC, Kubernetes",
+      "intro": "В продуктовых и big-tech компаниях сильный упор на алгоритмы и System Design, плюс глубокие вопросы по JVM и конкурентности. Готовиться стоит и к live-coding, и к проектированию систем.",
+      "companies": ["yandeks", "vk", "ozon-ozon", "avito-avito"]
+    },
+    {
+      "slug": "outsource",
+      "name": "Аутсорс и интеграторы",
+      "short": "аутсорс",
+      "stack": "Java, Spring Boot, Hibernate, PostgreSQL, Docker, REST, микросервисы",
+      "intro": "В аутсорсе и интеграторах ценят широкий стек и умение быстро включаться в проект. На собесах — Spring, Hibernate, базы данных и практические задачи по разным доменам.",
+      "companies": ["t1", "innotech", "liga-tsifrovoy-ekonomiki", "aston", "nord-clan", "simbirsoft"]
+    },
+    {
+      "slug": "telecom",
+      "name": "Телеком",
+      "short": "телеком",
+      "stack": "Java, Spring, Kafka, PostgreSQL, highload, интеграции",
+      "intro": "В телекоме Java-разработка — это highload и интеграции. На собесах спрашивают многопоточность, очереди и устойчивость систем.",
+      "companies": ["mts", "bilayn", "rostelekom"]
+    }
+  ]
+}

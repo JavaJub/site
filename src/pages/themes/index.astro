@@ -1,0 +1,37 @@
+---
+import Base from '../../layouts/Base.astro';
+import TopicIcon from '../../components/TopicIcon.astro';
+import { stats, topicLabel } from '../../lib/companies';
+const topics = Object.entries(stats.topicTotals).filter(([k]) => k !== 'other').sort((a, b) => b[1] - a[1]).map(([k]) => k);
+const title = 'Темы вопросов Java-собеседований — Core, Spring, Kafka, SQL, многопоточность | JavaJub';
+const description = 'Вопросы Java-собеседований по темам: Java Core, коллекции, JVM, многопоточность, Spring, Hibernate, SQL, Kafka, System Design, тестирование. Реальные вопросы из компаний.';
+---
+<Base title={title} description={description}>
+  <section class="section">
+    <div class="container">
+      <nav class="crumbs mono"><a href="/">главная</a> / темы</nav>
+      <div class="accent-bar"></div>
+      <h1>Темы Java-собеседований</h1>
+      <p class="lead">Вопросы из реальных собесов, разложенные по темам. Повтори то, что чаще всего спрашивают на интервью.</p>
+      <div class="grid grid--cards" style="margin-top:1.4rem">
+        {topics.map((key) => (
+          <a class="card card--link tcard" href={`/themes/${key}/`}>
+            <span class="tcard__ic"><TopicIcon topic={key} size={26} /></span>
+            <h3>{topicLabel(key)}</h3>
+            <span class="tcard__go mono">Частые вопросы →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
+<style>
+  .crumbs { color: var(--text-faint); font-size: .82rem; margin-bottom: 1rem; }
+  .crumbs a:hover { color: var(--accent-light); }
+  .tcard { display: flex; flex-direction: column; gap: .6rem; min-height: 9rem; }
+  .tcard h3 { margin: 0; }
+  .tcard__go { color: var(--accent-light); font-weight: 700; font-size: .85rem; margin-top: auto; }
+  .tcard__ic { display: grid; place-items: center; width: 46px; height: 46px; color: var(--accent);
+    border: 1px solid var(--accent-line); border-radius: 12px; background: var(--accent-soft); }
+  .tcard:hover .tcard__ic { border-color: var(--accent); }
+</style>

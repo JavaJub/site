@@ -1,0 +1,39 @@
+---
+import Base from '../../layouts/Base.astro';
+import TopicIcon from '../../components/TopicIcon.astro';
+import { questionTopics, questionsByTopic } from '../../lib/questions';
+import { topicLabel, ru } from '../../lib/companies';
+const rows = questionTopics
+  .map((t) => ({ topic: t, label: topicLabel(t), count: questionsByTopic(t).length }))
+  .sort((a, b) => b.count - a.count);
+const total = rows.reduce((s, r) => s + r.count, 0);
+const title = 'Вопросы Java-собеседований с ответами — по темам | JavaJub';
+const description = `${ru(total)} вопросов Java-собеседований с разбором и ответами: Java Core, Spring, многопоточность, SQL, Kafka, JVM, коллекции и другие темы. Готовься к интервью.`;
+---
+<Base title={title} description={description}>
+  <section class="section">
+    <div class="container">
+      <nav class="crumbs mono"><a href="/">главная</a> <span>/</span> <b>вопросы</b></nav>
+      <div class="accent-bar"></div>
+      <h1>Вопросы с ответами</h1>
+      <p class="lead">{ru(total)} разобранных вопросов Java-собеседований — с правильным ответом и пояснением. Выбери тему и читай.</p>
+      <div class="grid grid--cards" style="margin-top:1.4rem">
+        {rows.map((r) => (
+          <a class="card card--link qx" href={`/questions/${r.topic}/`}>
+            <span class="qx__ic"><TopicIcon topic={r.topic} size={24} /></span>
+            <div><h3>{r.label}</h3><span class="qx__n mono">{ru(r.count)} вопросов с ответами →</span></div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
+<style>
+  .crumbs { color: var(--text-faint); font-size: .82rem; margin-bottom: 1rem; }
+  .crumbs a:hover { color: var(--accent-light); } .crumbs span { opacity: .5; } .crumbs b { color: var(--text-soft); }
+  .qx { display: flex; align-items: center; gap: .9rem; }
+  .qx h3 { margin: 0 0 .15rem; font-size: 1.1rem; }
+  .qx__ic { flex: none; display: grid; place-items: center; width: 46px; height: 46px; color: var(--accent);
+    border: 1px solid var(--accent-line); border-radius: 12px; background: var(--accent-soft); }
+  .qx__n { color: var(--accent-light); font-weight: 700; font-size: .82rem; }
+</style>

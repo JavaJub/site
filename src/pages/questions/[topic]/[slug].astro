@@ -1,0 +1,95 @@
+---
+import Base from '../../../layouts/Base.astro';
+import TopicIcon from '../../../components/TopicIcon.astro';
+import { tg } from '../../../lib/site';
+import { questions, questionsByTopic, type QA } from '../../../lib/questions';
+
+export function getStaticPaths() {
+  return questions.map((q) => ({ params: { topic: q.topic, slug: q.slug }, props: { q } }));
+}
+const { q } = Astro.props as { q: QA };
+const related = questionsByTopic(q.topic).filter((x) => x.slug !== q.slug).slice(0, 6);
+
+const title = `${q.prompt} — ответ | Java-собеседование · JavaJub`;
+const description = q.answer.slice(0, 157).replace(/\s+\S*$/, '') + '…';
+const url = `https://www.javajub.com/questions/${q.topic}/${q.slug}/`;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'QAPage',
+      inLanguage: 'ru',
+      mainEntity: {
+        '@type': 'Question',
+        name: q.prompt,
+        answerCount: 1,
+        acceptedAnswer: { '@type': 'Answer', text: `${q.answer} ${q.explanation}`.trim() },
+      },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'JavaJub', item: 'https://www.javajub.com/' },
+        { '@type': 'ListItem', position: 2, name: 'Вопросы', item: 'https://www.javajub.com/questions/' },
+        { '@type': 'ListItem', position: 3, name: q.topicLabel, item: `https://www.javajub.com/questions/${q.topic}/` },
+        { '@type': 'ListItem', position: 4, name: q.prompt, item: url },
+      ],
+    },
+  ],
+};
+---
+<Base title={title} description={description} jsonLd={jsonLd}>
+  <section class="section">
+    <div class="container narrow">
+      <nav class="crumbs mono"><a href="/">главная</a> <span>/</span> <a href="/questions/">вопросы</a> <span>/</span> <a href={`/questions/${q.topic}/`}>{q.topicLabel}</a></nav>
+      <div class="qhead">
+        <a class="qhead__tag tag tag--ic" href={`/questions/${q.topic}/`}><TopicIcon topic={q.topic} size={13} /> {q.topicLabel}</a>
+        <span class="pill">{q.level}</span>
+      </div>
+      <h1 class="qh1">{q.prompt}</h1>
+
+      <div class="answer">
+        <h2 class="answer__h"><span class="dot"></span>Ответ</h2>
+        <p class="answer__t">{q.answer}</p>
+        {q.explanation && q.explanation !== q.answer && (
+          <div class="answer__ex"><strong>Разбор:</strong> {q.explanation}</div>
+        )}
+      </div>
+
+      <div class="cta card">
+        <p class="muted" style="margin:0 0 .8rem">Хочешь так же по своей компании — с вопросами по грейдам и задачами? Закажи гайд или забери свежее в Telegram.</p>
+        <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+          <a class="btn btn--primary" href="/order/">Заказать гайд</a>
+          <a class="btn btn--ghost" href="/quizzes/">Пройти тест</a>
+        </div>
+      </div>
+
+      {related.length > 0 && (
+        <div class="related">
+          <h2 class="answer__h"><span class="dot"></span>Ещё вопросы по теме «{q.topicLabel}»</h2>
+          <ul class="rlist">
+            {related.map((r) => <li><a href={`/questions/${q.topic}/${r.slug}/`}>{r.prompt}</a></li>)}
+          </ul>
+        </div>
+      )}
+    </div>
+  </section>
+</Base>
+<style>
+  .narrow { max-width: 760px; }
+  .crumbs { color: var(--text-faint); font-size: .82rem; margin-bottom: 1.2rem; }
+  .crumbs a:hover { color: var(--accent-light); } .crumbs span { opacity: .5; }
+  .qhead { display: flex; align-items: center; gap: .5rem; margin-bottom: .8rem; }
+  .qh1 { font-size: clamp(1.6rem, 3.6vw, 2.3rem); }
+  .answer { margin-top: 1.6rem; }
+  .answer__h { display: flex; align-items: center; gap: .6rem; font-size: 1.2rem; margin-bottom: .7rem; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
+  .answer__t { font-size: 1.1rem; line-height: 1.6; color: var(--text); }
+  .answer__ex { border-left: 3px solid var(--accent); padding: .7rem .9rem; background: var(--card-2); border-radius: 0 8px 8px 0; color: var(--text-soft); margin-top: 1rem; }
+  .cta { margin: 2rem 0; background: var(--card-2); border-color: var(--border-strong); }
+  .related { margin-top: 2rem; }
+  .rlist { list-style: none; margin: .8rem 0 0; padding: 0; }
+  .rlist li { padding: .55rem 0; border-bottom: 1px solid var(--border); }
+  .rlist a { color: var(--text-soft); } .rlist a:hover { color: var(--accent-light); }
+</style>

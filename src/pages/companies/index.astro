@@ -1,0 +1,77 @@
+---
+import Base from '../../layouts/Base.astro';
+import CompanyCard from '../../components/CompanyCard.astro';
+import { indexableCompanies, stats, ru } from '../../lib/companies';
+
+const list = indexableCompanies;
+const title = `Собеседования Java по компаниям — ${ru(stats.companies)} компаний · вопросы и грейды | JavaJub`;
+const description = `Реальные вопросы с собеседований Java в ${ru(stats.companies)} компаниях: Сбер, Т-Банк, Альфа-Банк, ВТБ, Яндекс, VK, Ozon, Aston и других. По грейдам — Junior, Middle, Senior. Готовься к интервью прицельно.`;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Компании — собеседования Java',
+  description,
+  url: 'https://www.javajub.com/companies/',
+  mainEntity: {
+    '@type': 'ItemList',
+    numberOfItems: list.length,
+    itemListElement: list.slice(0, 50).map((c, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: c.name,
+      url: `https://www.javajub.com/companies/${c.slug}/`,
+    })),
+  },
+};
+---
+<Base title={title} description={description} jsonLd={jsonLd}>
+  <section class="section">
+    <div class="container">
+      <nav class="crumbs mono"><a href="/">главная</a> / компании</nav>
+      <div class="accent-bar"></div>
+      <h1>Собеседования Java по компаниям</h1>
+      <p class="lead">{ru(stats.questions)}+ реальных вопросов из {ru(stats.companies)} компаний, сгруппированных по грейдам и темам. Выбери компанию, к которой готовишься.</p>
+
+      <div class="filter">
+        <input id="q" class="filter__in" type="search" placeholder="Поиск компании — Сбер, Т-Банк, ВТБ…" autocomplete="off" aria-label="Поиск компании" />
+        <span class="filter__count mono" id="count">{list.length}</span>
+      </div>
+
+      <div class="grid grid--cards" id="list" style="margin-top:1.2rem">
+        {list.map((c) => (
+          <div class="cwrap" data-name={c.name.toLowerCase()} data-slug={c.slug}>
+            <CompanyCard company={c} />
+          </div>
+        ))}
+      </div>
+      <p id="empty" hidden class="muted" style="margin-top:1.5rem">Пока нет такой компании в базе сайта. <a href="/order/">Закажи гайд</a> — соберём разбор.</p>
+    </div>
+  </section>
+</Base>
+<style>
+  .crumbs { color: var(--text-faint); font-size: 0.82rem; margin-bottom: 1rem; }
+  .crumbs a:hover { color: var(--accent-light); }
+  .filter { display: flex; align-items: center; gap: 0.8rem; margin-top: 1.4rem; }
+  .filter__in { flex: 1; max-width: 30rem; background: var(--card); border: 1px solid var(--border);
+    color: var(--text); border-radius: 10px; padding: 0.75rem 1rem; font: inherit; }
+  .filter__in:focus { outline: none; border-color: var(--accent); }
+  .filter__count { color: var(--text-faint); }
+</style>
+<script>
+  const q = document.getElementById('q') as HTMLInputElement;
+  const items = Array.from(document.querySelectorAll<HTMLElement>('.cwrap'));
+  const count = document.getElementById('count')!;
+  const empty = document.getElementById('empty')!;
+  q?.addEventListener('input', () => {
+    const v = q.value.trim().toLowerCase();
+    let shown = 0;
+    for (const el of items) {
+      const hit = !v || (el.dataset.name?.includes(v) || el.dataset.slug?.includes(v));
+      el.hidden = !hit;
+      if (hit) shown++;
+    }
+    count.textContent = String(shown);
+    empty.hidden = shown !== 0;
+  });
+</script>

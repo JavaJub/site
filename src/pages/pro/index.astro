@@ -1,0 +1,181 @@
+---
+import Base from '../../layouts/Base.astro';
+import TelegramIcon from '../../components/icons/TelegramIcon.astro';
+import Cases from '../../components/Cases.astro';
+import ProGuides from '../../components/ProGuides.astro';
+import { LINKS, FEATURES } from '../../lib/site';
+
+const plans = [
+  { id: 'month', title: 'Месяц', amount: '790', per: '₽ / мес', note: null, best: false },
+  { id: 'year', title: 'Год', amount: '6 290', per: '₽ / год', note: '−35% · ≈524 ₽/мес', best: true },
+  { id: 'quarter', title: '3 месяца', amount: '1 990', per: '₽ / 3 мес', note: '−16%', best: false },
+];
+
+// Product offers inside Pro (informational — оформление в Telegram).
+const offers = [
+  { ic: '📘', title: 'Гайды по компаниям', desc: 'Реальные вопросы с ответами по грейдам (Middle/Senior) — банки, финтех и продуктовые компании.' },
+  { ic: '🛠', title: 'Гайд на заказ', desc: 'Нет нужной компании? Соберём разбор под конкретную компанию и грейд по запросу.' },
+  { ic: '⚡', title: 'Шпаргалка по Middle', desc: 'Компактная выжимка — ключевые вопросы и короткие ответы, чтобы освежить всё за пару часов перед собесом.' },
+  { ic: '🏦', title: 'Все вопросы Middle · финтех', desc: 'Сборник со всеми вопросами на Middle по банкам и финтеху — максимум вопросов в одном документе.' },
+];
+
+const title = 'JavaJub Pro — гайды по собеседованиям Java по компаниям | JavaJub';
+const description = 'JavaJub Pro: полные гайды по собеседованиям Java — реальные вопросы с ответами, гайд на заказ, шпаргалка по Middle, сборник вопросов по финтеху. Оформление в Telegram.';
+---
+<Base title={title} description={description}>
+  <section class="section">
+    <div class="container">
+      <nav class="crumbs mono"><a href="/">главная</a> <span>/</span> <b>Pro</b></nav>
+      <div class="accent-bar"></div>
+      <h1>JavaJub <span class="hl">Pro</span></h1>
+      <p class="lead">Полные гайды по собеседованиям: реальные вопросы <b>с ответами</b>, задачи (live-coding, SQL, System Design) и чек-листы под грейд. Один пройденный собес окупает подписку.</p>
+
+      {FEATURES.payOnSite && (
+        <Fragment>
+          <div id="pro-success" class="card success" hidden>
+            <h3>Оплата прошла 🎉</h3>
+            <p id="success-text" class="muted">Спасибо! Доступ к Pro активирован.</p>
+            <a class="btn btn--tg" id="success-link" href={LINKS.telegramPro} target="_blank" rel="noreferrer"><TelegramIcon /> Открыть JavaJub Pro</a>
+          </div>
+          <div class="plans" id="plans">
+            {plans.map((p) => (
+              <div class:list={["plan card", { 'plan--best': p.best }]}>
+                {p.best && <span class="plan__badge">выгодно</span>}
+                <h3 class="plan__title">{p.title}</h3>
+                <div class="plan__price"><b>{p.amount}</b> <span>{p.per}</span></div>
+                {p.note && <div class="plan__note mono">{p.note}</div>}
+                <button class="btn btn--primary plan__btn" data-plan={p.id}>Оплатить</button>
+              </div>
+            ))}
+          </div>
+          <div class="paybox">
+            <input id="pay-email" type="email" placeholder="email для чека (необязательно)" autocomplete="email" />
+            <span class="mono faint">Оплата картой или СБП через ЮKassa · безопасно</span>
+            <p id="pay-error" class="payerr" hidden></p>
+          </div>
+        </Fragment>
+      )}
+
+      <h2 class="sec-h">Что входит в Pro</h2>
+      <div class="offers">
+        {offers.map((o) => (
+          <div class="offer card">
+            <span class="offer__ic" aria-hidden="true">{o.ic}</span>
+            <h3 class="offer__t">{o.title}</h3>
+            <p class="offer__d muted">{o.desc}</p>
+          </div>
+        ))}
+      </div>
+
+      {!FEATURES.payOnSite && (
+        <div class="protariff card">
+          <div>
+            <span class="kicker">доступ к Pro</span>
+            <p class="muted" style="margin:.4rem 0 .7rem">Подписка открывает все гайды, шпаргалки и новые разборы. <b>Оформление и оплата — в Telegram.</b></p>
+            <ul class="tariff">
+              <li><b>790&nbsp;₽</b> <span class="faint">/ мес</span></li>
+              <li><b>1&nbsp;990&nbsp;₽</b> <span class="faint">/ 3 мес</span></li>
+              <li><b>6&nbsp;290&nbsp;₽</b> <span class="faint">/ год · −35%</span></li>
+            </ul>
+          </div>
+          <div class="protariff__btns">
+            <a class="btn btn--tg" href={LINKS.telegramPro} target="_blank" rel="noreferrer"><TelegramIcon /> Оформить в Telegram</a>
+            <a class="btn btn--ghost" href={LINKS.subBot} target="_blank" rel="noreferrer">Бот подписки</a>
+          </div>
+        </div>
+      )}
+
+      <p class="muted" style="margin-top:1.6rem">Сначала посмотреть бесплатно: <a href="/guides/">гайды</a>, <a href="/companies/">компании</a>, <a href="/questions/">вопросы с ответами</a>, <a href="/quizzes/">тесты</a>.</p>
+    </div>
+  </section>
+
+  <!-- WHAT'S INSIDE PRO: cover + table of contents teaser (no questions) -->
+  <ProGuides alt />
+
+  <Cases heading="Уже проходят собесы по нашим гайдам" />
+</Base>
+<style>
+  .crumbs { color: var(--text-faint); font-size: .82rem; margin-bottom: 1rem; }
+  .crumbs a:hover { color: var(--accent-light); } .crumbs span { opacity: .5; } .crumbs b { color: var(--text-soft); }
+  .sec-h { margin: 2rem 0 0; font-size: 1.5rem; }
+
+  .offers { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: 1rem; margin-top: 1.1rem; }
+  .offer { display: flex; flex-direction: column; gap: .4rem; }
+  .offer__ic { font-size: 1.5rem; line-height: 1; }
+  .offer__t { margin: .2rem 0 0; font-size: 1.1rem; }
+  .offer__d { font-size: .92rem; margin: 0; }
+
+  .protariff { display: flex; align-items: center; justify-content: space-between; gap: 1.4rem; flex-wrap: wrap;
+    margin-top: 1.4rem; background: linear-gradient(120deg, var(--card), var(--card-2)); border-color: var(--border-strong); }
+  .tariff { list-style: none; margin: 0; padding: 0; display: flex; gap: 1.4rem; flex-wrap: wrap; }
+  .tariff b { font-size: 1.25rem; font-weight: 800; color: var(--cream); letter-spacing: -.02em; }
+  .protariff__btns { display: flex; gap: .6rem; flex-wrap: wrap; }
+
+  .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1.8rem 0 1rem; align-items: stretch; }
+  .plan { position: relative; display: flex; flex-direction: column; gap: .5rem; text-align: center; }
+  .plan--best { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 16px 40px rgba(255,61,0,.14); }
+  .plan__badge { position: absolute; top: -.7rem; left: 50%; transform: translateX(-50%); background: var(--accent);
+    color: var(--contrast); font-size: .7rem; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; padding: .15rem .7rem; border-radius: 999px; }
+  .plan__title { margin: .3rem 0 0; }
+  .plan__price b { font-size: 2rem; font-weight: 800; color: var(--cream); letter-spacing: -.03em; }
+  .plan__price span { color: var(--text-soft); font-size: .9rem; }
+  .plan__note { color: var(--accent-light); font-size: .82rem; }
+  .plan__btn { margin-top: auto; justify-content: center; }
+  .paybox { display: flex; flex-direction: column; align-items: center; gap: .5rem; margin: .5rem 0 2rem; }
+  .paybox input { max-width: 22rem; text-align: center; background: var(--card); border: 1px solid var(--border); color: var(--text); border-radius: 10px; padding: .6rem .9rem; font: inherit; }
+  .payerr { color: var(--accent-light); font-size: .9rem; margin: 0; }
+  .success { background: var(--card-2); border-color: var(--accent); display: flex; flex-direction: column; gap: .6rem; align-items: flex-start; margin-bottom: 1.6rem; }
+  @media (max-width: 760px) { .plans { grid-template-columns: 1fr; } }
+</style>
+<script>
+  // Checkout logic only runs when the on-site plans are actually rendered.
+  if (document.getElementById('plans')) {
+    const BASE = import.meta.env.PUBLIC_API_BASE || '';
+    const emailEl = document.getElementById('pay-email') as HTMLInputElement;
+    const errEl = document.getElementById('pay-error')!;
+
+    document.querySelectorAll<HTMLButtonElement>('[data-plan]').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        errEl.hidden = true;
+        btn.disabled = true; btn.textContent = 'Создаём оплату…';
+        try {
+          const res = await fetch(`${BASE}/api/pay`, {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ plan: btn.dataset.plan, email: emailEl.value.trim() }),
+          });
+          const data = await res.json();
+          if (data.ok && data.confirmationUrl) { window.location.href = data.confirmationUrl; return; }
+          throw new Error(data.error || 'Не удалось создать оплату');
+        } catch (e) {
+          errEl.textContent = 'Оплата временно недоступна. Напишите в Telegram-бот — поможем.';
+          errEl.hidden = false;
+          btn.disabled = false; btn.textContent = 'Оплатить';
+        }
+      });
+    });
+
+    const payId = new URLSearchParams(location.search).get('pay');
+    if (payId) {
+      const ok = document.getElementById('pro-success')!;
+      const txt = document.getElementById('success-text')!;
+      const link = document.getElementById('success-link') as HTMLAnchorElement;
+      (async () => {
+        for (let i = 0; i < 12; i++) {
+          try {
+            const r = await fetch(`${BASE}/api/pay/${payId}`);
+            const d = await r.json();
+            if (d.ok && d.status === 'paid') {
+              document.getElementById('plans')!.hidden = true;
+              txt.textContent = d.invite ? 'Доступ к Pro активирован — заходи по персональной ссылке.' : 'Спасибо! Доступ выдаём — ссылка придёт в Telegram/на почту.';
+              if (d.invite || d.fallbackUrl) link.href = d.invite || d.fallbackUrl;
+              ok.removeAttribute('hidden');
+              ok.scrollIntoView({ block: 'center' });
+              return;
+            }
+          } catch (_) {}
+          await new Promise((r) => setTimeout(r, 1500));
+        }
+      })();
+    }
+  }
+</script>

@@ -1,0 +1,214 @@
+---
+import Base from '../../layouts/Base.astro';
+import TelegramIcon from '../../components/icons/TelegramIcon.astro';
+import { LINKS, FEATURES, tg } from '../../lib/site';
+import { indexableCompanies, ru, stats } from '../../lib/companies';
+const title = 'Заказать гайд по собеседованию под компанию — Java | JavaJub';
+const description = FEATURES.collectData
+  ? 'Закажи разбор собеседования Java под нужную компанию и грейд: реальные вопросы, задачи и чек-лист. Ответим на почту или в мессенджер.'
+  : 'Закажи разбор собеседования Java под нужную компанию и грейд — оформление в Telegram. Реальные вопросы, задачи и чек-лист по грейдам.';
+const companies = indexableCompanies.map((c) => ({ slug: c.slug, name: c.name }));
+const grades = ['Junior', 'Junior+', 'Middle', 'Middle+', 'Senior', 'Lead', 'AQA', 'Стажировка'];
+---
+<Base title={title} description={description} noCta>
+  <section class="section">
+    <div class="container order">
+      <nav class="crumbs mono"><a href="/">главная</a> / заказать гайд</nav>
+      <figure class="order__photo">
+        <img src="/img/hero-desk.jpg" alt="Рабочее место Java-разработчика — подготовка к собеседованию" width="1400" height="939" loading="eager" />
+        <figcaption class="mono">// соберём разбор под твою компанию и грейд</figcaption>
+      </figure>
+      <div class="order__grid">
+        <div>
+          <div class="accent-bar"></div>
+          <h1>Закажи гайд под свою компанию</h1>
+          <p class="lead">В базе уже {ru(stats.companies)} компаний. Нет нужной или хочешь полный разбор с ответами и задачами — {FEATURES.collectData ? 'оставь заявку.' : 'напиши нам в Telegram.'} Соберём разбор с реальными вопросами с собесов под нужный грейд.</p>
+
+          {FEATURES.collectData ? (
+            <Fragment>
+            <form id="order-form" class="form" novalidate>
+              <label class="field">
+                <span>Компания</span>
+                <input list="companies" id="company" name="company" placeholder="Начни вводить: Сбер, Т-Банк, Авито…" autocomplete="off" required />
+                <datalist id="companies">
+                  {companies.map((c) => <option value={c.name} data-slug={c.slug}></option>)}
+                  <option value="Другая компания"></option>
+                </datalist>
+              </label>
+              <label class="field">
+                <span>Грейд</span>
+                <select id="grade" name="grade" required>
+                  <option value="" disabled selected>Выбери грейд</option>
+                  {grades.map((g) => <option value={g}>{g}</option>)}
+                </select>
+              </label>
+              <div class="field">
+                <span>Как с тобой связаться</span>
+                <div class="seg" role="tablist">
+                  <button type="button" class="seg__b is-active" data-method="email">Email</button>
+                  <button type="button" class="seg__b" data-method="telegram">Telegram</button>
+                  <button type="button" class="seg__b" data-method="phone">Телефон</button>
+                </div>
+                <input id="contact" name="contact" placeholder="you@mail.ru" required />
+              </div>
+              <label class="field">
+                <span>Комментарий <span class="faint">(необязательно)</span></span>
+                <textarea id="note" name="note" rows="3" placeholder="Этап, дедлайн собеса, что важно разобрать…"></textarea>
+              </label>
+              <label class="consent">
+                <input type="checkbox" id="consent" required />
+                <span class="faint">Соглашаюсь с <a href="/privacy/">политикой обработки данных</a> для ответа на заявку.</span>
+              </label>
+              <button class="btn btn--primary" type="submit" id="submit">Отправить заявку</button>
+              <p class="form__hint faint mono">Заявка ни к чему не обязывает. Обычно отвечаем в течение дня.</p>
+            </form>
+            <div id="order-ok" class="card okpanel" hidden>
+              <h3>Заявка принята 🎯</h3>
+              <p class="muted" id="ok-text">Свяжемся с тобой по указанному контакту.</p>
+              <a class="btn btn--tg" id="ok-tg" href={LINKS.subBot} target="_blank" rel="noreferrer"><TelegramIcon /> Ускорить через Telegram-бот</a>
+            </div>
+            </Fragment>
+          ) : (
+            <div class="ordercta card">
+              <span class="pill pill--solid">оформление в Telegram</span>
+              <h3>Как заказать гайд</h3>
+              <ol class="steps">
+                <li>Напиши в наш Telegram — канал <b>@java_jub</b> или бот.</li>
+                <li>Назови компанию и грейд (и дедлайн собеса, если горит).</li>
+                <li>Соберём разбор с реальными вопросами, ответами и задачами.</li>
+              </ol>
+              <div class="ordercta__btns">
+                <a class="btn btn--tg" href={tg('order')} target="_blank" rel="noreferrer"><TelegramIcon /> Написать в Telegram</a>
+                <a class="btn btn--ghost" href={LINKS.subBot} target="_blank" rel="noreferrer">Открыть бота</a>
+              </div>
+              <p class="form__hint faint mono">Никаких форм и личных данных на сайте — общаемся в мессенджере.</p>
+            </div>
+          )}
+        </div>
+
+        <aside class="oside">
+          {FEATURES.collectData ? (
+            <div class="card" id="digest">
+              <span class="pill pill--accent">на почту</span>
+              <h3>Дайджест гайдов и разборов</h3>
+              <p class="muted">Раз в неделю — новые гайды по компаниям и разборы собесов. Без спама.</p>
+              <form id="digest-form" class="dform">
+                <input id="digest-email" type="email" placeholder="you@mail.ru" required />
+                <label class="consent"><input type="checkbox" id="digest-consent" required /><span class="faint">Согласие с <a href="/privacy/">политикой</a> и на рассылку</span></label>
+                <button class="btn btn--ghost" type="submit">Подписаться</button>
+              </form>
+              <p id="digest-ok" class="mono" style="color:var(--accent-light)" hidden>Готово! Подтверди подписку в письме.</p>
+            </div>
+          ) : (
+            <div class="card">
+              <span class="pill pill--solid">в Telegram</span>
+              <h3>Свежие гайды — в канале</h3>
+              <p class="muted">Новые разборы и вопросы с собесов выходят в @java_jub первыми. Это и есть наш «дайджест».</p>
+              <a class="btn btn--tg" href={tg('order_side')} target="_blank" rel="noreferrer"><TelegramIcon /> Подписаться на канал</a>
+            </div>
+          )}
+          <div class="card">
+            <h4 style="margin:0 0 .5rem">Почему стоит</h4>
+            <ul class="why">
+              <li>Реальные вопросы — «попадались слово в слово»</li>
+              <li>Структура под грейд: Core, Spring, БД, многопоточка, System Design</li>
+              <li>Задачи: live-coding, SQL, code review</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</Base>
+<style>
+  .crumbs { color: var(--text-faint); font-size: .82rem; margin-bottom: 1.2rem; }
+  .crumbs a:hover { color: var(--accent-light); }
+  .order__photo { position: relative; margin: 0 0 1.8rem; border-radius: var(--radius); overflow: hidden;
+    border: 1px solid var(--border-strong); line-height: 0; box-shadow: 0 18px 40px rgba(0,0,0,.4); }
+  .order__photo img { width: 100%; height: 200px; object-fit: cover; object-position: center 60%; display: block; }
+  .order__photo figcaption { position: absolute; left: 0; bottom: 0; right: 0; padding: 1.6rem 1.1rem .8rem;
+    background: linear-gradient(to top, rgba(8,7,6,.85), transparent); color: #ffd8c7; font-size: .8rem; line-height: 1.2; }
+  .order__grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 2rem; align-items: start; }
+  .form { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.6rem; max-width: 34rem; }
+  .field { display: flex; flex-direction: column; gap: .4rem; }
+  .field > span { font-size: .9rem; font-weight: 600; }
+  input, select, textarea { background: var(--card); border: 1px solid var(--border); color: var(--text);
+    border-radius: 10px; padding: .7rem .9rem; font: inherit; width: 100%; }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); }
+  .seg { display: inline-flex; gap: .3rem; margin-bottom: .5rem; }
+  .seg__b { width: auto; background: var(--card); border: 1px solid var(--border); color: var(--text-soft);
+    border-radius: 8px; padding: .4rem .8rem; cursor: pointer; font: inherit; }
+  .seg__b.is-active { border-color: var(--accent); color: var(--accent-light); background: var(--accent-soft); }
+  .consent { display: flex; align-items: flex-start; gap: .5rem; font-size: .85rem; }
+  .consent input { width: auto; margin-top: .2rem; }
+  .consent a { color: var(--accent-light); text-decoration: underline; }
+  .form__hint { font-size: .8rem; margin: .2rem 0 0; }
+
+  .ordercta { margin-top: 1.6rem; max-width: 34rem; display: flex; flex-direction: column; gap: .7rem; align-items: flex-start;
+    background: linear-gradient(160deg, var(--card-2), var(--card)); border-color: var(--border-strong); }
+  .ordercta h3 { margin: .2rem 0 0; }
+  .steps { margin: 0; padding-left: 1.2rem; color: var(--text-soft); display: flex; flex-direction: column; gap: .45rem; }
+  .steps b { color: var(--cream); }
+  .ordercta__btns { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: .3rem; }
+  .okpanel { margin-top: 1.4rem; max-width: 34rem; background: var(--card-2); display: flex; flex-direction: column; gap: .6rem; align-items: flex-start; }
+
+  .oside { display: flex; flex-direction: column; gap: 1rem; position: sticky; top: 80px; }
+  .dform { display: flex; flex-direction: column; gap: .6rem; margin-top: .7rem; }
+  .why { margin: 0; padding-left: 1.1rem; color: var(--text-soft); }
+  .why li { margin: .35rem 0; }
+  @media (max-width: 900px) { .order__grid { grid-template-columns: 1fr; } .oside { position: static; } }
+</style>
+<script>
+  // Form logic only runs when the data-collection form is actually rendered.
+  const form = document.getElementById('order-form') as HTMLFormElement | null;
+  if (form) {
+    const seg = document.querySelectorAll<HTMLButtonElement>('.seg__b');
+    const contact = document.getElementById('contact') as HTMLInputElement;
+    const placeholders: Record<string, string> = { email: 'you@mail.ru', telegram: '@username', phone: '+7 ___ ___ __ __' };
+    let method = 'email';
+    seg.forEach((b) => b.addEventListener('click', () => {
+      seg.forEach((x) => x.classList.remove('is-active'));
+      b.classList.add('is-active');
+      method = b.dataset.method!;
+      contact.placeholder = placeholders[method];
+      contact.type = method === 'email' ? 'email' : method === 'phone' ? 'tel' : 'text';
+    }));
+
+    const params = new URLSearchParams(location.search);
+    const pre = params.get('company');
+    if (pre) {
+      const opt = document.querySelector<HTMLOptionElement>(`#companies option[data-slug="${pre}"]`);
+      if (opt) (document.getElementById('company') as HTMLInputElement).value = opt.value;
+    }
+
+    const BASE = import.meta.env.PUBLIC_API_BASE || '';
+    const ok = document.getElementById('order-ok')!;
+    const okText = document.getElementById('ok-text')!;
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!form.reportValidity()) return;
+      const payload = {
+        company: (document.getElementById('company') as HTMLInputElement).value,
+        grade: (document.getElementById('grade') as HTMLSelectElement).value,
+        method, contact: contact.value,
+        note: (document.getElementById('note') as HTMLTextAreaElement).value,
+        source: 'order_page',
+      };
+      try {
+        await fetch(`${BASE}/api/requests`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      } catch (_) { /* fall through */ }
+      okText.textContent = `Заявка на гайд «${payload.company} · ${payload.grade}» принята. Свяжемся: ${payload.contact}.`;
+      form.hidden = true; ok.removeAttribute('hidden');
+    });
+
+    const dform = document.getElementById('digest-form') as HTMLFormElement | null;
+    dform?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!dform.reportValidity()) return;
+      const email = (document.getElementById('digest-email') as HTMLInputElement).value;
+      try { await fetch(`${BASE}/api/digest`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, source: 'digest' }) }); } catch (_) {}
+      dform.hidden = true;
+      document.getElementById('digest-ok')!.removeAttribute('hidden');
+    });
+  }
+</script>

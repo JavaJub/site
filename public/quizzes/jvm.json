@@ -1,0 +1,1485 @@
+{
+  "id": "jvm",
+  "title": "JVM",
+  "kind": "topic",
+  "description": "Самопроверка по теме: JVM.",
+  "telegramUrl": "https://t.me/+vDYjUmPrBYZmMTAy",
+  "questionCount": 30,
+  "questions": [
+    {
+      "id": "auto-classloader-parent-delegation-model-037",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "jvm",
+        "system-design"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 195,
+          "title": "Сбер · 5. JVM, память, GC"
+        }
+      ],
+      "prompt": "Classloader: parent delegation model?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Application → Platform (ext) → Bootstrap: родительский загрузчик сначала спрашивает дочерний и грузит класс сам, только если тот не нашёл."
+        },
+        {
+          "id": "b",
+          "text": "Все три загрузчика работают параллельно: класс грузит тот, кто первым найдёт его."
+        },
+        {
+          "id": "c",
+          "text": "Bootstrap → Platform (ext) → Application. Дочерний сначала делегирует родителю, потом грузит сам."
+        },
+        {
+          "id": "d",
+          "text": "Bootstrap → Platform → Application, но делегирование идёт снизу вверх: каждый сначала пробует сам."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "Правильная иерархия — Bootstrap (корень) → Platform/ext → Application, а делегирование идёт сверху: дочерний сначала просит родителя загрузить класс и берётся за это сам только при неудаче родителя. Ловушка в перевёрнутом направлении делегирования или классов — на самом деле именно родитель имеет приоритет, что защищает системные классы от подмены.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-escape-analysis-что-это-дает-039",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "jvm",
+        "java-core"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 201,
+          "title": "Сбер · 5. JVM, память, GC"
+        }
+      ],
+      "prompt": "Escape analysis — что это даёт?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "JIT анализирует время жизни объекта и, если тот не «сбегает», немедленно удаляет его сборщиком мусора прямо в той же точке метода, минуя Eden и полный цикл GC, что снижает нагрузку на молодое поколение."
+        },
+        {
+          "id": "b",
+          "text": "Это анализ точек выхода метода (return/throw), на основе которого JIT решает, можно ли заинлайнить вызов и развернуть цикл."
+        },
+        {
+          "id": "c",
+          "text": "JIT определяет, «сбегает» ли объект из метода. Если нет — может аллоцировать на стеке вместо heap (scalar replacement)."
+        },
+        {
+          "id": "d",
+          "text": "Escape analysis помечает поля объекта как thread-local и убирает барьеры памяти."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "Escape analysis устанавливает, не «утекает» ли объект за пределы метода/потока; если нет — применяются stack allocation и scalar replacement (разбиение на отдельные поля-скаляры), а также lock elision. Дистракторы подменяют суть: это не досрочный GC, не анализ точек return и не пометка полей thread-local — оптимизации касаются размещения объекта и устранения синхронизации.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-generational-zgc-что-нового-403",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "jvm"
+      ],
+      "companies": [
+        "t1-innotech"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/t1-innotech.md",
+          "line": 154,
+          "title": "Т1 Иннотех · 6. JVM, память и GC"
+        }
+      ],
+      "prompt": "Generational ZGC — что нового?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "ZGC с Java 21 стал generational (раздельная сборка Young/Old). Паузы <1ms даже на терабайтных heap. Предыдущий ZGC был non-generational (собирал весь heap). Generational ZGC — стандарт для high-load в 2026..."
+        },
+        {
+          "id": "b",
+          "text": "Generational ZGC появился ещё в Java 15 как первая стабильная версия ZGC, а в Java 21 его лишь сделали сборщиком по умолчанию вместо G1; деление на поколения присутствовало в нём с самого начала и в Java 21 ничего принципиально нового в этом плане не добавили."
+        },
+        {
+          "id": "c",
+          "text": "Generational ZGC отказался от деления на поколения в пользу единого региона и так добился пауз менее 1 мс на больших heap."
+        },
+        {
+          "id": "d",
+          "text": "Generational ZGC выносит сборку Young в отдельный поток, но Old по-прежнему собирается с длинным stop-the-world."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "В Java 21 ZGC получил разделение на поколения (Young/Old) по слабой гипотезе о поколениях, оставшись almost concurrent с паузами <1 мс. Ошибки в дистракторах: generational-режим — нововведение именно Java 21, а не Java 15; деление на поколения было добавлено, а не убрано; ZGC и для Old работает конкурентно, без длинного stop-the-world.",
+      "reviewLinks": [
+        {
+          "label": "Т1 Иннотех",
+          "href": "../guides/t1-innotech/"
+        }
+      ]
+    },
+    {
+      "id": "auto-jdk-jre-jvm-433",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "jvm",
+        "java-core"
+      ],
+      "companies": [
+        "vk",
+        "yandex-travel"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/vk.md",
+          "line": 97,
+          "title": "VK · 3. Java Core — что точно спросят · Базовые вопросы"
+        },
+        {
+          "path": "guides/yandex-travel.md",
+          "line": 82,
+          "title": "Яндекс Путешествия · 3. Java Core — что точно спросят · Базовые вопросы"
+        }
+      ],
+      "prompt": "JDK, JRE, JVM?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "JVM = JRE + библиотеки, JRE = JVM + компилятор javac."
+        },
+        {
+          "id": "b",
+          "text": "JDK — это виртуальная машина, исполняющая байт-код, JRE — набор инструментов разработчика (javac, jar), а JVM — лишь стандартные библиотеки классов."
+        },
+        {
+          "id": "c",
+          "text": "JRE включает компилятор и отладчик и достаточен для разработки, а JDK нужен только для запуска уже скомпилированных приложений в продакшене, поэтому на боевых серверах ставят именно JDK без JRE."
+        },
+        {
+          "id": "d",
+          "text": "JVM — виртуальная машина (исполняет байт-код). JRE = JVM + библиотеки. JDK = JRE + инструменты. С Java 9 JRE отдельно не поставляется. Java 21: Virtual Threads, Records, Sealed Classes, Pattern Matching."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "Вложенность строго такая: JVM (исполняет байт-код) ⊂ JRE (JVM + стандартные библиотеки для запуска) ⊂ JDK (JRE + инструменты разработки вроде javac, jar, javadoc). Ловушка в перестановке слоёв и в путанице ролей: компилятор и инструменты входят в JDK, а не в JRE/JVM, а отдельный JRE не поставляется начиная с Java 9.",
+      "reviewLinks": [
+        {
+          "label": "VK",
+          "href": "../guides/vk/"
+        }
+      ]
+    },
+    {
+      "id": "auto-jvm-jre-jdk-в-чем-разница-030",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "jvm",
+        "java-core"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 174,
+          "title": "Сбер · 5. JVM, память, GC"
+        }
+      ],
+      "prompt": "JVM, JRE, JDK — в чём разница?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "JDK — виртуальная машина, JRE = JDK + javac, JVM = JRE + библиотеки."
+        },
+        {
+          "id": "b",
+          "text": "JVM включает компилятор javac и отладчик jdb, JRE — это та же JVM без библиотек, а JDK добавляет лишь графические библиотеки Swing и AWT для построения пользовательского интерфейса."
+        },
+        {
+          "id": "c",
+          "text": "JRE содержит виртуальную машину и инструменты разработки, JDK — это набор библиотек без JVM, а сама JVM нужна только для компиляции исходников в байт-код."
+        },
+        {
+          "id": "d",
+          "text": "JVM — виртуальная машина. JRE = JVM + библиотеки. JDK = JRE + инструменты разработки (javac, jdb)."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "Иерархия вложенная: JVM — это виртуальная машина, JRE = JVM + стандартные библиотеки времени выполнения, JDK = JRE + инструменты разработки (javac, jdb). Дистракторы меняют уровни местами (делают JDK или JRE самым внутренним), приписывают JVM компилятор или сужают JDK до одних только UI-библиотек. JVM исполняет байт-код, а не компилирует исходники.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-weakreference-softreference-phantomreference-437",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "jvm"
+      ],
+      "companies": [
+        "vk",
+        "yandex-travel"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/vk.md",
+          "line": 115,
+          "title": "VK · 3. Java Core — что точно спросят · Базовые вопросы"
+        },
+        {
+          "path": "guides/yandex-travel.md",
+          "line": 100,
+          "title": "Яндекс Путешествия · 3. Java Core — что точно спросят · Базовые вопросы"
+        }
+      ],
+      "prompt": "Что такое WeakReference / SoftReference / PhantomReference?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Weak — GC собирает при первой же сборке. Soft — GC собирает при нехватке памяти (для кэшей). Phantom — для постфинализационной очистки ресурсов. WeakHashMap — ключи через WeakReference."
+        },
+        {
+          "id": "b",
+          "text": "Weak — GC собирает только при нехватке памяти, удобно для кэшей; Soft — собирается при первой же сборке; Phantom — даёт доступ к объекту после finalize для повторного использования."
+        },
+        {
+          "id": "c",
+          "text": "Weak — собирается при первой сборке; Soft — при нехватке памяти; Phantom — позволяет воскресить объект и отменить его сборку, если ресурс ещё нужен. WeakHashMap хранит значения через WeakReference."
+        },
+        {
+          "id": "d",
+          "text": "Weak — собирается при первой сборке; Soft — при нехватке памяти; Phantom — это самая сильная из мягких ссылок, get() возвращает объект до его финализации для очистки ресурсов."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "Weak собирается при ближайшей сборке, Soft — при нехватке памяти (кэши), Phantom — для постфинализационной очистки ресурсов, причём get() у PhantomReference всегда возвращает null. Дистракторы путают Weak с Soft, приписывают Phantom воскрешение объекта или ненулевой get(), а WeakHashMap делает слабыми именно ключи, а не значения.",
+      "reviewLinks": [
+        {
+          "label": "VK",
+          "href": "../guides/vk/"
+        }
+      ]
+    },
+    {
+      "id": "auto-young-old-generation-как-работает-поколенческая-сборка-032",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "jvm",
+        "java-core"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 180,
+          "title": "Сбер · 5. JVM, память, GC"
+        }
+      ],
+      "prompt": "Young / Old generation — как работает поколенческая сборка?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Young состоит из Eden и двух Survivor; объект сразу создаётся в одном из Survivor, а после первого же minor GC копируется в Old. Eden используется только для крупных объектов, которые не помещаются в Survivor."
+        },
+        {
+          "id": "b",
+          "text": "Young: Eden и два Survivor. Пережившие несколько minor GC объекты остаются в Survivor навсегда, а в Old идут лишь аллоцированные напрямую."
+        },
+        {
+          "id": "c",
+          "text": "Young: Eden + 2 Survivor. После нескольких переживаний minor GC — объект попадает в Old."
+        },
+        {
+          "id": "d",
+          "text": "Young: один Eden и один Survivor; в Old объекты идут при каждом full GC."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "Новые объекты аллоцируются в Eden, при minor GC выжившие копируются в активный Survivor, и только пережив несколько сборок (достигнув порога tenuring), объект продвигается в Old generation. Ловушка — неверные детали: объекты не создаются в Survivor, в Young два Survivor (а не один), и продвижение в Old определяется возрастом объекта, а не привязано к full GC или large object allocation.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-в-чем-разница-stackoverflowerror-и-outofmemoryerror-152",
+      "type": "single",
+      "level": "trainee",
+      "topics": [
+        "jvm"
+      ],
+      "companies": [
+        "sberseasons"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber-internship.md",
+          "line": 411,
+          "title": "SberSeasons · 5. JVM, память и GC · StackOverflowError и OutOfMemoryError"
+        }
+      ],
+      "prompt": "В чём разница StackOverflowError и OutOfMemoryError?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "StackOverflowError — переполнение стека. Возникает при бесконечной рекурсии или очень глубоких вызовах. Стек у потока ограничен (по умолчанию около 512 КБ – 1 МБ). OutOfMemoryError — нехватка памяти в куче (heap)..."
+        },
+        {
+          "id": "b",
+          "text": "StackOverflowError — это нехватка места в куче при создании слишком больших объектов, а OutOfMemoryError, наоборот, возникает при переполнении стека потока из-за чересчур глубокой рекурсии. Обе ошибки относятся к области heap."
+        },
+        {
+          "id": "c",
+          "text": "StackOverflowError бросается при выходе индекса за границы массива, а OutOfMemoryError — при делении на ноль."
+        },
+        {
+          "id": "d",
+          "text": "StackOverflowError — переполнение пула строк в Metaspace, а OutOfMemoryError — исчерпание стека."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "StackOverflowError — переполнение стека потока, типично при бесконечной или слишком глубокой рекурсии; размер стека невелик и задаётся флагом -Xss. OutOfMemoryError — исчерпание памяти, чаще всего в куче (heap), размер которой задаётся -Xmx. Ловушки — поменять heap и stack местами, перепутать флаги -Xss/-Xmx или отнести эти Error к RuntimeException.",
+      "reviewLinks": [
+        {
+          "label": "SberSeasons",
+          "href": "../guides/sber-internship/"
+        }
+      ]
+    },
+    {
+      "id": "auto-в-чем-разница-между-jdk-jre-и-jvm-573",
+      "type": "single",
+      "level": "junior",
+      "topics": [
+        "jvm",
+        "java-core"
+      ],
+      "companies": [
+        "itk-academy"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/itk-academy.md",
+          "line": 77,
+          "title": "ITK Academy · 3. Java Core & ООП · Типовые вопросы"
+        }
+      ],
+      "prompt": "В чём разница между JDK, JRE и JVM?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "JVM = JRE плюс инструменты разработки вроде javac и jdb, а сама JRE — это только стандартные библиотеки классов без виртуальной машины внутри, тогда как JDK представляет собой минимальную среду, которая непосредственно исполняет байт-код и поэтому нужна каждому конечному пользователю для запуска приложений."
+        },
+        {
+          "id": "b",
+          "text": "JDK нужен пользователю для запуска готовых приложений, а JRE служит исключительно для компиляции исходного кода в байт-код через javac."
+        },
+        {
+          "id": "c",
+          "text": "JVM компилирует .java в .class, JRE переводит байт-код в машинный код, а JDK — это документация."
+        },
+        {
+          "id": "d",
+          "text": "JVM — виртуальная машина (исполняет байт-код). JRE = JVM + стандартные библиотеки (нужно для запуска). JDK = JRE + инструменты разработки (javac, jdb, jar)."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "Правильная иерархия: JVM исполняет байт-код, JRE = JVM плюс стандартные библиотеки (достаточно для запуска), JDK = JRE плюс инструменты разработки (javac, jdb, jar). Дистракторы переставляют уровни вложенности, путают роли компиляции и исполнения (javac входит в JDK, а не в JRE) и сводят JDK к документации, что неверно.",
+      "reviewLinks": [
+        {
+          "label": "ITK Academy",
+          "href": "../guides/itk-academy/"
+        }
+      ]
+    },
+    {
+      "id": "auto-виды-outofmemoryerror-035",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "jvm"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 189,
+          "title": "Сбер · 5. JVM, память, GC"
+        }
+      ],
+      "prompt": "Что такое Виды OutOfMemoryError?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "StackOverflowError, NullPointerException на куче, переполнение PermGen в Java 17, а также утечка прямых байт-буферов — все эти ошибки JVM считает разновидностями OutOfMemoryError и выбрасывает их при переполнении соответствующих областей памяти, когда сборщик мусора уже не способен освободить достаточный объём для продолжения работы."
+        },
+        {
+          "id": "b",
+          "text": "Java heap space, переполнение стека, голодание потоков, утечка загрузчика классов — четыре вида, возникающие при исчерпании памяти."
+        },
+        {
+          "id": "c",
+          "text": "Фрагментация кучи, переполнение Young и Old, нехватка Survivor — по ошибке на регион."
+        },
+        {
+          "id": "d",
+          "text": "Java heap space, Metaspace, Unable to create new native thread, GC overhead limit exceeded."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "Стандартные виды OutOfMemoryError: «Java heap space», «Metaspace» (с Java 8 вместо PermGen), «unable to create new native thread» и «GC overhead limit exceeded». Ловушки: StackOverflowError и NullPointerException вообще не относятся к OOM, PermGen убран в Java 8, а отдельных OOM по young/old/survivor регионам JVM не выбрасывает — это всё «Java heap space».",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-виды-ссылок-strong-soft-weak-phantom-405",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "jvm",
+        "java-core"
+      ],
+      "companies": [
+        "t1-innotech"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/t1-innotech.md",
+          "line": 160,
+          "title": "Т1 Иннотех · 6. JVM, память и GC"
+        }
+      ],
+      "prompt": "Виды ссылок: Strong, Soft, Weak, Phantom?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Strong: GC удаляет такие объекты в самую последнюю очередь. Soft: собирается уже при первой же сборке мусора. Weak: освобождается только при острой нехватке памяти и потому применяется в кэшах. Phantom: метод get() возвращает сам объект непосредственно перед его окончательным удалением, позволяя прочитать данные."
+        },
+        {
+          "id": "b",
+          "text": "Strong: обычная, GC не трогает. Soft: GC собирает при нехватке памяти (кэши). Weak: GC собирает при первой сборке (WeakHashMap). Phantom: get() всегда null, уведомление через ReferenceQueue (постфинализационная очистка)..."
+        },
+        {
+          "id": "c",
+          "text": "Strong: обычная ссылка. Soft: GC собирает при нехватке памяти. Weak: собирается при нехватке, но раньше Soft. Phantom: вызывает finalize() и возвращает объект через get()."
+        },
+        {
+          "id": "d",
+          "text": "Strong: не собирается даже при OOM. Weak эквивалентна Soft по поведению."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "Soft-ссылки собираются при нехватке памяти (хороши для кэшей), Weak — при ближайшей сборке независимо от памяти (WeakHashMap), Phantom всегда даёт get()==null и нужны для постфинализационной очистки через ReferenceQueue. Дистракторы переставляют Soft и Weak местами, ошибочно заставляют Phantom возвращать объект и приписывают Strong «несборку даже при OOM» (на самом деле сильно достижимый объект просто не собирается, что и приводит к OOM).",
+      "reviewLinks": [
+        {
+          "label": "Т1 Иннотех",
+          "href": "../guides/t1-innotech/"
+        }
+      ]
+    },
+    {
+      "id": "auto-где-хранятся-примитивы-и-где-объекты-094",
+      "type": "single",
+      "level": "trainee",
+      "topics": [
+        "java-core",
+        "jvm"
+      ],
+      "companies": [
+        "sberseasons"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber-internship.md",
+          "line": 148,
+          "title": "SberSeasons · 3. Java Core и ООП · Примитивы и обёртки"
+        },
+        {
+          "path": "guides/sber-internship.md",
+          "line": 403,
+          "title": "SberSeasons · 5. JVM, память и GC · Структура памяти Java"
+        }
+      ],
+      "prompt": "Где хранятся примитивы и где объекты?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Примитивы как локальные переменные — на стеке. Если примитив — поле объекта, он лежит внутри объекта в куче. Все объекты — в куче (heap). Статические поля и метаданные классов — в Metaspace (с Java 8 заменил PermGen)."
+        },
+        {
+          "id": "b",
+          "text": "Примитивы всегда на стеке, объекты — только статические в куче."
+        },
+        {
+          "id": "c",
+          "text": "Примитивы всегда хранятся на стеке, даже когда являются полями объекта — в куче лежит лишь ссылка на их значения; объекты тоже размещаются на стеке, если созданы внутри метода, и попадают в кучу только при объявлении static."
+        },
+        {
+          "id": "d",
+          "text": "Локальные примитивы — на стеке, объекты — в Metaspace рядом с классами; в куче только массивы и строки из пула."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "Все объекты живут в куче (heap); на стеке — лишь локальные примитивы и ссылки на объекты. Примитив-поле не уезжает на стек: он лежит внутри объекта в куче. В Metaspace хранятся метаданные классов и статические поля, но не обычные объекты, а размещение в куче не зависит от потоков или «shared»-пометок.",
+      "reviewLinks": [
+        {
+          "label": "SberSeasons",
+          "href": "../guides/sber-internship/"
+        }
+      ]
+    },
+    {
+      "id": "auto-где-хранятся-статические-поля-151",
+      "type": "single",
+      "level": "trainee",
+      "topics": [
+        "jvm",
+        "java-core"
+      ],
+      "companies": [
+        "sberseasons"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber-internship.md",
+          "line": 406,
+          "title": "SberSeasons · 5. JVM, память и GC · Структура памяти Java"
+        }
+      ],
+      "prompt": "Где хранятся статические поля?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "На стеке потока, загрузившего класс первым."
+        },
+        {
+          "id": "b",
+          "text": "Статические поля хранятся на стеке того потока, который первым обратился к классу при его загрузке; именно поэтому они доступны всем потокам сразу и инициализируются ровно один раз при старте JVM, а не при создании экземпляра."
+        },
+        {
+          "id": "c",
+          "text": "Статика лежит в heap рядом с обычными объектами и собирается GC по тем же правилам: как только на класс нет ссылок, она немедленно очищается."
+        },
+        {
+          "id": "d",
+          "text": "В Metaspace. До Java 8 это была область PermGen (часть heap), с Java 8 — отдельная область в нативной памяти (off-heap). Это важно: при анализе утечек статические поля не видны в обычном дампе heap."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "Статические поля находятся в Metaspace — нативной off-heap области, заменившей PermGen в Java 8 (до этого PermGen был частью heap). На стеке хранятся только локальные данные, не статика. Ловушка: статика НЕ лежит в обычной куче и потому не видна в стандартном heap-дампе, а Code Cache предназначен для нативного кода JIT, а не для полей.",
+      "reviewLinks": [
+        {
+          "label": "SberSeasons",
+          "href": "../guides/sber-internship/"
+        }
+      ]
+    },
+    {
+      "id": "auto-из-чего-состоит-память-java-149",
+      "type": "single",
+      "level": "trainee",
+      "topics": [
+        "jvm"
+      ],
+      "companies": [
+        "sberseasons"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber-internship.md",
+          "line": 397,
+          "title": "SberSeasons · 5. JVM, память и GC · Структура памяти Java"
+        }
+      ],
+      "prompt": "Из чего состоит память Java?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Heap для объектов, Stack для примитивов."
+        },
+        {
+          "id": "b",
+          "text": "Основные области: Heap (объекты), Stack (фреймы вызовов) и PermGen, где в актуальных версиях Java по-прежнему хранятся все метаданные классов и пул строк строго фиксированного размера, заданного на старте JVM один раз без последующего расширения."
+        },
+        {
+          "id": "c",
+          "text": "Основные области: Heap (куча) — здесь живут все объекты. Stack (стек) — у каждого потока свой, хранит локальные переменные и фреймы вызовов. Metaspace (с Java 8 заменил PermGen) — метаданные классов, статические поля..."
+        },
+        {
+          "id": "d",
+          "text": "Память состоит из Young Generation и Old Generation внутри стека каждого потока; Metaspace при этом является частью кучи и растёт вместе с ней по мере загрузки новых объектов в приложении."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "JVM-память разделена на Heap (все объекты, включая поля), Stack (по одному на поток — локальные переменные и фреймы) и Metaspace (метаданные классов, вне кучи, в нативной памяти). Ловушка: примитивные поля объектов лежат в куче внутри объекта, а не в стеке; PermGen убран в Java 8 и заменён Metaspace; Young/Old — это поколения внутри Heap, а не стека.",
+      "reviewLinks": [
+        {
+          "label": "SberSeasons",
+          "href": "../guides/sber-internship/"
+        }
+      ]
+    },
+    {
+      "id": "auto-как-gc-решает-что-объект-можно-удалить-153",
+      "type": "single",
+      "level": "trainee",
+      "topics": [
+        "jvm"
+      ],
+      "companies": [
+        "sberseasons"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber-internship.md",
+          "line": 416,
+          "title": "SberSeasons · 5. JVM, память и GC · Garbage Collector"
+        }
+      ],
+      "prompt": "Как GC решает, что объект можно удалить?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "GC использует подсчёт ссылок (reference counting): у каждого объекта есть счётчик ссылающихся на него, и как только счётчик достигает нуля, объект немедленно удаляется из кучи."
+        },
+        {
+          "id": "b",
+          "text": "По достижимости от GC Roots, но к корням относятся только статические поля и пул строк; локальные переменные стека и активные потоки не считаются корнями, поэтому объекты, доступные лишь из метода, собираются сразу."
+        },
+        {
+          "id": "c",
+          "text": "По достижимости от GC Roots. GC Roots — статические поля, локальные переменные стека, активные потоки, JNI-ссылки. Если до объекта нельзя добраться по ссылкам от GC Roots — он мусор и будет собран."
+        },
+        {
+          "id": "d",
+          "text": "GC анализирует время последнего обращения к объекту: если к объекту не было обращений дольше заданного порога, он помечается устаревшим и удаляется независимо от того, есть ли на него живые ссылки."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "JVM использует анализ достижимости (reachability) от набора GC Roots — статических полей, локальных переменных и операндов активных стеков, работающих потоков и JNI-ссылок; недостижимые объекты считаются мусором. Ловушка: HotSpot не использует reference counting (он не справляется с циклическими ссылками) и не основан на времени последнего доступа; локальные переменные стека являются полноценными корнями.",
+      "reviewLinks": [
+        {
+          "label": "SberSeasons",
+          "href": "../guides/sber-internship/"
+        }
+      ]
+    },
+    {
+      "id": "auto-как-воспроизвести-oom-404",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "jvm"
+      ],
+      "companies": [
+        "t1-innotech"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/t1-innotech.md",
+          "line": 157,
+          "title": "Т1 Иннотех · 6. JVM, память и GC"
+        }
+      ],
+      "prompt": "Как воспроизвести OOM?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Бесконечная рекурсия исчерпает heap."
+        },
+        {
+          "id": "b",
+          "text": "Открыть тысячи соединений с БД и не закрывать их: пул соединений заполнится, и JVM выбросит OutOfMemoryError, так как каждое открытое соединение целиком и полностью хранится в области Old Generation вплоть до самого его закрытия."
+        },
+        {
+          "id": "c",
+          "text": "static Map без eviction: статический Map, добавляешь объекты в цикле → heap exhaustion. Бесконечное создание Thread: каждый поток = ~1MB стека → native OOM. Metaspace: динамическая генерация классов (CGLIB, ASM)..."
+        },
+        {
+          "id": "d",
+          "text": "Запустить System.gc() в плотном цикле: принудительные сборки не успевают освобождать память между вызовами, что в итоге гарантированно приводит к heap OutOfMemoryError в приложении."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "OOM воспроизводят накоплением объектов без очистки (static-коллекция растёт в цикле → heap exhaustion), бесконтрольным созданием потоков (нативная память под стеки) или генерацией классов (Metaspace). Ловушка: бесконечная рекурсия даёт StackOverflowError, а не OutOfMemoryError; фреймы лежат в стеке потока, а не в heap; вызовы System.gc() и утечка connection'ов сами по себе heap не исчерпывают.",
+      "reviewLinks": [
+        {
+          "label": "Т1 Иннотех",
+          "href": "../guides/t1-innotech/"
+        }
+      ]
+    },
+    {
+      "id": "auto-как-делится-heap-150",
+      "type": "single",
+      "level": "trainee",
+      "topics": [
+        "jvm"
+      ],
+      "companies": [
+        "sberseasons"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber-internship.md",
+          "line": 400,
+          "title": "SberSeasons · 5. JVM, память и GC · Структура памяти Java"
+        }
+      ],
+      "prompt": "Как делится Heap?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Heap делится на Young Generation для новых объектов и на Permanent Generation, где вместе с долгоживущими объектами хранятся метаданные классов и пул строк, а Survivor-областей вообще нет."
+        },
+        {
+          "id": "b",
+          "text": "Eden хранит объекты, пережившие первый Minor GC, а оба Survivor-пространства отданы исключительно под крупные объекты, сразу попадающие в Old."
+        },
+        {
+          "id": "c",
+          "text": "Young Generation — новые объекты. Состоит из Eden (где создаются), Survivor 0, Survivor 1 (для тех, что пережили несколько Minor GC). Old Generation — долгоживущие объекты, которые пережили много циклов GC."
+        },
+        {
+          "id": "d",
+          "text": "Heap состоит из стека и кучи: молодые объекты лежат в стеке."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "Heap делится на Young Generation (Eden + два Survivor: новые объекты создаются в Eden, выжившие переезжают между Survivor) и Old Generation для долгоживущих объектов. Ловушка: PermGen убрали в Java 8, заменив на Metaspace вне heap; стек к heap не относится и хранит фреймы/примитивы локальных переменных, а не «молодые объекты»; в Eden объекты именно создаются, а не попадают туда после первого GC.",
+      "reviewLinks": [
+        {
+          "label": "SberSeasons",
+          "href": "../guides/sber-internship/"
+        }
+      ]
+    },
+    {
+      "id": "auto-как-диагностировать-утечку-памяти-036",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "jvm",
+        "java-core"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 192,
+          "title": "Сбер · 5. JVM, память, GC"
+        }
+      ],
+      "prompt": "Как диагностировать утечку памяти?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Включить -verbose:gc и по частоте Minor GC точно локализовать утечку, не снимая heap dump."
+        },
+        {
+          "id": "b",
+          "text": "Heap dump (jmap, -XX:+HeapDumpOnOutOfMemoryError) → анализ в Eclipse MAT или VisualVM."
+        },
+        {
+          "id": "c",
+          "text": "Запустить async-profiler во flame-graph по CPU и найти самый затратный по процессорному времени метод — именно он удерживает лишние объекты, поэтому heap dump и анализ в MAT не требуются вовсе."
+        },
+        {
+          "id": "d",
+          "text": "Поднять -Xmx до максимума: если OutOfMemoryError исчез, утечки нет."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "Диагностика утечки строится на heap dump (jmap или -XX:+HeapDumpOnOutOfMemoryError) и его анализе в Eclipse MAT/VisualVM — там видно, какие объекты накапливаются и кто держит на них ссылки (dominator tree, GC roots). Ловушка: GC-логи и CPU-профайлер показывают симптомы и нагрузку, но не дерево удержания объектов; увеличение -Xmx лишь отодвигает OOM и не отличает утечку от честной потребности в памяти.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-какие-бывают-сборщики-мусора-033",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "jvm"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 183,
+          "title": "Сбер · 5. JVM, память, GC"
+        }
+      ],
+      "prompt": "Какие бывают сборщики мусора?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Serial, Parallel, CMS (default с Java 11), G1, ZGC, Shenandoah. Для минимальных пауз выбирают Serial — он однопоточный."
+        },
+        {
+          "id": "b",
+          "text": "Serial, Parallel, CMS (default с Java 9), G1 (deprecated с Java 9), ZGC, Shenandoah. Для low-latency выбирают Parallel из-за его высокой пропускной способности на больших кучах."
+        },
+        {
+          "id": "c",
+          "text": "Serial, Parallel, CMS (deprecated с Java 9, удалён в Java 14), G1 (default с Java 9), ZGC, Shenandoah. Для low-latency выбирают ZGC/Shenandoah."
+        },
+        {
+          "id": "d",
+          "text": "Serial, Parallel, CMS, G1 (default с Java 8), Epsilon, Shenandoah. ZGC удалён в Java 14 как устаревший, а CMS остаётся рекомендуемым для low-latency задач."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "Сборщики: Serial, Parallel, CMS (deprecated с Java 9, удалён в Java 14), G1 (default с Java 9), ZGC и Shenandoah, причём для low-latency берут именно ZGC/Shenandoah. Ловушки: путаница «кто default» и «кто deprecated» (CMS vs G1), приписывание удаления ZGC вместо CMS, и неверный выбор Parallel/Serial для минимальных пауз — у них как раз заметные stop-the-world паузы.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-какие-виды-ссылок-в-java-157",
+      "type": "single",
+      "level": "trainee",
+      "topics": [
+        "jvm",
+        "java-core"
+      ],
+      "companies": [
+        "sberseasons"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber-internship.md",
+          "line": 430,
+          "title": "SberSeasons · 5. JVM, память и GC · Виды ссылок"
+        }
+      ],
+      "prompt": "Какие виды ссылок в Java?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Strong — обычная ссылка, но собирается уже при первой нехватке памяти. Soft (SoftReference) — гарантированно никогда не собирается. Weak (WeakReference) — собирается только при OutOfMemoryError. Phantom — используется для кэшей."
+        },
+        {
+          "id": "b",
+          "text": "Soft-ссылки собираются немедленно при каждой сборке мусора независимо от наличия памяти, а Weak-ссылки переживают сборку до тех пор, пока в куче достаточно места. PhantomReference позволяет напрямую получить объект через get() перед финализацией."
+        },
+        {
+          "id": "c",
+          "text": "Strong (обычная new) — пока есть Strong-ссылка, объект не соберётся. Soft (SoftReference) — собирается, когда не хватает памяти. Для кэшей. Weak (WeakReference) — собирается при следующей сборке, даже если есть память..."
+        },
+        {
+          "id": "d",
+          "text": "Видов ссылок два: изменяемые (mutable) и неизменяемые (immutable). Immutable-ссылки на final-поля никогда не собираются сборщиком мусора, а mutable собираются сразу после выхода из области видимости метода."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "Иерархия по силе: Strong (объект жив, пока есть ссылка), Soft (собирается при нехватке памяти, годен для кэшей), Weak (собирается при ближайшей сборке) и Phantom (для пост-mortem очистки, get() всегда возвращает null). Дистракторы меняют местами поведение Soft и Weak и приписывают PhantomReference доступ к объекту, которого у неё нет.",
+      "reviewLinks": [
+        {
+          "label": "SberSeasons",
+          "href": "../guides/sber-internship/"
+        }
+      ]
+    },
+    {
+      "id": "auto-какие-области-памяти-в-jvm-что-хранится-в-heap-а-что-в-stack-003",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "jvm",
+        "java-core"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 85,
+          "title": "Сбер · 3. Java Core & ООП · Типовые вопросы"
+        }
+      ],
+      "prompt": "Какие области памяти в JVM? Что хранится в heap, а что в stack?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Heap — объекты и массивы; stack — фреймы методов, примитивы, ссылки."
+        },
+        {
+          "id": "b",
+          "text": "Heap — объекты, массивы и локальные примитивы; stack — ссылки и статические поля."
+        },
+        {
+          "id": "c",
+          "text": "Heap — статические поля, константы и пул строк; stack — все объекты, массивы и фреймы методов, чтобы они автоматически удалялись при выходе из метода."
+        },
+        {
+          "id": "d",
+          "text": "Heap — фреймы методов; stack — сами объекты и массивы."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "Правильно: в heap живут объекты и массивы (общая для всех потоков область), в stack — фреймы методов с локальными примитивами и ссылками (по стеку на поток). Дистракторы меняют местами назначение областей: объекты и массивы не размещаются в стеке, локальные примитивы лежат именно во фрейме на стеке, а статика и пул строк относятся к области класса/heap (Metaspace, строковый пул в куче), а не к стеку.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-какие-сборщики-мусора-ты-знаешь-155",
+      "type": "single",
+      "level": "trainee",
+      "topics": [
+        "jvm"
+      ],
+      "companies": [
+        "sberseasons"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber-internship.md",
+          "line": 422,
+          "title": "SberSeasons · 5. JVM, память и GC · Garbage Collector"
+        }
+      ],
+      "prompt": "Какие сборщики мусора ты знаешь?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "G1 был однопоточным для маленьких приложений, а Serial делит heap на регионы."
+        },
+        {
+          "id": "b",
+          "text": "Parallel GC полностью исключает любые stop-the-world паузы при сборке мусора, тогда как ZGC и Shenandoah, наоборот, останавливают абсолютно все потоки приложения на всё время полной сборки и потому совсем не подходят для работы с большими heap."
+        },
+        {
+          "id": "c",
+          "text": "Serial — однопоточный, для маленьких приложений. Parallel — многопоточный для Young, был дефолтом до Java 9. G1 (Garbage First) — с Java 9 дефолт, делит heap на регионы, низкие паузы. ZGC и Shenandoah — для больших heap..."
+        },
+        {
+          "id": "d",
+          "text": "CMS остаётся дефолтным сборщиком начиная с Java 9, работает вообще без пауз и полностью вытеснил из современных версий JVM как G1, так и ZGC с Shenandoah."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "Serial — однопоточный для маленьких приложений; Parallel — многопоточный, дефолт до Java 9; G1 — дефолт с Java 9, делит heap на регионы и снижает паузы; ZGC и Shenandoah нацелены на сверхнизкие паузы на больших heap. Ловушка — путать роли сборщиков: Parallel не убирает stop-the-world, а CMS, наоборот, объявлен устаревшим и удалён, а не стал дефолтом.",
+      "reviewLinks": [
+        {
+          "label": "SberSeasons",
+          "href": "../guides/sber-internship/"
+        }
+      ]
+    },
+    {
+      "id": "auto-области-памяти-jvm-031",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "jvm",
+        "java-core"
+      ],
+      "companies": [
+        "sber",
+        "alfa-bank",
+        "vk",
+        "yandex-travel",
+        "liga"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 177,
+          "title": "Сбер · 5. JVM, память, GC"
+        },
+        {
+          "path": "guides/alfa-bank.md",
+          "line": 74,
+          "title": "Альфа-Банк · 3. Java Core — что точно спросят · Базовые вопросы"
+        },
+        {
+          "path": "guides/vk.md",
+          "line": 100,
+          "title": "VK · 3. Java Core — что точно спросят · Базовые вопросы"
+        },
+        {
+          "path": "guides/yandex-travel.md",
+          "line": 85,
+          "title": "Яндекс Путешествия · 3. Java Core — что точно спросят · Базовые вопросы"
+        },
+        {
+          "path": "guides/liga.md",
+          "line": 90,
+          "title": "Лига Цифровой Экономики · 3. Java Core — что точно спросят · Базовые вопросы"
+        }
+      ],
+      "prompt": "Что такое Области памяти JVM?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Heap — хранение объектов, управляется GC. Stack — фрейм для каждого вызова метода (локальные переменные, ссылки, примитивы). Metaspace (до Java 8 — PermGen) — метаданные классов, пул интернированных строк..."
+        },
+        {
+          "id": "b",
+          "text": "Heap — объекты и фреймы методов; Stack — общий пул потоков с метаданными классов; PermGen в Java 8+ хранит примитивы и интернированные строки."
+        },
+        {
+          "id": "c",
+          "text": "Heap делится на Young и Old, где Stack является частью Young Generation; Metaspace лежит внутри Heap и собирается тем же сборщиком; локальные переменные тоже хранятся в Heap."
+        },
+        {
+          "id": "d",
+          "text": "Stack общий для всех потоков и хранит объекты; Heap приватен для потока."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "Heap — общая для всех потоков область объектов под управлением GC; Stack — приватный для каждого потока стек фреймов с локальными переменными, ссылками и примитивами; Metaspace (в Java 8+ вместо PermGen) хранит метаданные классов в нативной памяти. Главная ловушка — путаница: Stack приватен для потока, а Heap общий (а не наоборот), и Metaspace не входит в Heap. Фреймы методов и локальные переменные живут в Stack, а не в Heap.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-структура-памяти-jvm-где-что-хранится-402",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "jvm",
+        "java-core"
+      ],
+      "companies": [
+        "t1-innotech"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/t1-innotech.md",
+          "line": 151,
+          "title": "Т1 Иннотех · 6. JVM, память и GC"
+        }
+      ],
+      "prompt": "Структура памяти JVM: где что хранится?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Heap хранит все объекты и фреймы методов всех потоков; Stack — глобальные статические переменные и константы; Metaspace расположен внутри Young-поколения и собирается обычным Minor GC вместе с объектами."
+        },
+        {
+          "id": "b",
+          "text": "Heap: объекты (Young=Eden+Survivor, Old). Stack: фреймы методов (на каждый поток свой, LIFO), примитивы, ссылки. Metaspace: метаданные классов, статические поля. Code Cache: JIT-скомпилированный код..."
+        },
+        {
+          "id": "c",
+          "text": "Объекты живут в Stack (он общий для всех потоков и потокобезопасен), примитивы и ссылки — в Heap; метаданные классов с Java 8 хранятся в PermGen внутри Heap, а Code Cache — это часть Old-поколения."
+        },
+        {
+          "id": "d",
+          "text": "Heap делится на Eden и Old, Survivor-областей нет; статические поля и пул строк лежат в Stack каждого потока; JIT-код хранится прямо в Metaspace, отдельной области Code Cache в JVM не существует."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "Heap общий для всех потоков и хранит объекты (Young: Eden+Survivor, Old), Stack у каждого потока свой и держит фреймы, примитивы и ссылки, Metaspace (вне Heap, в нативной памяти с Java 8) — метаданные классов, Code Cache — JIT-код. Ловушки: PermGen убран в Java 8, статика и пул строк не в Stack, а Stack не общий и не хранит объекты.",
+      "reviewLinks": [
+        {
+          "label": "Т1 Иннотех",
+          "href": "../guides/t1-innotech/"
+        }
+      ]
+    },
+    {
+      "id": "auto-циклические-ссылки-соберутся-154",
+      "type": "single",
+      "level": "trainee",
+      "topics": [
+        "jvm",
+        "java-core"
+      ],
+      "companies": [
+        "sberseasons"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber-internship.md",
+          "line": 419,
+          "title": "SberSeasons · 5. JVM, память и GC · Garbage Collector"
+        }
+      ],
+      "prompt": "Циклические ссылки — соберутся?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Нет. В Java используется reference counting, поэтому пара взаимно ссылающихся объектов всегда имеет ненулевой счётчик и никогда не освобождается без явного обнуления полей, что и приводит к утечке памяти в подобных конструкциях."
+        },
+        {
+          "id": "b",
+          "text": "Да. Java GC работает по reachability, а не по reference counting. Два объекта, ссылающиеся друг на друга, но не достижимые снаружи — будут собраны. Это отличие от Python, где есть reference counting + cycle collector."
+        },
+        {
+          "id": "c",
+          "text": "Соберутся только если хотя бы один объект помечен как WeakReference; при обычных сильных ссылках циклическая пара остаётся в памяти и течёт."
+        },
+        {
+          "id": "d",
+          "text": "Нет, такие объекты собирает только Full GC: молодое поколение не умеет находить циклы, и до старшего они доживают навсегда."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "JVM определяет живость объекта через достижимость от GC roots, а не через подсчёт ссылок, поэтому изолированный цикл без внешних ссылок недостижим и будет собран любым сборщиком. Главная ловушка — перенос модели reference counting (как в Python/CPython) на Java, где её нет.",
+      "reviewLinks": [
+        {
+          "label": "SberSeasons",
+          "href": "../guides/sber-internship/"
+        }
+      ]
+    },
+    {
+      "id": "auto-чем-отличаются-jvm-jre-и-jdk-092",
+      "type": "single",
+      "level": "trainee",
+      "topics": [
+        "jvm",
+        "java-core"
+      ],
+      "companies": [
+        "sberseasons"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber-internship.md",
+          "line": 140,
+          "title": "SberSeasons · 3. Java Core и ООП · JVM, JRE, JDK"
+        }
+      ],
+      "prompt": "Чем отличаются JVM, JRE и JDK?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "JVM — это компилятор, превращающий .java в .class, JRE — среда для написания кода с редактором и отладчиком, а JDK — минимальная поставка только для запуска готовых приложений у конечного пользователя."
+        },
+        {
+          "id": "b",
+          "text": "JDK содержит только компилятор javac и не включает JVM; чтобы запустить собранную программу, поверх JDK обязательно ставят отдельную JRE, которая и поставляет виртуальную машину."
+        },
+        {
+          "id": "c",
+          "text": "JVM включает в себя JRE и JDK как свои подсистемы: внутри виртуальной машины лежат и стандартные библиотеки, и компилятор, поэтому достаточно установить только JVM."
+        },
+        {
+          "id": "d",
+          "text": "JVM (Java Virtual Machine) — виртуальная машина, которая исполняет байткод. Содержит GC и JIT-компилятор. JRE (Java Runtime Environment) — JVM + стандартные библиотеки (java.lang, java.util и т.д.)..."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "Матрёшка идёт наоборот: JVM (исполняет байткод, содержит GC и JIT) входит в JRE (JVM + стандартные библиотеки), а JRE входит в JDK (JRE + инструменты разработки javac, javadoc, jdb). Ловушка в путанице вложенности и ролей: JVM не компилирует исходники, а JDK как раз содержит и JVM, и компилятор.",
+      "reviewLinks": [
+        {
+          "label": "SberSeasons",
+          "href": "../guides/sber-internship/"
+        }
+      ]
+    },
+    {
+      "id": "auto-что-такое-jdk-jre-jvm-311",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "jvm",
+        "java-core"
+      ],
+      "companies": [
+        "alfa-bank",
+        "liga"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/alfa-bank.md",
+          "line": 71,
+          "title": "Альфа-Банк · 3. Java Core — что точно спросят · Базовые вопросы"
+        },
+        {
+          "path": "guides/liga.md",
+          "line": 87,
+          "title": "Лига Цифровой Экономики · 3. Java Core — что точно спросят · Базовые вопросы"
+        }
+      ],
+      "prompt": "Что такое JDK, JRE, JVM?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "JVM транслирует исходный код .java в байт-код, JRE содержит для этого компилятор javac, а JDK добавляет среду исполнения для запуска готовых программ и набор стандартных библиотек классов, без которых приложение не стартует."
+        },
+        {
+          "id": "b",
+          "text": "JDK — это сама виртуальная машина, JRE — графическая оболочка, а JVM — набор инструментов разработчика."
+        },
+        {
+          "id": "c",
+          "text": "JVM исполняет байт-код, JRE = JVM плюс инструменты разработки (javac, jdb), а JDK = JRE плюс стандартные библиотеки классов для запуска приложений."
+        },
+        {
+          "id": "d",
+          "text": "JVM — виртуальная машина, исполняет байт-код. JRE = JVM + стандартные библиотеки (нужно для запуска). JDK = JRE + инструменты разработки: javac, jdb, jar. С Java 9 JRE как отдельный дистрибутив не поставляется."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "Иерархия такова: JVM исполняет байт-код, JRE = JVM + стандартные библиотеки (для запуска), JDK = JRE + инструменты разработки (javac, jdb, jar). Главная ловушка — путаница ролей: компилятор javac входит в JDK, а не в JRE/JVM, и сама JVM не компилирует .java в байт-код (это делает javac).",
+      "reviewLinks": [
+        {
+          "label": "Альфа-Банк",
+          "href": "../guides/alfa-bank/"
+        }
+      ]
+    },
+    {
+      "id": "auto-что-такое-jit-компиляция-038",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "jvm"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 198,
+          "title": "Сбер · 5. JVM, память, GC"
+        }
+      ],
+      "prompt": "Что такое JIT-компиляция?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Оптимизация «горячего» кода в нативный. C1 — быстрый прогрев, C2 — агрессивная оптимизация."
+        },
+        {
+          "id": "b",
+          "text": "JIT заранее, на этапе сборки проекта, переводит весь байт-код в нативный машинный код, чтобы при запуске JVM не тратила время на интерпретацию и сразу выполняла готовые инструкции процессора без прогрева."
+        },
+        {
+          "id": "c",
+          "text": "JIT компилирует исходники .java в байт-код во время выполнения."
+        },
+        {
+          "id": "d",
+          "text": "JIT профилирует код и для «горячих» участков переключается обратно на интерпретатор, считая её быстрее компиляции."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "JIT во время выполнения компилирует часто исполняемый («горячий») байт-код в нативный код: C1 даёт быстрый прогрев, C2 — агрессивные оптимизации. Ловушка — спутать JIT с AOT-компиляцией (заранее, на этапе сборки) или с работой javac (исходники → байт-код); JIT работает в рантайме и переводит байт-код в машинный, а не наоборот.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    },
+    {
+      "id": "auto-что-такое-minor-gc-и-major-gc-156",
+      "type": "single",
+      "level": "trainee",
+      "topics": [
+        "jvm"
+      ],
+      "companies": [
+        "sberseasons"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber-internship.md",
+          "line": 425,
+          "title": "SberSeasons · 5. JVM, память и GC · Garbage Collector"
+        }
+      ],
+      "prompt": "Что такое Minor GC и Major GC?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Minor GC собирает Old Generation быстрыми проходами без остановки потоков, а Major GC останавливает приложение и чистит Young Generation вместе с Metaspace целиком, поэтому именно Minor GC считается лёгким, а Major — тяжёлым событием."
+        },
+        {
+          "id": "b",
+          "text": "Minor GC запускается строго по таймеру раз в N миллисекунд."
+        },
+        {
+          "id": "c",
+          "text": "Minor GC — собирает Young Generation. Быстро (миллисекунды), Stop-The-World, но коротко. Major GC — собирает Old Generation, медленнее. Full GC — весь heap + Metaspace. Тревожное событие, если случается часто."
+        },
+        {
+          "id": "d",
+          "text": "Minor GC уплотняет (compaction) объекты в Old Generation, устраняя фрагментацию, а Major GC лишь помечает мусор в Young Generation."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "Minor GC чистит Young Generation (короткий STW), Major GC — Old Generation, Full GC — весь heap плюс Metaspace. Путаница чаще всего в том, что меняют местами поколения, либо приписывают сборщику работу по таймеру/только ручной вызов, чего на деле нет — GC запускается по заполнению областей.",
+      "reviewLinks": [
+        {
+          "label": "SberSeasons",
+          "href": "../guides/sber-internship/"
+        }
+      ]
+    },
+    {
+      "id": "auto-что-такое-stop-the-world-034",
+      "type": "single",
+      "level": "middle",
+      "topics": [
+        "jvm",
+        "java-core"
+      ],
+      "companies": [
+        "sber"
+      ],
+      "sourceRefs": [
+        {
+          "path": "guides/sber.md",
+          "line": 186,
+          "title": "Сбер · 5. JVM, память, GC"
+        }
+      ],
+      "prompt": "Что такое Stop-the-World?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Режим JVM, при котором весь heap временно переносится в нативную память ОС, чтобы освободить место под новые объекты; современные сборщики вроде ZGC устраняют такие паузы полностью."
+        },
+        {
+          "id": "b",
+          "text": "Блокировка сборщика на потоке-демоне без остановки прикладных потоков."
+        },
+        {
+          "id": "c",
+          "text": "Состояние при переполнении heap перед OutOfMemoryError: все потоки заморожены до перезапуска."
+        },
+        {
+          "id": "d",
+          "text": "Пауза приложения для сборки мусора. У ZGC и Shenandoah паузы < 10 мс даже на огромных heap'ах."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "Stop-the-World — это пауза, во время которой JVM останавливает все прикладные потоки, чтобы безопасно выполнить фазы сборки мусора. Ловушка дистракторов: GC не переносит heap в ОС и не работает полностью без остановки потоков (даже ZGC и Shenandoah делают короткие STW-паузы), а STW не связан с OutOfMemoryError.",
+      "reviewLinks": [
+        {
+          "label": "Сбер",
+          "href": "../guides/sber/"
+        }
+      ]
+    }
+  ]
+}

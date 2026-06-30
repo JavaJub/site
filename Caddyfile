@@ -1,0 +1,23 @@
+# Local: SITE_ADDRESS defaults to :80 (HTTP).
+# Prod: set SITE_ADDRESS=www.javajub.com → Caddy gets a Let's Encrypt cert automatically.
+{$SITE_ADDRESS::80} {
+	encode zstd gzip
+
+	# API + payment pages + (token-protected) admin → backend container.
+	@api path /api/* /pay/* /admin /admin/*
+	handle @api {
+		reverse_proxy {$API_UPSTREAM:api:8787}
+	}
+
+	# Static site (Astro, directory output → trailing-slash dirs serve index.html).
+	handle {
+		root * /srv
+		try_files {path} {path}index.html {path}/index.html /404.html
+		file_server
+	}
+
+	handle_errors {
+		rewrite * /404.html
+		file_server
+	}
+}

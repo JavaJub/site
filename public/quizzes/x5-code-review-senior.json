@@ -1,0 +1,766 @@
+{
+  "id": "x5-code-review-senior",
+  "title": "X5 Tech Senior code review",
+  "kind": "company",
+  "description": "Concurrency, Random, parallelStream и production-мышление.",
+  "telegramUrl": "https://t.me/+vDYjUmPrBYZmMTAy",
+  "questionCount": 16,
+  "questions": [
+    {
+      "id": "auto-в-чем-проблема-несколько-связанных-пунктов-717",
+      "type": "code_review",
+      "level": "senior",
+      "topics": [
+        "java-core"
+      ],
+      "companies": [
+        "x5-tech"
+      ],
+      "sourceRefs": [
+        {
+          "path": "tasks/x5-blackfriday-code-review.md",
+          "line": 257,
+          "title": "X5 Tech · 4. Баг #3 — magic filter в стриме · Что не так"
+        }
+      ],
+      "prompt": "В чём проблема — несколько связанных пунктов?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Несколько связанных проблем. (1) Поле не final — может быть случайно перезаписано, в том числе через reflection. Для thread-safe сервиса (а Spring singleton — он всегда thread-safe должен быть) — это потенциальная пробле..."
+        },
+        {
+          "id": "b",
+          "text": "Реальной проблемы нет: Spring создаёт отдельный экземпляр бина на каждый входящий запрос, поэтому изменяемое не-final поле полностью безопасно и состояние гарантированно не разделяется между потоками даже под высокой нагрузкой."
+        },
+        {
+          "id": "c",
+          "text": "Единственная проблема — производительность: не-final поле мешает JIT-инлайнингу. Достаточно пометить его volatile, и singleton станет потокобезопасным."
+        },
+        {
+          "id": "d",
+          "text": "Проблема в том, что поле нужно инициализировать через setter, а не в конструкторе."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "Spring singleton по умолчанию один на контейнер и разделяется между всеми потоками, поэтому изменяемое (не-final) состояние в нём — источник гонок и его лучше делать final / неизменяемым либо инжектить через конструктор. Неверно, что бин создаётся на каждый запрос (это scope prototype/request), что volatile сам по себе решает все гонки и что конструкторная инъекция в singleton приводит к NPE.",
+      "reviewLinks": [
+        {
+          "label": "X5 Tech",
+          "href": "../tasks/x5-blackfriday-code-review/"
+        }
+      ]
+    },
+    {
+      "id": "auto-в-чем-суть-проблемы-714",
+      "type": "code_review",
+      "level": "senior",
+      "topics": [
+        "java-core"
+      ],
+      "companies": [
+        "x5-tech"
+      ],
+      "sourceRefs": [
+        {
+          "path": "tasks/x5-blackfriday-code-review.md",
+          "line": 210,
+          "title": "X5 Tech · 4. Баг #3 — magic filter в стриме · Что не так"
+        }
+      ],
+      "prompt": "В чём суть проблемы?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Главная проблема здесь в производительности: фильтрация по нечётным ценам выполняется в обычном цикле и обрабатывает элементы строго последовательно, поэтому её обязательно нужно заменить на параллельный stream, который распределит работу между ядрами процессора и заметно ускорит проход по всей коллекции."
+        },
+        {
+          "id": "b",
+          "text": "Это «магическое» условие — фильтр, смысл которого непонятен из кода. «Берём только нечётные цены» — это бизнес-правило или баг? Если правило — должно быть документировано или вынесено в named-predicate..."
+        },
+        {
+          "id": "c",
+          "text": "Главная проблема — отсутствие проверки на null перед сравнением цены, из-за чего код неизбежно падает с NullPointerException."
+        },
+        {
+          "id": "d",
+          "text": "Главная проблема в том, что условие написано через if вместо тернарного оператора."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "Главная беда — «магическое» бизнес-правило: фильтр «только нечётные цены» непонятен из кода, неясно, правило это или баг, и его следует задокументировать либо вынести в именованный предикат с говорящим названием. Дистракторы уводят в сторону второстепенных или выдуманных проблем (производительность, NPE, стиль if/тернарник), игнорируя суть — потерю смысла и неявность намерения.",
+      "reviewLinks": [
+        {
+          "label": "X5 Tech",
+          "href": "../tasks/x5-blackfriday-code-review/"
+        }
+      ]
+    },
+    {
+      "id": "auto-главный-плюс-constructor-injection-в-тестах-720",
+      "type": "code_review",
+      "level": "senior",
+      "topics": [
+        "testing-aqa"
+      ],
+      "companies": [
+        "x5-tech"
+      ],
+      "sourceRefs": [
+        {
+          "path": "tasks/x5-blackfriday-code-review.md",
+          "line": 315,
+          "title": "X5 Tech · 4. Баг #3 — magic filter в стриме · Главное преимущество — тесты"
+        }
+      ],
+      "prompt": "Главный плюс constructor injection в тестах?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Spring сам подставит моки через @MockBean."
+        },
+        {
+          "id": "b",
+          "text": "Главный плюс в том, что Spring сам подставит моки через @MockBean, и заглушки не приходится создавать вручную: контейнер видит конструктор, находит подходящие бины и автоматически внедряет в тест их замоканные версии."
+        },
+        {
+          "id": "c",
+          "text": "Не нужен Spring-контекст для юнит-теста. Просто new MyService(mock1, mock2) — и можно тестировать. Контекст Spring поднимается секунды-десятки секунд, на тысячах юнит-тестов это разница в часы CI..."
+        },
+        {
+          "id": "d",
+          "text": "Поля становятся final, и Mockito через рефлексию подменяет зависимости быстрее, чем при field injection — отсюда выигрыш в скорости."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "Ключевой плюс constructor injection для юнит-тестов — независимость от Spring-контекста: объект создаётся обычным new с переданными моками, без подъёма контейнера, что радикально ускоряет тысячи тестов. @MockBean как раз ТРЕБУЕТ контекста (это медленный интеграционный путь), final-поля не ускоряют Mockito, а возможность менять зависимости сеттерами — это минус field/setter injection, а не плюс конструктора.",
+      "reviewLinks": [
+        {
+          "label": "X5 Tech",
+          "href": "../tasks/x5-blackfriday-code-review/"
+        }
+      ]
+    },
+    {
+      "id": "auto-зачем-randomgenerator-вместо-random-719",
+      "type": "code_review",
+      "level": "senior",
+      "topics": [
+        "java-core"
+      ],
+      "companies": [
+        "x5-tech"
+      ],
+      "sourceRefs": [
+        {
+          "path": "tasks/x5-blackfriday-code-review.md",
+          "line": 295,
+          "title": "X5 Tech · 4. Баг #3 — magic filter в стриме · Как правильно"
+        }
+      ],
+      "prompt": "Зачем RandomGenerator вместо Random?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "RandomGenerator — это потокобезопасная замена Random: он синхронизирует доступ к внутреннему состоянию через CAS, поэтому один и тот же экземпляр можно безопасно шарить между потоками без потери производительности, в отличие от ThreadLocalRandom."
+        },
+        {
+          "id": "b",
+          "text": "RandomGenerator пришёл на смену Random потому, что использует криптографически стойкий алгоритм генерации, тогда как java.util.Random не подходит для безопасности; для несекьюрных нужд по-прежнему рекомендуется именно Random."
+        },
+        {
+          "id": "c",
+          "text": "RandomGenerator — общий интерфейс для всех ГСЧ в Java 17+. Это часть JEP 356: Enhanced Pseudo- Random Number Generators. Реализации: ThreadLocalRandom, SplittableRandom, различные алгоритмы (Xoshiro, L128X, L64X)..."
+        },
+        {
+          "id": "d",
+          "text": "RandomGenerator — это абстрактный класс из java.security, от которого наследуется SecureRandom; он введён в Java 17 как единая точка для всех источников энтропии операционной системы."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "RandomGenerator (JEP 356, Java 17) — это общий интерфейс для разных алгоритмов ГСЧ (Xoshiro, LXM-семейство L64X/L128X и др.), позволяющий выбирать генератор по нужным свойствам (период, splittable, jumpable, leapable) через RandomGeneratorFactory. Ловушки: он не про потокобезопасность и не про криптостойкость — для секретов по-прежнему нужен SecureRandom, а Random/ThreadLocalRandom стали лишь реализациями этого интерфейса.",
+      "reviewLinks": [
+        {
+          "label": "X5 Tech",
+          "href": "../tasks/x5-blackfriday-code-review/"
+        }
+      ]
+    },
+    {
+      "id": "auto-как-java-util-random-становится-thread-safe-706",
+      "type": "code_review",
+      "level": "senior",
+      "topics": [
+        "concurrency"
+      ],
+      "companies": [
+        "x5-tech"
+      ],
+      "sourceRefs": [
+        {
+          "path": "tasks/x5-blackfriday-code-review.md",
+          "line": 90,
+          "title": "X5 Tech · 2. Баг #1 — contention на shared Random · Что не так — внутреннее устройство Random"
+        }
+      ],
+      "prompt": "Как java.util.Random становится thread-safe?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Метод next() объявлен synchronized."
+        },
+        {
+          "id": "b",
+          "text": "Потокобезопасность достигается тем, что seed хранится в ThreadLocal: у каждого потока своя независимая копия состояния, поэтому конкуренции за общее поле seed вообще не возникает."
+        },
+        {
+          "id": "c",
+          "text": "Random безопасен, потому что seed помечен volatile: запись нового значения сразу видна всем потокам."
+        },
+        {
+          "id": "d",
+          "text": "java.util.Random формально thread-safe — это написано в Javadoc. Но реализация потокобезопасности — через атомарный CAS на одном поле AtomicLong seed..."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "В java.util.Random поле seed — это AtomicLong, а метод next() в цикле читает старое значение и через compareAndSet атомарно записывает новое, повторяя попытку при конфликте; так достигается формально заявленная в Javadoc потокобезопасность без блокировок. Ловушка: используется неблокирующий CAS, а не synchronized; volatile сам по себе не защищает от гонки read-modify-write, а ThreadLocal-вариант — это уже отдельный класс ThreadLocalRandom.",
+      "reviewLinks": [
+        {
+          "label": "X5 Tech",
+          "href": "../tasks/x5-blackfriday-code-review/"
+        }
+      ]
+    },
+    {
+      "id": "auto-как-исправить-712",
+      "type": "code_review",
+      "level": "senior",
+      "topics": [
+        "concurrency",
+        "java-core"
+      ],
+      "companies": [
+        "x5-tech"
+      ],
+      "sourceRefs": [
+        {
+          "path": "tasks/x5-blackfriday-code-review.md",
+          "line": 140,
+          "title": "X5 Tech · 3. Баг #2 — parallelStream на общем ForkJoinPool · Что не так"
+        }
+      ],
+      "prompt": "Как исправить?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Два рабочих варианта. Первый — создать свой ForkJoinPool под конкретную задачу и передать параллельный стрим внутрь его submit..."
+        },
+        {
+          "id": "b",
+          "text": "Увеличить общий common-pool через java.util.concurrent.ForkJoinPool.common.parallelism: тогда у каждого parallelStream появится собственный набор потоков и тяжёлая задача окажется изолированной от остальных."
+        },
+        {
+          "id": "c",
+          "text": "Заменить parallelStream() на stream().parallel(): стрим возьмёт потоки вызывающего кода."
+        },
+        {
+          "id": "d",
+          "text": "Обернуть тело стрима в CompletableFuture.supplyAsync без executor'а: асинхронность снимет блокировку."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "Корректное решение — выполнять параллельный стрим внутри своего ForkJoinPool через его submit(...).get(), чтобы тяжёлая/блокирующая работа не занимала общий commonPool, который делят все parallelStream приложения (альтернатива — вообще не использовать parallelStream для блокирующих операций). Ловушка: расширение common.parallelism лишь меняет размер общего пула, не изолируя задачу; .parallel() в конце всё равно уходит в тот же commonPool; а CompletableFuture.supplyAsync без явного executor'а по умолчанию исполняется тем же ForkJoinPool.commonPool().",
+      "reviewLinks": [
+        {
+          "label": "X5 Tech",
+          "href": "../tasks/x5-blackfriday-code-review/"
+        }
+      ]
+    },
+    {
+      "id": "auto-как-правильно-716",
+      "type": "code_review",
+      "level": "senior",
+      "topics": [
+        "java-core"
+      ],
+      "companies": [
+        "x5-tech"
+      ],
+      "sourceRefs": [
+        {
+          "path": "tasks/x5-blackfriday-code-review.md",
+          "line": 216,
+          "title": "X5 Tech · 4. Баг #3 — magic filter в стриме · Что не так"
+        }
+      ],
+      "prompt": "Как правильно?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Сохранить фильтр, обернув его в feature-toggle или property из конфигурации."
+        },
+        {
+          "id": "b",
+          "text": "Два варианта в зависимости от ответа на «зачем»: (1) Если фильтр случайный или для отладки — удалить полностью. Если ничего не сломается — фильтр был лишним..."
+        },
+        {
+          "id": "c",
+          "text": "Заменить фильтр на @ConditionalOnProperty над бином: тогда Spring сам решит, регистрировать его в цепочке или нет, и ручное удаление кода фильтра уже не потребуется при изменении поведения."
+        },
+        {
+          "id": "d",
+          "text": "Понизить уровень логирования внутри фильтра и оставить его в цепочке: так он перестанет влиять на запросы, а код останется на будущее."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "Ключ в том, чтобы сначала ответить на вопрос «зачем этот фильтр нужен»: случайный или отладочный код удаляют полностью, а реально работающий — оставляют и документируют. Ловушка дистракторов в том, что они предлагают усложнить и «спрятать» сомнительный код через флаги, условия или логирование вместо честного решения о его судьбе, маскируя проблему вместо её устранения.",
+      "reviewLinks": [
+        {
+          "label": "X5 Tech",
+          "href": "../tasks/x5-blackfriday-code-review/"
+        }
+      ]
+    },
+    {
+      "id": "auto-как-устроен-threadlocalrandom-708",
+      "type": "code_review",
+      "level": "senior",
+      "topics": [
+        "concurrency"
+      ],
+      "companies": [
+        "x5-tech"
+      ],
+      "sourceRefs": [
+        {
+          "path": "tasks/x5-blackfriday-code-review.md",
+          "line": 102,
+          "title": "X5 Tech · 2. Баг #1 — contention на shared Random · Решение: ThreadLocalRandom"
+        }
+      ],
+      "prompt": "Как устроен ThreadLocalRandom?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "ThreadLocalRandom хранит генератор в обычном поле ThreadLocal<Random>, поэтому каждый поток лениво создаёт свой java.util.Random."
+        },
+        {
+          "id": "b",
+          "text": "Под капотом используется один общий seed на весь пул, но доступ к нему синхронизируется через ReentrantLock, что и убирает конкуренцию по сравнению с обычным Math.random() при многопоточной нагрузке."
+        },
+        {
+          "id": "c",
+          "text": "ThreadLocalRandom использует отдельный seed для каждого потока — хранится в полях класса Thread (это специальная JVM-оптимизация, не обычный ThreadLocal)..."
+        },
+        {
+          "id": "d",
+          "text": "ThreadLocalRandom переопределяет next(int) на AtomicLong с CAS-обновлением общего seed, поэтому потоки не блокируются, хотя и делят одно состояние."
+        }
+      ],
+      "correct": [
+        "c"
+      ],
+      "explanation": "Ключевая идея ThreadLocalRandom — отсутствие разделяемого состояния: seed лежит прямо в полях самого Thread (threadLocalRandomSeed и др.), padding-поля снижают false sharing, и обновление seed идёт без CAS и без синхронизации. Поэтому неверны варианты с общим seed под локом или CAS, а также с обёрткой ThreadLocal<Random> — это специальная JVM-оптимизация, а не обычный ThreadLocal и не один генератор на всех.",
+      "reviewLinks": [
+        {
+          "label": "X5 Tech",
+          "href": "../tasks/x5-blackfriday-code-review/"
+        }
+      ]
+    },
+    {
+      "id": "auto-какие-могут-быть-легитимные-причины-715",
+      "type": "code_review",
+      "level": "senior",
+      "topics": [
+        "java-core"
+      ],
+      "companies": [
+        "x5-tech"
+      ],
+      "sourceRefs": [
+        {
+          "path": "tasks/x5-blackfriday-code-review.md",
+          "line": 213,
+          "title": "X5 Tech · 4. Баг #3 — magic filter в стриме · Что не так"
+        }
+      ],
+      "prompt": "Какие могут быть «легитимные» причины?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Это осознанная оптимизация: фильтр заранее отсекает большую часть данных, поэтому код оправдан и трогать его не нужно."
+        },
+        {
+          "id": "b",
+          "text": "Легитимная причина почти всегда есть — это требование информационной безопасности или комплаенса, которое невозможно выразить средствами обычной бизнес-логики, поэтому подобные фильтры стоит по умолчанию считать полностью корректными и не подлежащими переписыванию."
+        },
+        {
+          "id": "c",
+          "text": "Это типовой способ сделать A/B-тест или плавную раскатку фичи: условие работает как флаг, по которому часть пользователей получает другое поведение, так что это нормальная продуктовая практика."
+        },
+        {
+          "id": "d",
+          "text": "Их немного, и все маловероятны. (1) Тесты на edge cases — фильтр оставили из отладочного кода. (2) Какой-то странный бизнес-юзкейс типа «скидку даём только на товары с нечётной ценой» — но это нонсенс с точки зрения марк..."
+        }
+      ],
+      "correct": [
+        "d"
+      ],
+      "explanation": "Правильный ответ подчёркивает, что легитимных причин мало и все они маловероятны (остаток отладочного фильтра, искусственный edge-case в тестах, абсурдный бизнес-юзкейс). Дистракторы ошибочны тем, что объявляют подозрительный фильтр нормой — выдают его за оптимизацию, требование безопасности или штатный механизм A/B-тестов, тогда как суть вопроса в том, что такое поведение почти всегда подозрительно и требует разбора, а не оправдания.",
+      "reviewLinks": [
+        {
+          "label": "X5 Tech",
+          "href": "../tasks/x5-blackfriday-code-review/"
+        }
+      ]
+    },
+    {
+      "id": "auto-когда-использовать-что-random-securerandom-threadlocalrandom-709",
+      "type": "code_review",
+      "level": "senior",
+      "topics": [
+        "concurrency"
+      ],
+      "companies": [
+        "x5-tech"
+      ],
+      "sourceRefs": [
+        {
+          "path": "tasks/x5-blackfriday-code-review.md",
+          "line": 105,
+          "title": "X5 Tech · 2. Баг #1 — contention на shared Random · Решение: ThreadLocalRandom"
+        }
+      ],
+      "prompt": "Когда использовать что — Random, SecureRandom, ThreadLocalRandom?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Random безопасен и эффективен в многопоточном коде, поскольку все его методы помечены synchronized и не дают гонок при параллельном доступе, тогда как ThreadLocalRandom предназначен исключительно для криптографических задач и применяется вместо SecureRandom при генерации ключей."
+        },
+        {
+          "id": "b",
+          "text": "Random — для однопоточного кода с обычной случайностью (тесты, моки, простой код). ThreadLocalRandom — для многопоточного кода с обычной случайностью (concurrent workloads, parallel stream)..."
+        },
+        {
+          "id": "c",
+          "text": "ThreadLocalRandom стоит выбирать для токенов и паролей: он криптостойкий за счёт отдельного seed на поток, а SecureRandom нужен лишь в однопоточных тестах."
+        },
+        {
+          "id": "d",
+          "text": "SecureRandom — универсальная быстрая замена Random."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "Random годится для однопоточной несекретной случайности, ThreadLocalRandom — для многопоточной несекретной (нет contention на общий seed), а SecureRandom — для криптографии (токены, пароли, соль), но он медленнее. Ловушки: общий Random в многопотоке хоть и synchronized, но создаёт contention и проигрывает ThreadLocalRandom; ThreadLocalRandom НЕ криптостоек; SecureRandom не быстрее и не замена обычному Random для произвольной случайности.",
+      "reviewLinks": [
+        {
+          "label": "X5 Tech",
+          "href": "../tasks/x5-blackfriday-code-review/"
+        }
+      ]
+    },
+    {
+      "id": "auto-когда-что-выбирать-свой-forkjoinpool-или-virtual-threads-713",
+      "type": "code_review",
+      "level": "senior",
+      "topics": [
+        "concurrency"
+      ],
+      "companies": [
+        "x5-tech"
+      ],
+      "sourceRefs": [
+        {
+          "path": "tasks/x5-blackfriday-code-review.md",
+          "line": 195,
+          "title": "X5 Tech · 3. Баг #2 — parallelStream на общем ForkJoinPool · Решение 2: virtual threads (Java 21+)"
+        }
+      ],
+      "prompt": "Когда что выбирать — свой ForkJoinPool или virtual threads?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Virtual threads выбирают именно под CPU-bound вычисления: огромное число лёгких потоков якобы позволяет запустить тысячи параллельных расчётов и полностью загрузить все ядра процессора, тогда как ForkJoinPool остаётся нужен лишь для блокирующих операций ввода-вывода."
+        },
+        {
+          "id": "b",
+          "text": "ForkJoinPool — для CPU-bound задач: математика, парсинг, трансформации без IO. Размер пула = число ядер. Wow-эффекта не даст, но не блокирует common pool. Virtual threads — для IO-bound: блокирующий JDBC, HTTP-вызовы..."
+        },
+        {
+          "id": "c",
+          "text": "Свой ForkJoinPool создают под IO-bound нагрузку с блокирующими JDBC и HTTP-вызовами, раздувая пул до тысяч потоков, а virtual threads берут под счётные задачи."
+        },
+        {
+          "id": "d",
+          "text": "Разницы по типу нагрузки нет, выбор зависит от версии Java."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "ForkJoinPool с размером ~числа ядер — для CPU-bound (математика, парсинг, трансформации без IO), а virtual threads — для IO-bound: они дёшевы и при блокировке на JDBC/HTTP отпускают несущий поток. Дистракторы меняют типы нагрузки местами: на счётных задачах виртуальные потоки бессмысленны (ядер всё равно ограниченное число), а раздувать ForkJoinPool под блокирующий IO неэффективно — для этого и придуманы virtual threads.",
+      "reviewLinks": [
+        {
+          "label": "X5 Tech",
+          "href": "../tasks/x5-blackfriday-code-review/"
+        }
+      ]
+    },
+    {
+      "id": "auto-почему-final-поля-и-constructor-injection-стандарт-senior-718",
+      "type": "code_review",
+      "level": "senior",
+      "topics": [
+        "java-core"
+      ],
+      "companies": [
+        "x5-tech"
+      ],
+      "sourceRefs": [
+        {
+          "path": "tasks/x5-blackfriday-code-review.md",
+          "line": 260,
+          "title": "X5 Tech · 4. Баг #3 — magic filter в стриме · Что не так"
+        }
+      ],
+      "prompt": "Почему final-поля и constructor injection — стандарт Senior?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "final-поля делают бин потокобезопасным, потому что JVM сама синхронизирует доступ к ним."
+        },
+        {
+          "id": "b",
+          "text": "Иммутабельность зависимостей — основа thread-safe сервиса. После создания объекта его зависимости НЕ должны меняться. final гарантирует это на уровне компилятора. Конструктор делает зависимости явными — открыл класс..."
+        },
+        {
+          "id": "c",
+          "text": "Constructor injection с final-полями нужен прежде всего ради скорости: значения final-полей JVM кеширует прямо в регистрах процессора и читает их заметно быстрее обычных, что особенно критично для высоконагруженных сервисов под пиковым трафиком."
+        },
+        {
+          "id": "d",
+          "text": "final-поля заставляют Spring пересоздавать бин на каждый запрос, поэтому зависимости всегда свежие, и именно это делает сервис безопасным в многопоточной среде по стандарту Senior."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "Стандарт — иммутабельность зависимостей: после создания singleton-сервиса его зависимости не должны меняться, и final это гарантирует на уровне компилятора, что и лежит в основе thread-safety. Конструктор делает зависимости явными и проверяемыми. Дистракторы искажают семантику final: он не вводит синхронизацию/монитор, не про кеширование в регистрах и тем более не заставляет Spring пересоздавать singleton-бин.",
+      "reviewLinks": [
+        {
+          "label": "X5 Tech",
+          "href": "../tasks/x5-blackfriday-code-review/"
+        }
+      ]
+    },
+    {
+      "id": "auto-почему-parallel-проблема-710",
+      "type": "code_review",
+      "level": "senior",
+      "topics": [
+        "concurrency",
+        "java-core"
+      ],
+      "companies": [
+        "x5-tech"
+      ],
+      "sourceRefs": [
+        {
+          "path": "tasks/x5-blackfriday-code-review.md",
+          "line": 134,
+          "title": "X5 Tech · 3. Баг #2 — parallelStream на общем ForkJoinPool · Что не так"
+        }
+      ],
+      "prompt": "Почему .parallel() — проблема?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "parallel() и parallelStream() под капотом используют ForkJoinPool.commonPool() — это один общий пул потоков на ВСЁ JVM-приложение. Размер по умолчанию = Runtime..."
+        },
+        {
+          "id": "b",
+          "text": "parallel() создаёт новый пул потоков на каждый вызов, и при частых обращениях в цикле приложение упирается в лимит OS-потоков и падает с ошибкой нехватки потоков."
+        },
+        {
+          "id": "c",
+          "text": "Проблема в том, что parallel() не гарантирует порядок и даёт недетерминированный результат даже для ассоциативных reduce."
+        },
+        {
+          "id": "d",
+          "text": "parallel() медленный, потому что каждый элемент перед обработкой сериализуется и копируется между потоками через общую очередь, и накладные расходы на это копирование почти всегда перекрывают любой выигрыш от распараллеливания вычислений."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "Главная беда parallel() — все параллельные стримы делят один общий ForkJoinPool.commonPool() на всю JVM, поэтому одна блокирующая или тяжёлая задача душит остальные, а размер пула фиксирован числом ядер. Ловушка: новый пул на каждый вызов не создаётся, порядок для корректно ассоциативных reduce сохраняется (forEachOrdered/collect это учитывают), и поэлементной сериализации нет — речь о разделяемом ресурсе и блокировках в нём.",
+      "reviewLinks": [
+        {
+          "label": "X5 Tech",
+          "href": "../tasks/x5-blackfriday-code-review/"
+        }
+      ]
+    },
+    {
+      "id": "auto-почему-shared-random-может-быть-медленнее-sequential-707",
+      "type": "code_review",
+      "level": "senior",
+      "topics": [
+        "java-core"
+      ],
+      "companies": [
+        "x5-tech"
+      ],
+      "sourceRefs": [
+        {
+          "path": "tasks/x5-blackfriday-code-review.md",
+          "line": 93,
+          "title": "X5 Tech · 2. Баг #1 — contention на shared Random · Что не так — внутреннее устройство Random"
+        }
+      ],
+      "prompt": "Почему shared Random может быть медленнее sequential?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Shared Random медленнее, потому что его методы помечены synchronized, и 7 потоков выстраиваются в очередь на монитор объекта; sequential же не входит в synchronized-блок, так как не видит конкуренции и JIT убирает блокировку."
+        },
+        {
+          "id": "b",
+          "text": "В sequential один поток последовательно дёргает nextDouble — CAS всегда успешен, никаких retry. В parallel 7 потоков одновременно пытаются обновить seed. Только один CAS успешен, остальные 6 потоков retry-ят..."
+        },
+        {
+          "id": "c",
+          "text": "Замедление из-за того, что единственный экземпляр Random лежит в одной кэш-линии, и 7 потоков постоянно инвалидируют её друг у друга (false sharing); CAS тут ни при чём, проблема чисто в когерентности кэшей."
+        },
+        {
+          "id": "d",
+          "text": "В parallel несколько потоков читают seed одновременно и получают одинаковые случайные числа, поэтому стриму приходится перегенерировать дубликаты заново, и эти повторные вызовы nextDouble съедают весь выигрыш от параллелизма."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "java.util.Random обновляет seed через CAS в цикле: при конкуренции только один поток из семи успевает, остальные крутят retry, и contention сводит на нет параллелизм. Ловушка: методы Random.next() не synchronized (там как раз lock-free CAS на AtomicLong), false sharing не главная причина, а дубликатов чисел не возникает — проигрыш именно в повторяющихся неуспешных CAS.",
+      "reviewLinks": [
+        {
+          "label": "X5 Tech",
+          "href": "../tasks/x5-blackfriday-code-review/"
+        }
+      ]
+    },
+    {
+      "id": "auto-чем-это-грозит-в-проде-711",
+      "type": "code_review",
+      "level": "senior",
+      "topics": [
+        "concurrency",
+        "java-core"
+      ],
+      "companies": [
+        "x5-tech"
+      ],
+      "sourceRefs": [
+        {
+          "path": "tasks/x5-blackfriday-code-review.md",
+          "line": 137,
+          "title": "X5 Tech · 3. Баг #2 — parallelStream на общем ForkJoinPool · Что не так"
+        }
+      ],
+      "prompt": "Чем это грозит в проде?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Ничего страшного: каждый вызов parallelStream поднимает свой отдельный пул, поэтому 1000 RPS дадут 1000 независимых пулов, и нагрузка равномерно распределится без взаимных блокировок между запросами."
+        },
+        {
+          "id": "b",
+          "text": "Сценарий: микросервис обрабатывает 1000 RPS обычных запросов. Каждый из них где-то использует parallelStream (агрегация, фильтр коллекции)..."
+        },
+        {
+          "id": "c",
+          "text": "Опасен лишь рост памяти на боксинг при сплитераторах."
+        },
+        {
+          "id": "d",
+          "text": "Угроза в том, что parallelStream создаёт пул размером с RPS, поэтому при 1000 запросах поднимется 1000 потоков и случится OutOfMemoryError из-за переполнения стеков, а не деградация латентности под нагрузкой."
+        }
+      ],
+      "correct": [
+        "b"
+      ],
+      "explanation": "Все parallelStream по умолчанию делят один общий ForkJoinPool.commonPool() с числом потоков примерно (ядра-1). При 1000 RPS задачи выстраиваются в очередь к этому крошечному пулу, начинается конкуренция за потоки, латентность взлетает, а блокирующие операции внутри стрима могут вообще застопорить весь пул. Ловушка: пул не создаётся на каждый вызов и не масштабируется до RPS — он общий и фиксированный, поэтому проблема именно в насыщении и росте задержек.",
+      "reviewLinks": [
+        {
+          "label": "X5 Tech",
+          "href": "../tasks/x5-blackfriday-code-review/"
+        }
+      ]
+    },
+    {
+      "id": "curated-code-review-random",
+      "type": "code_review",
+      "level": "senior",
+      "topics": [
+        "concurrency",
+        "algorithms"
+      ],
+      "companies": [
+        "x5-tech"
+      ],
+      "sourceRefs": [
+        {
+          "path": "tasks/x5-blackfriday-code-review.md",
+          "line": 90,
+          "title": "X5 Tech · shared Random"
+        }
+      ],
+      "prompt": "На code review найден shared java.util.Random внутри parallelStream. Какой комментарий наиболее полезен?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Random формально thread-safe, но общий seed создаёт contention; лучше ThreadLocalRandom или RandomGenerator."
+        },
+        {
+          "id": "b",
+          "text": "Random не thread-safe, поэтому код всегда будет падать с ConcurrentModificationException."
+        },
+        {
+          "id": "c",
+          "text": "parallelStream создаёт новый Random на каждый элемент, поэтому проблемы производительности нет."
+        },
+        {
+          "id": "d",
+          "text": "Нужно заменить Random на SecureRandom для любой бизнес-логики со скидками."
+        }
+      ],
+      "correct": [
+        "a"
+      ],
+      "explanation": "У shared Random есть синхронизация/CAS на общем состоянии. В параллельной обработке это может убить выигрыш от parallelStream.",
+      "reviewLinks": [
+        {
+          "label": "Разбор X5 Tech",
+          "href": "../tasks/x5-blackfriday-code-review/"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+---
+import { topicLabel, type Company } from '../lib/companies';
+import CompanyAvatar from './CompanyAvatar.astro';
+interface Props { company: Company; }
+const { company } = Astro.props;
+const grades = company.gradeList.filter((g) => g !== 'Общие').slice(0, 5);
+---
+<a class="cc" href={`/companies/${company.slug}/`}>
+  <div class="cc__top">
+    <CompanyAvatar name={company.name} size={42} />
+    <h3 class="cc__name">{company.name}</h3>
+    <span class="cc__arrow" aria-hidden="true">→</span>
+  </div>
+  <div class="cc__grades">
+    {grades.map((g) => <span class="pill">{g}</span>)}
+  </div>
+  <div class="cc__tags">
+    {company.topTopics.filter((t) => t !== 'other').slice(0, 4).map((t) => <span class="tag">{topicLabel(t)}</span>)}
+  </div>
+  <span class="cc__go">Реальные вопросы с собеса</span>
+</a>
+<style>
+  .cc {
+    position: relative; display: flex; flex-direction: column; gap: 0.7rem;
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 1.15rem 1.2rem 1.1rem; overflow: hidden;
+    transition: transform 0.14s ease, border-color 0.14s ease, box-shadow 0.14s ease;
+  }
+  .cc::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+    background: linear-gradient(var(--accent), var(--accent-light)); transform: scaleY(0); transform-origin: top; transition: transform 0.16s ease; }
+  .cc:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: 0 16px 34px rgba(0,0,0,0.4); }
+  .cc:hover::before { transform: scaleY(1); }
+  .cc__top { display: flex; align-items: center; gap: 0.7rem; }
+  .cc__name { margin: 0; font-size: 1.1rem; line-height: 1.2; flex: 1; }
+  .cc__arrow { color: var(--text-faint); font-size: 1.1rem; transition: transform 0.16s ease, color 0.16s ease; }
+  .cc:hover .cc__arrow { color: var(--accent); transform: translateX(3px); }
+  .cc__grades { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+  .cc__tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: auto; }
+  .cc__go { font-family: var(--font-mono); font-size: 0.76rem; color: var(--text-faint); letter-spacing: 0.02em; }
+  .cc:hover .cc__go { color: var(--accent-light); }
+</style>
