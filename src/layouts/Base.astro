@@ -70,6 +70,8 @@ const ldList = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
           var t = localStorage.getItem('jj-theme');
           // Dark is the brand default; only an explicit user choice switches it.
           document.documentElement.setAttribute('data-theme', t === 'light' ? 'light' : 'dark');
+          // Keep the bottom CTA bar hidden if the user dismissed it (no flash).
+          if (localStorage.getItem('jj-ctabar-closed') === '1') document.documentElement.classList.add('ctabar-hidden');
         } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
       })();
     </script>
@@ -106,17 +108,24 @@ const ldList = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
     {!noCta && (
       <div class="ctabar">
         <div class="container ctabar__inner">
-          <span class="mono" style="font-size:.9rem;color:var(--text-soft)">
+          <span class="mono ctabar__msg" style="font-size:.9rem;color:var(--text-soft)">
             <span style="color:var(--accent-light)">›</span> новые гайды и свежие вопросы с собесов — первыми в Telegram
           </span>
-          <span style="display:flex;gap:.6rem;flex-wrap:wrap">
+          <span class="ctabar__actions">
             <a class="btn btn--ghost" href="/guides/">Смотреть гайды</a>
             <a class="btn btn--tg" href={tg('ctabar')} target="_blank" rel="noreferrer"><TelegramIcon /> Подписаться</a>
+            <button class="ctabar__close" data-ctabar-close type="button" aria-label="Закрыть">✕</button>
           </span>
         </div>
       </div>
     )}
     <Footer />
     <Lightbox />
+    <script>
+      document.querySelector('[data-ctabar-close]')?.addEventListener('click', () => {
+        document.documentElement.classList.add('ctabar-hidden');
+        try { localStorage.setItem('jj-ctabar-closed', '1'); } catch (e) { /* ignore */ }
+      });
+    </script>
   </body>
 </html>
