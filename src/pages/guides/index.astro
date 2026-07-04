@@ -28,7 +28,7 @@ const jsonLd = {
       <div class="accent-bar"></div>
       <h1>Гайды по <span class="hl">собеседованиям Java</span></h1>
       <p class="lead">Реальные вопросы, задачи и кейсы с собесов в конкретных компаниях — собрано по грейдам.
-        Эти гайды <b>бесплатны</b>: открывай, читай, скачивай PDF.</p>
+        Первые разделы — прямо здесь. <b>Полный гайд</b> (все вопросы с ответами, задачи и чек-лист «за 2 часа») — бесплатно в Telegram-канале.</p>
 
       <ul class="gstats">
         <li><b>{guidesStats.count}</b> бесплатных гайдов</li>
@@ -41,7 +41,7 @@ const jsonLd = {
           <article class="gcard">
             <div class="gcard__cover" role="button" tabindex="0" aria-label={`Посмотреть обложку: ${g.company}`}
                  data-lightbox-img={g.cover} data-lightbox-cap={`Гайд: собеседование Java в ${g.company} · ${g.grade}`}>
-              <span class={`gcard__kind ${g.kind === 'review' ? 'is-review' : ''}`}>{g.kind === 'review' ? 'разбор' : 'гайд'} · бесплатно</span>
+              <span class={`gcard__kind ${g.kind === 'review' ? 'is-review' : ''}`}>{g.kind === 'review' ? 'разбор' : 'гайд'} · превью</span>
               <img src={g.cover} alt={`Гайд JavaJub: собеседование Java в ${g.company}, ${g.grade}`} loading="lazy" width="320" height="453" />
               <span class="gcard__zoom" aria-hidden="true">⤢</span>
             </div>
@@ -56,10 +56,12 @@ const jsonLd = {
                 {g.stack.slice(0, 6).map((s) => <span class="tag">{s}</span>)}
               </div>
               <div class="gcard__btns">
-                <a class="btn btn--primary" href={g.pdf} target="_blank" rel="noreferrer"
-                   data-lightbox-pdf={g.pdf} data-lightbox-cap={`Гайд: собеседование Java в ${g.company} · ${g.grade}`}>Открыть гайд (PDF)</a>
+                <a class="btn btn--tg" href={tg(`guide_${g.slug}`)} target="_blank" rel="noreferrer"><TelegramIcon /> Полный гайд в канале</a>
+                <a class="btn btn--ghost" href={g.pdf} target="_blank" rel="noreferrer"
+                   data-lightbox-pdf={g.pdf} data-lightbox-cap={`Превью гайда: собеседование Java в ${g.company} · ${g.grade}`}>Превью (10 стр.)</a>
                 {g.companySlug && <a class="btn btn--ghost" href={`/companies/${g.companySlug}/`}>Вопросы компании</a>}
               </div>
+              <span class="gcard__note mono faint">первые разделы бесплатно · полностью — в @java_jub</span>
             </div>
           </article>
         ))}
@@ -113,6 +115,7 @@ const jsonLd = {
   .gcard__stack { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .1rem; }
   .gcard__btns { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: auto; padding-top: .6rem; }
   .gcard__btns .btn { padding: .6rem .9rem; font-size: .9rem; }
+  .gcard__note { display: block; margin-top: .5rem; font-size: .72rem; letter-spacing: .01em; }
 
   .gmore { display: flex; align-items: center; justify-content: space-between; gap: 1.4rem; flex-wrap: wrap;
     margin-top: 2rem; background: linear-gradient(120deg, var(--card), var(--card-2)); border-color: var(--border-strong); }
