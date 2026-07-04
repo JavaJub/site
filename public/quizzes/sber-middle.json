@@ -2019,7 +2019,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "BeanDefinition → инстанцирование → DI → Aware-интерфейсы → BPP.postProcessBefore → @PostConstruct → InitializingBean → init-method → BPP.postProcessAfter → ГОТОВ → @PreDestroy → DisposableBean → destroy-method..."
+          "text": "BeanDefinition → инстанцирование → DI → Aware-интерфейсы → BPP.postProcessBefore → @PostConstruct → InitializingBean → init-method → BPP.postProcessAfter (здесь оборачивание в прокси, AOP) → ГОТОВ → @PreDestroy → DisposableBean → destroy-method."
         },
         {
           "id": "b",
@@ -2864,7 +2864,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "Heap — хранение объектов, управляется GC. Stack — фрейм для каждого вызова метода (локальные переменные, ссылки, примитивы). Metaspace (до Java 8 — PermGen) — метаданные классов, пул интернированных строк..."
+          "text": "Heap — хранение объектов, управляется GC, общий для всех потоков. Stack — фрейм для каждого вызова метода (локальные переменные, ссылки, примитивы), приватный для потока. Metaspace (до Java 8 — PermGen) — метаданные классов в нативной памяти, вне Heap."
         },
         {
           "id": "b",
@@ -4084,7 +4084,7 @@
         },
         {
           "id": "b",
-          "text": "Соотношение size / capacity, при котором происходит расширение таблицы. По умолчанию 0.75. То есть когда size превышает 75% от capacity, таблица расширяется в 2 раза и все элементы перехэшируются..."
+          "text": "Пороговое соотношение size / capacity (по умолчанию 0.75), при превышении которого таблица расширяется. То есть когда size превышает 75% от capacity, capacity увеличивается в 2 раза и все элементы перехэшируются под новый размер."
         },
         {
           "id": "c",

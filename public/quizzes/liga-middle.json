@@ -158,7 +158,7 @@
         },
         {
           "id": "d",
-          "text": "ArrayList: O(1) доступ по индексу, O(n) вставка в середину, дружелюбно к CPU-кэшу (непрерывная память). LinkedList: O(1) вставка в начало/конец (если есть ссылка), O(n) доступ по индексу..."
+          "text": "ArrayList: O(1) доступ по индексу, O(n) вставка в середину, дружелюбно к CPU-кэшу (непрерывная память). LinkedList: O(1) вставка в начало/конец (если есть ссылка), O(n) доступ по индексу, так как нужно последовательно идти по узлам двусвязного списка."
         }
       ],
       "correct": [
@@ -844,7 +844,7 @@
         },
         {
           "id": "c",
-          "text": "ConcurrentModificationException при изменении коллекции не через сам итератор. Реализован через modCount. Не гарантирован в многопоточной среде — только best effort. Альтернатива: CopyOnWriteArrayList (fail-safe..."
+          "text": "ConcurrentModificationException при изменении коллекции не через сам итератор. Реализован через сравнение modCount с expectedModCount. Не гарантирован в многопоточной среде — только best effort. Альтернатива: CopyOnWriteArrayList (fail-safe)."
         },
         {
           "id": "d",
@@ -1109,7 +1109,7 @@
         },
         {
           "id": "c",
-          "text": "@Test — тестовый метод. @BeforeEach/@AfterEach — до/после каждого теста. @BeforeAll/@AfterAll — до/после всех (static). @DisplayName — читаемое имя. @Disabled — пропустить. @Tag — категория (smoke, regression)..."
+          "text": "@Test — тестовый метод. @BeforeEach/@AfterEach — до/после каждого теста. @BeforeAll/@AfterAll — до/после всех (static). @DisplayName — читаемое имя. @Disabled — пропустить. @Tag — категория (smoke, regression)."
         },
         {
           "id": "d",
@@ -1502,7 +1502,7 @@
         },
         {
           "id": "b",
-          "text": "singleton (default — один на контекст), prototype (новый при каждом запросе), request (один на HTTP-запрос), session, application, websocket. Важно: инжект prototype в singleton через Provider<T> или ObjectFactory<T>..."
+          "text": "singleton (default — один на контекст), prototype (новый при каждом запросе), request (один на HTTP-запрос), session, application, websocket. Web-скоупы доступны автоматически в web-контексте. Важно: инжект prototype в singleton через Provider<T> или ObjectFactory<T>; для prototype контейнер не вызывает destroy-колбэки."
         },
         {
           "id": "c",
@@ -1912,7 +1912,7 @@
         },
         {
           "id": "c",
-          "text": "Абстрактный класс: состояние (поля), конструкторы, один наследник. Интерфейс: контракт, множественная реализация, Java 8 — default/static методы. Когда что: общее поведение + состояние → абстрактный класс..."
+          "text": "Абстрактный класс: состояние (поля), конструкторы, один наследник. Интерфейс: контракт, множественная реализация, Java 8 — default/static методы. Когда что: общее поведение + состояние → абстрактный класс; только контракт с множественной реализацией → интерфейс."
         },
         {
           "id": "d",
@@ -2069,7 +2069,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "BeanDefinition → инстанцирование → DI → Aware-интерфейсы → BPP.postProcessBefore → @PostConstruct → InitializingBean → init-method → BPP.postProcessAfter → ГОТОВ → @PreDestroy → DisposableBean → destroy-method..."
+          "text": "BeanDefinition → инстанцирование → DI → Aware-интерфейсы → BPP.postProcessBefore → @PostConstruct → InitializingBean → init-method → BPP.postProcessAfter (здесь оборачивание в прокси, AOP) → ГОТОВ → @PreDestroy → DisposableBean → destroy-method."
         },
         {
           "id": "b",
@@ -2866,7 +2866,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "Массив Node<K,V>[]. Размер — степень двойки (default 16). Индекс: (n-1) & hash(key), hash — XOR верхних 16 бит с нижними. Коллизии — связный список. Java 8+: при TREEIFY_THRESHOLD=8 И capacity ≥ 64 → red-black tree..."
+          "text": "Массив Node<K,V>[]. Размер — степень двойки (default 16). Индекс: (n-1) & hash(key), hash — XOR верхних 16 бит с нижними. Коллизии — связный список (chaining). Java 8+: при TREEIFY_THRESHOLD=8 И capacity ≥ 64 → red-black tree."
         },
         {
           "id": "b",
@@ -3186,7 +3186,7 @@
         },
         {
           "id": "c",
-          "text": "Если a.equals(b) == true, то a.hashCode() == b.hashCode(). Обратное необязательно (коллизии допустимы). equals(null) → false. Переопределяешь один — переопределяй оба. Практический пример: положить объект в HashSet..."
+          "text": "Если a.equals(b) == true, то a.hashCode() == b.hashCode(). Обратное необязательно (коллизии допустимы). equals(null) → false. Переопределяешь один — переопределяй оба. Практический пример: положить объект в HashSet — иначе он не найдётся."
         },
         {
           "id": "d",
@@ -3398,7 +3398,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "Heap — хранение объектов, управляется GC. Stack — фрейм для каждого вызова метода (локальные переменные, ссылки, примитивы). Metaspace (до Java 8 — PermGen) — метаданные классов, пул интернированных строк..."
+          "text": "Heap — хранение объектов, управляется GC, общий для всех потоков. Stack — фрейм для каждого вызова метода (локальные переменные, ссылки, примитивы), приватный для потока. Metaspace (до Java 8 — PermGen) — метаданные классов в нативной памяти, вне Heap."
         },
         {
           "id": "b",
@@ -3604,7 +3604,7 @@
         },
         {
           "id": "d",
-          "text": "Collection (List, Set, Queue) и Map (отдельно, НЕ наследует Collection). List — упорядоченный с дубликатами. Set — без дубликатов. Queue — очередь. Map — пары ключ-значение. Реализации: ArrayList, LinkedList, HashSet..."
+          "text": "Collection (List, Set, Queue) и Map (отдельно, НЕ наследует Collection). List — упорядоченный с дубликатами. Set — без дубликатов. Queue — очередь. Map — пары ключ-значение. Реализации: ArrayList, LinkedList, HashSet, HashMap."
         }
       ],
       "correct": [
@@ -3716,7 +3716,7 @@
         },
         {
           "id": "d",
-          "text": "Четыре причины: 1) безопасность — строки передаются в конструкторы файлов, БД, сетевых соединений, изменение привело бы к уязвимостям; 2) потокобезопасность — можно шарить между потоками без синхронизации..."
+          "text": "Четыре причины: 1) безопасность — строки передаются в конструкторы файлов, БД, сетевых соединений, изменение привело бы к уязвимостям; 2) потокобезопасность — можно шарить между потоками без синхронизации; 3) кэширование hashCode; 4) корректная работа String Pool."
         }
       ],
       "correct": [
@@ -4431,7 +4431,7 @@
         },
         {
           "id": "d",
-          "text": "READ_UNCOMMITTED — dirty read. READ_COMMITTED (default PG) — только закоммиченные. REPEATABLE_READ — повторное чтение = тот же результат. SERIALIZABLE — полная изоляция. Выше уровень → больше консистентности..."
+          "text": "READ_UNCOMMITTED — dirty read. READ_COMMITTED (default PG) — только закоммиченные. REPEATABLE_READ — повторное чтение = тот же результат. SERIALIZABLE — полная изоляция, исключает фантомы. Выше уровень → больше консистентности, но меньше параллелизма."
         }
       ],
       "correct": [
@@ -5164,7 +5164,7 @@
         },
         {
           "id": "b",
-          "text": "Соотношение size / capacity, при котором происходит расширение таблицы. По умолчанию 0.75. То есть когда size превышает 75% от capacity, таблица расширяется в 2 раза и все элементы перехэшируются..."
+          "text": "Пороговое соотношение size / capacity (по умолчанию 0.75), при превышении которого таблица расширяется. То есть когда size превышает 75% от capacity, capacity увеличивается в 2 раза и все элементы перехэшируются под новый размер."
         },
         {
           "id": "c",
@@ -5219,7 +5219,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "Object-Relational Mapping — отображение объектов на таблицы БД. Класс User → таблица users, поля → колонки, связи (@OneToMany) → JOIN'ы. Hibernate берёт на себя SQL — разработчик работает с объектами..."
+          "text": "Object-Relational Mapping — отображение объектов на таблицы БД: класс User → таблица users, поля → колонки, связи (@OneToMany) → JOIN'ы. Hibernate сам генерирует SQL, а разработчик работает с объектами."
         },
         {
           "id": "b",

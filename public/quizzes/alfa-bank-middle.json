@@ -170,7 +170,7 @@
         },
         {
           "id": "d",
-          "text": "ArrayList: O(1) доступ по индексу, O(n) вставка в середину, дружелюбно к CPU-кэшу (непрерывная память). LinkedList: O(1) вставка в начало/конец (если есть ссылка), O(n) доступ по индексу..."
+          "text": "ArrayList: O(1) доступ по индексу, O(n) вставка в середину, дружелюбно к CPU-кэшу (непрерывная память). LinkedList: O(1) вставка в начало/конец (если есть ссылка), O(n) доступ по индексу, так как нужно последовательно идти по узлам двусвязного списка."
         }
       ],
       "correct": [
@@ -258,7 +258,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "Checked: от Exception (не RuntimeException) — компилятор требует throws/catch. Примеры: IOException, SQLException. Unchecked: от RuntimeException и Error. Примеры: NullPointerException, IllegalArgumentException..."
+          "text": "Checked: от Exception (не RuntimeException) — компилятор требует throws/catch. Примеры: IOException, SQLException. Unchecked: от RuntimeException и Error — обрабатывать не обязательно. Примеры: NullPointerException, IllegalArgumentException."
         },
         {
           "id": "b",
@@ -472,7 +472,7 @@
         },
         {
           "id": "c",
-          "text": "Каждая партиция — ровно один consumer из группы. Больше партиций → больше параллелизма. Если consumers > partitions — лишние простаивают. Rebalancing при добавлении/падении consumer..."
+          "text": "Каждая партиция — ровно один consumer из группы. Больше партиций → больше параллелизма. Если consumers > partitions — лишние простаивают. Rebalancing при добавлении/падении consumer. Offset хранится на уровне группы (в __consumer_offsets), поэтому после rebalancing чтение продолжается с закоммиченной позиции."
         },
         {
           "id": "d",
@@ -633,7 +633,7 @@
         },
         {
           "id": "b",
-          "text": "EXPLAIN — план без выполнения. EXPLAIN ANALYZE — реальное выполнение + actual time. Seq Scan на большой таблице — плохо. Index Scan / Index Only Scan — хорошо. Rows Removed by Filter — индекс не помогает..."
+          "text": "EXPLAIN — оценочный план без выполнения. EXPLAIN ANALYZE — реальное выполнение запроса + actual time и число строк. Seq Scan на большой таблице — плохо. Index Scan / Index Only Scan — хорошо. Rows Removed by Filter — индекс не помогает фильтрации."
         },
         {
           "id": "c",
@@ -696,7 +696,7 @@
         },
         {
           "id": "c",
-          "text": "ConcurrentModificationException при изменении коллекции не через сам итератор. Реализован через modCount. Не гарантирован в многопоточной среде — только best effort. Альтернатива: CopyOnWriteArrayList (fail-safe..."
+          "text": "ConcurrentModificationException при изменении коллекции не через сам итератор. Реализован через сравнение modCount с expectedModCount. Не гарантирован в многопоточной среде — только best effort. Альтернатива: CopyOnWriteArrayList (fail-safe)."
         },
         {
           "id": "d",
@@ -812,7 +812,7 @@
         },
         {
           "id": "d",
-          "text": "Ключевое отношение JMM. Если A happens-before B, то записи в A видны в B. Примеры: unlock → lock того же монитора. volatile write → read. Thread.start() → первая инструкция потока. Последняя инструкция → Thread.join()..."
+          "text": "Ключевое отношение JMM: гарантия видимости и упорядочивания эффектов (JVM вправе переупорядочивать, пока наблюдаемый порядок соблюдён). Если A happens-before B, то записи в A (в том числе все обычные записи до volatile-записи) видны в B. Примеры: unlock → lock того же монитора; volatile write → read; Thread.start() → первая инструкция потока; последняя инструкция → Thread.join()."
         }
       ],
       "correct": [
@@ -1028,7 +1028,7 @@
         },
         {
           "id": "b",
-          "text": "Распределённый лог-ориентированный брокер. Данные хранятся на диске (retention), не удаляются после прочтения. Topic → Partition → Offset. Partition — единица параллелизма. Зачем: асинхронное взаимодействие..."
+          "text": "Распределённый лог-ориентированный брокер. Данные хранятся на диске (retention), не удаляются после прочтения. Topic → Partition → Offset. Partition — единица параллелизма. Зачем: асинхронное взаимодействие, развязка сервисов и потоковая обработка."
         },
         {
           "id": "c",
@@ -1142,7 +1142,7 @@
         },
         {
           "id": "b",
-          "text": "Обращение к lazy-полю после закрытия сессии. Решения (от лучшего к худшему): DTO-проекция (SELECT NEW), JOIN FETCH (@Query), @EntityGraph(attributePaths), @BatchSize(size=100)..."
+          "text": "Обращение к lazy-полю после закрытия сессии (вне транзакции), когда прокси не может догрузить данные. Решения (от лучшего к худшему): DTO-проекция (SELECT NEW), JOIN FETCH (@Query), @EntityGraph(attributePaths), @BatchSize(size=100)."
         },
         {
           "id": "c",
@@ -1195,7 +1195,7 @@
         },
         {
           "id": "c",
-          "text": "Liveness — жив ли? Нет → перезапуск. Readiness — готов к трафику? Нет → убирается из LB. Startup — для медленного старта: пока не пройдёт, остальные не проверяются. Spring Boot Actuator: /actuator/health/liveness..."
+          "text": "Liveness — жив ли? Нет → перезапуск. Readiness — готов к трафику? Нет → убирается из LB. Startup — для медленного старта: пока она не пройдёт, Liveness и Readiness не выполняются, а после успеха Startup больше не опрашивается. В Spring Boot Actuator доступны /actuator/health/liveness и /actuator/health/readiness."
         },
         {
           "id": "d",
@@ -1506,7 +1506,7 @@
         },
         {
           "id": "d",
-          "text": "1 findAll() + N доп. запросов на lazy-коллекции. 1000 заказов → 1001 SQL. Обнаружение: hibernate.generate_statistics=true, datasource-proxy. Решения: JOIN FETCH, @EntityGraph, @BatchSize(100), @Fetch(FetchMode..."
+          "text": "1 findAll() + N доп. запросов на lazy-коллекции при обращении к ним: 1000 заказов → 1001 SQL. Обнаружение: hibernate.generate_statistics=true, datasource-proxy. Решения: JOIN FETCH, @EntityGraph, @BatchSize(100), @Fetch(FetchMode.SUBSELECT)."
         }
       ],
       "correct": [
@@ -1608,7 +1608,7 @@
         },
         {
           "id": "c",
-          "text": "REQUIRED (default) — присоединяется/создаёт. REQUIRES_NEW — всегда новая, приостанавливает текущую (аудит/логирование). NESTED — savepoint внутри текущей. SUPPORTS — присоединяется если есть, нет — без..."
+          "text": "REQUIRED (default) — присоединяется к текущей или создаёт новую. REQUIRES_NEW — всегда новая, приостанавливает текущую (аудит/логирование). NESTED — savepoint внутри текущей (откат внешней откатывает и вложенную). SUPPORTS — присоединяется если транзакция есть, нет — работает без неё. MANDATORY требует существующую (иначе исключение), NEVER — наоборот, бросает исключение при наличии транзакции."
         },
         {
           "id": "d",
@@ -1655,7 +1655,7 @@
         },
         {
           "id": "c",
-          "text": "Распределённые транзакции через цепочку локальных + компенсирующие действия. Choreography (события, децентрализованно) vs Orchestration (центральный оркестратор). Пример: оплата → списание → бронирование..."
+          "text": "Распределённые транзакции через цепочку локальных + компенсирующие действия. Choreography (события, децентрализованно) vs Orchestration (центральный оркестратор). Пример: оплата → списание → бронирование; при сбое шага выполняются компенсирующие действия, семантически отменяющие уже сделанное (зафиксированные локальные транзакции откатить нельзя)."
         },
         {
           "id": "d",
@@ -1704,7 +1704,7 @@
         },
         {
           "id": "b",
-          "text": "singleton (default — один на контекст), prototype (новый при каждом запросе), request (один на HTTP-запрос), session, application, websocket. Важно: инжект prototype в singleton через Provider<T> или ObjectFactory<T>..."
+          "text": "singleton (default — один на контекст), prototype (новый при каждом запросе), request (один на HTTP-запрос), session, application, websocket. Web-скоупы доступны автоматически в web-контексте. Важно: инжект prototype в singleton через Provider<T> или ObjectFactory<T>; для prototype контейнер не вызывает destroy-колбэки."
         },
         {
           "id": "c",
@@ -1807,7 +1807,7 @@
         },
         {
           "id": "d",
-          "text": "Интерфейс extends JpaRepository<Entity, ID>. Spring создаёт прокси в рантайме. Имя метода парсится: findByEmailAndStatus → JPQL. @Query для сложных запросов. Pageable → Page/Slice. JpaRepository добавляет flush()..."
+          "text": "Интерфейс extends JpaRepository<Entity, ID>. Spring создаёт прокси в рантайме. Имя метода парсится: findByEmailAndStatus → JPQL. @Query для сложных запросов (JPQL по умолчанию, native по флагу). Pageable → Page/Slice. JpaRepository добавляет flush() и batch-операции."
         }
       ],
       "correct": [
@@ -1858,7 +1858,7 @@
         },
         {
           "id": "b",
-          "text": "@Configuration + @EnableAutoConfiguration + @ComponentScan. Автоконфигурация через @Conditional: если DataSource в classpath — настроит JPA. Список в META- INF/spring/...AutoConfiguration.imports (Spring Boot 3+..."
+          "text": "@Configuration + @EnableAutoConfiguration + @ComponentScan. Автоконфигурация через @Conditional: если DataSource в classpath — настроит JPA. Кандидаты берутся из META-INF/spring/...AutoConfiguration.imports (Spring Boot 3+). По умолчанию сканируется пакет класса и подпакеты."
         },
         {
           "id": "c",
@@ -1901,7 +1901,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "Промежуточные (filter, map, flatMap, sorted, distinct, peek, limit, skip) — ленивые, возвращают Stream, не выполняются пока нет терминальной. Терминальные (collect, forEach, count, reduce, findFirst..."
+          "text": "Промежуточные (filter, map, flatMap, sorted, distinct, peek, limit, skip) — ленивые, возвращают Stream, не выполняются пока нет терминальной. Терминальные (collect, forEach, count, reduce, findFirst) запускают конвейер и возвращают результат или void, завершая стрим."
         },
         {
           "id": "b",
@@ -1960,7 +1960,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "Захватывает монитор объекта. Instance-метод — монитор this. Static — монитор Class. Блок — указанный объект. Только один поток. Reentrant: поток может повторно захватить свой монитор (счётчик)..."
+          "text": "Захватывает монитор объекта. Instance-метод — монитор this. Static — монитор Class. Блок — указанный объект. Только один поток. Reentrant: поток может повторно захватить свой монитор (счётчик). Даёт happens-before, поэтому отдельный volatile не нужен."
         },
         {
           "id": "b",
@@ -2161,7 +2161,7 @@
         },
         {
           "id": "d",
-          "text": "Spring создаёт прокси-обёртку. JDK dynamic proxy (если интерфейс) или CGLIB (наследование). Прокси: открывает транзакцию (PlatformTransactionManager), вызывает метод, commit при успехе..."
+          "text": "Spring создаёт прокси-обёртку. JDK dynamic proxy (если интерфейс) или CGLIB (наследование). Прокси: открывает транзакцию (PlatformTransactionManager), вызывает метод, commit при успехе, rollback при ошибке. AspectJ weaving — только при явной настройке mode=ASPECTJ."
         }
       ],
       "correct": [
@@ -2263,7 +2263,7 @@
         },
         {
           "id": "c",
-          "text": "Автоматически вызывает close() в finally. Ресурс реализует AutoCloseable. Закрытие в обратном порядке объявления. Если и try, и close бросают исключение — close-исключение подавляется (getSuppressed())..."
+          "text": "Автоматически вызывает close() в finally. Ресурс реализует AutoCloseable. Закрытие в обратном порядке объявления. Если и try, и close бросают исключение — наружу идёт исключение тела, а close-исключение подавляется (getSuppressed())."
         },
         {
           "id": "d",
@@ -2369,7 +2369,7 @@
         },
         {
           "id": "c",
-          "text": "Spurious wakeup: JVM/ОС может разбудить поток без notify. while (!condition) { wait(); }. Важно: вызывать ТОЛЬКО внутри synchronized на том же объекте, иначе — IllegalMonitorStateException. notify() будит один поток..."
+          "text": "Spurious wakeup: JVM/ОС может разбудить поток без notify. while (!condition) { wait(); }. Важно: вызывать ТОЛЬКО внутри synchronized на том же объекте, иначе — IllegalMonitorStateException. notify() будит один поток, а при notifyAll просыпаются несколько — условие нужно перепроверить, поэтому if недостаточно, только while."
         },
         {
           "id": "d",
@@ -2534,7 +2534,7 @@
         },
         {
           "id": "c",
-          "text": "Абстрактный класс: состояние (поля), конструкторы, один наследник. Интерфейс: контракт, множественная реализация, Java 8 — default/static методы. Когда что: общее поведение + состояние → абстрактный класс..."
+          "text": "Абстрактный класс: состояние (поля), конструкторы, один наследник. Интерфейс: контракт, множественная реализация, Java 8 — default/static методы. Когда что: общее поведение + состояние → абстрактный класс; только контракт с множественной реализацией → интерфейс."
         },
         {
           "id": "d",
@@ -2591,7 +2591,7 @@
         },
         {
           "id": "d",
-          "text": "at-most-once — может потеряться. at-least-once — может продублироваться (default). exactly-once — idempotent producer + transactional + read_committed. В проде: at-least-once + идемпотентная обработка (upsert в БД..."
+          "text": "at-most-once — может потеряться (но не дублируется). at-least-once — может продублироваться, но не теряется (default). exactly-once — idempotent producer + transactional + read_committed на консьюмере. В проде: at-least-once + идемпотентная обработка (upsert в БД)."
         }
       ],
       "correct": [
@@ -2650,7 +2650,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "BeanDefinition → инстанцирование → DI → Aware-интерфейсы → BPP.postProcessBefore → @PostConstruct → InitializingBean → init-method → BPP.postProcessAfter → ГОТОВ → @PreDestroy → DisposableBean → destroy-method..."
+          "text": "BeanDefinition → инстанцирование → DI → Aware-интерфейсы → BPP.postProcessBefore → @PostConstruct → InitializingBean → init-method → BPP.postProcessAfter (здесь оборачивание в прокси, AOP) → ГОТОВ → @PreDestroy → DisposableBean → destroy-method."
         },
         {
           "id": "b",
@@ -2768,7 +2768,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "Массив Node<K,V>[]. Размер — степень двойки (default 16). Индекс: (n-1) & hash(key), hash — XOR верхних 16 бит с нижними. Коллизии — связный список. Java 8+: при TREEIFY_THRESHOLD=8 И capacity ≥ 64 → red-black tree..."
+          "text": "Массив Node<K,V>[]. Размер — степень двойки (default 16). Индекс: (n-1) & hash(key), hash — XOR верхних 16 бит с нижними. Коллизии — связный список (chaining). Java 8+: при TREEIFY_THRESHOLD=8 И capacity ≥ 64 → red-black tree."
         },
         {
           "id": "b",
@@ -2823,7 +2823,7 @@
         },
         {
           "id": "c",
-          "text": "Constructor injection. Поля можно final, явно видны зависимости, легко тестировать без контекста (new Service(mockRepo)), невозможен циклический DI при старте (сигнал о проблеме в дизайне). С Spring 4..."
+          "text": "Constructor injection. Поля можно final, явно видны зависимости, легко тестировать без контекста (new Service(mockRepo)), невозможен циклический DI при старте (сигнал о проблеме в дизайне). С Spring 4 при единственном конструкторе @Autowired можно не писать."
         },
         {
           "id": "d",
@@ -2941,7 +2941,7 @@
         },
         {
           "id": "c",
-          "text": "Если a.equals(b) == true, то a.hashCode() == b.hashCode(). Обратное необязательно (коллизии допустимы). equals(null) → false. Переопределяешь один — переопределяй оба. Практический пример: положить объект в HashSet..."
+          "text": "Если a.equals(b) == true, то a.hashCode() == b.hashCode(). Обратное необязательно (коллизии допустимы). equals(null) → false. Переопределяешь один — переопределяй оба. Практический пример: положить объект в HashSet — иначе он не найдётся."
         },
         {
           "id": "d",
@@ -2998,7 +2998,7 @@
         },
         {
           "id": "d",
-          "text": "First-level: автоматический, привязан к Session. Гарантирует identity (один PK = один объект). Second-level: опциональный, общий (EhCache, Caffeine, Infinispan). Query cache: кэширует JPQL-результаты..."
+          "text": "First-level: автоматический, привязан к Session. Гарантирует identity (один PK = один объект). Second-level: опциональный, общий на уровне SessionFactory (EhCache, Caffeine, Infinispan). Query cache: кэширует результаты JPQL-запросов и требует включённого second-level."
         }
       ],
       "correct": [
@@ -3058,7 +3058,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "Heap — хранение объектов, управляется GC. Stack — фрейм для каждого вызова метода (локальные переменные, ссылки, примитивы). Metaspace (до Java 8 — PermGen) — метаданные классов, пул интернированных строк..."
+          "text": "Heap — хранение объектов, управляется GC, общий для всех потоков. Stack — фрейм для каждого вызова метода (локальные переменные, ссылки, примитивы), приватный для потока. Metaspace (до Java 8 — PermGen) — метаданные классов в нативной памяти, вне Heap."
         },
         {
           "id": "b",
@@ -3119,7 +3119,7 @@
         },
         {
           "id": "c",
-          "text": "@RestControllerAdvice + @ExceptionHandler. ErrorDto с code, message, timestamp. HTTP-статусы: 400 (валидация), 404 (не найдено), 409 (бизнес-конфликт), 500. MethodArgumentNotValidException для @Valid..."
+          "text": "@RestControllerAdvice + @ExceptionHandler. ErrorDto с code, message, timestamp. HTTP-статусы: 400 (валидация), 404 (не найдено), 409 (бизнес-конфликт), 500 (непредвиденные). MethodArgumentNotValidException для ошибок @Valid отдаёт 400."
         },
         {
           "id": "d",
@@ -3229,7 +3229,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "ROW_NUMBER(), RANK(), DENSE_RANK() — нумерация/ранжирование. LAG/LEAD — предыдущая/следующая строка. SUM/AVG/COUNT OVER (PARTITION BY ... ORDER BY ...) — агрегация без GROUP BY..."
+          "text": "ROW_NUMBER(), RANK(), DENSE_RANK() — нумерация/ранжирование. LAG/LEAD — предыдущая/следующая строка. SUM/AVG/COUNT OVER (PARTITION BY ... ORDER BY ...) — агрегация без GROUP BY. В отличие от GROUP BY оконные функции не сворачивают строки."
         },
         {
           "id": "b",
@@ -3348,7 +3348,7 @@
         },
         {
           "id": "d",
-          "text": "Collection (List, Set, Queue) и Map (отдельно, НЕ наследует Collection). List — упорядоченный с дубликатами. Set — без дубликатов. Queue — очередь. Map — пары ключ-значение. Реализации: ArrayList, LinkedList, HashSet..."
+          "text": "Collection (List, Set, Queue) и Map (отдельно, НЕ наследует Collection). List — упорядоченный с дубликатами. Set — без дубликатов. Queue — очередь. Map — пары ключ-значение. Реализации: ArrayList, LinkedList, HashSet, HashMap."
         }
       ],
       "correct": [
@@ -3460,7 +3460,7 @@
         },
         {
           "id": "d",
-          "text": "Четыре причины: 1) безопасность — строки передаются в конструкторы файлов, БД, сетевых соединений, изменение привело бы к уязвимостям; 2) потокобезопасность — можно шарить между потоками без синхронизации..."
+          "text": "Четыре причины: 1) безопасность — строки передаются в конструкторы файлов, БД, сетевых соединений, изменение привело бы к уязвимостям; 2) потокобезопасность — можно шарить между потоками без синхронизации; 3) кэширование hashCode; 4) корректная работа String Pool."
         }
       ],
       "correct": [
@@ -3499,7 +3499,7 @@
         },
         {
           "id": "b",
-          "text": "newFixedThreadPool(n) — фикс. число, LinkedBlockingQueue. newCachedThreadPool — неограниченно (ОПАСНО — OOM). newScheduledThreadPool — периодические задачи. В проде: ThreadPoolExecutor вручную с corePoolSize..."
+          "text": "newFixedThreadPool(n) — фикс. число потоков, неограниченная LinkedBlockingQueue (при наплыве задачи копятся в очереди). newCachedThreadPool — неограниченно плодит потоки (ОПАСНО — OOM). newScheduledThreadPool — периодические задачи через scheduleAtFixedRate. В проде: ThreadPoolExecutor вручную с corePoolSize, задающим базовое число потоков."
         },
         {
           "id": "c",
@@ -3557,7 +3557,7 @@
         },
         {
           "id": "c",
-          "text": "Transient — new User(), Hibernate не знает. Persistent/Managed — связан с сессией, dirty checking автоматически синхронизирует изменения. Detached — сессия закрыта/detach. Removed — помечен на удаление..."
+          "text": "Transient — new User(), Hibernate не знает. Persistent/Managed — связан с сессией, dirty checking автоматически синхронизирует изменения. Detached — сессия закрыта/detach, изменения сами в БД не уходят, нужен merge(). Removed — помечен на удаление. Всего четыре состояния."
         },
         {
           "id": "d",
@@ -3606,7 +3606,7 @@
         },
         {
           "id": "b",
-          "text": "B-tree (default) — =, <, >, BETWEEN, ORDER BY, LIKE 'abc%'. Hash — только =. GIN — массивы, JSONB, full-text. GiST — геометрия, диапазоны. BRIN — большие таблицы с порядком (timestamp)..."
+          "text": "B-tree (default) — =, <, >, BETWEEN, ORDER BY, LIKE 'abc%'. Hash — только =. GIN — массивы, JSONB, full-text. GiST — геометрия, диапазоны. BRIN — большие таблицы с порядком (timestamp). LIKE с ведущим '%' индексом не ускоряется."
         },
         {
           "id": "c",
@@ -3679,7 +3679,7 @@
         },
         {
           "id": "d",
-          "text": "READ_UNCOMMITTED — dirty read. READ_COMMITTED (default PG) — только закоммиченные. REPEATABLE_READ — повторное чтение = тот же результат. SERIALIZABLE — полная изоляция. Выше уровень → больше консистентности..."
+          "text": "READ_UNCOMMITTED — dirty read. READ_COMMITTED (default PG) — только закоммиченные. REPEATABLE_READ — повторное чтение = тот же результат. SERIALIZABLE — полная изоляция, исключает фантомы. Выше уровень → больше консистентности, но меньше параллелизма."
         }
       ],
       "correct": [
@@ -3722,7 +3722,7 @@
         },
         {
           "id": "c",
-          "text": "Ровно один абстрактный метод (SAM). @FunctionalInterface — опциональная аннотация, но защищает от случайного добавления второго метода. Основные: Function<T,R>, Predicate<T>, Consumer<T>, Supplier<T>, UnaryOperator<T>..."
+          "text": "Ровно один абстрактный метод (SAM). @FunctionalInterface — опциональная аннотация, но защищает от случайного добавления второго метода; лямбда компилируется и без неё. Default- и static-методы разрешены. Основные: Function<T,R>, Predicate<T>, Consumer<T>, Supplier<T>, UnaryOperator<T>."
         },
         {
           "id": "d",
@@ -3874,7 +3874,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "Object-Relational Mapping — отображение объектов на таблицы БД. Класс User → таблица users, поля → колонки, связи (@OneToMany) → JOIN'ы. Hibernate берёт на себя SQL — разработчик работает с объектами..."
+          "text": "Object-Relational Mapping — отображение объектов на таблицы БД: класс User → таблица users, поля → колонки, связи (@OneToMany) → JOIN'ы. Hibernate сам генерирует SQL, а разработчик работает с объектами."
         },
         {
           "id": "b",
@@ -3925,7 +3925,7 @@
         },
         {
           "id": "b",
-          "text": "Автономный сервис с одной зоной ответственности, собственной БД, независимым деплоем. Общается через REST/gRPC (синхронно) или брокер (асинхронно). Плюсы: независимый деплой, масштабирование, технологическая гибкость..."
+          "text": "Автономный сервис с одной зоной ответственности, собственной БД, независимым деплоем. Общается через REST/gRPC (синхронно) или брокер (асинхронно). Плюсы: независимый деплой, масштабирование, технологическая гибкость."
         },
         {
           "id": "c",

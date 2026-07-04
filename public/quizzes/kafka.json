@@ -41,7 +41,7 @@
         },
         {
           "id": "d",
-          "text": "ACK: consumer подтверждает обработку. NACK: отказ (retry или DLQ). DLQ (Dead Letter Queue): очередь для «мёртвых» сообщений, которые не удалось обработать после N ретраев..."
+          "text": "ACK: consumer подтверждает обработку. NACK: отказ (retry или DLQ). DLQ (Dead Letter Queue): очередь для «мёртвых» сообщений, которые не удалось обработать после N ретраев."
         }
       ],
       "correct": [
@@ -223,7 +223,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "CLOSED: всё работает, запросы проходят. При N ошибок (или % ошибок > threshold) → OPEN. OPEN: все запросы блокируются, возвращается fallback. Через waitDuration → HALF_OPEN. HALF_OPEN: пропускает N тестовых запросов..."
+          "text": "CLOSED: всё работает, запросы проходят. При N ошибок (или % ошибок > threshold) → OPEN. OPEN: все запросы блокируются, возвращается fallback. Через waitDuration → HALF_OPEN. HALF_OPEN: пропускает N тестовых запросов; при успехе → CLOSED, при ошибке → OPEN."
         },
         {
           "id": "b",
@@ -284,7 +284,7 @@
         },
         {
           "id": "c",
-          "text": "Каждая партиция — ровно один consumer из группы. Больше партиций → больше параллелизма. Если consumers > partitions — лишние простаивают. Rebalancing при добавлении/падении consumer..."
+          "text": "Каждая партиция — ровно один consumer из группы. Больше партиций → больше параллелизма. Если consumers > partitions — лишние простаивают. Rebalancing при добавлении/падении consumer. Offset хранится на уровне группы (в __consumer_offsets), поэтому после rebalancing чтение продолжается с закоммиченной позиции."
         },
         {
           "id": "d",
@@ -465,7 +465,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "Consumer: ты сам управляешь offset, обработкой, сохранением. Kafka Streams: декларативная обработка потоков (filter, map, groupBy, aggregate, join). Stateful (RocksDB для локального состояния)..."
+          "text": "Consumer: ты сам управляешь offset, обработкой, сохранением. Kafka Streams: клиентская библиотека с декларативной обработкой потоков (filter, map, groupBy, aggregate, join). Stateful — использует RocksDB для локального состояния с бэкапом в changelog-топик."
         },
         {
           "id": "b",
@@ -513,7 +513,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "Kafka: pull (consumer сам забирает), хранит сообщения (retention), log compaction, высокая пропускная способность, горизонтальное масштабирование. RabbitMQ: push (брокер отправляет), удаляет после ACK..."
+          "text": "Kafka: pull (consumer сам забирает), хранит сообщения (retention), не удаляет после чтения (можно перечитывать), log compaction, высокая пропускная способность, горизонтальное масштабирование партициями. RabbitMQ: push (брокер отправляет), удаляет после ACK, гибкая маршрутизация (exchange/queue)."
         },
         {
           "id": "b",
@@ -570,7 +570,7 @@
         },
         {
           "id": "b",
-          "text": "Распределённый лог-ориентированный брокер. Данные хранятся на диске (retention), не удаляются после прочтения. Topic → Partition → Offset. Partition — единица параллелизма. Зачем: асинхронное взаимодействие..."
+          "text": "Распределённый лог-ориентированный брокер. Данные хранятся на диске (retention), не удаляются после прочтения. Topic → Partition → Offset. Partition — единица параллелизма. Зачем: асинхронное взаимодействие, развязка сервисов и потоковая обработка."
         },
         {
           "id": "c",
@@ -668,7 +668,7 @@
         },
         {
           "id": "c",
-          "text": "Распределённые транзакции через цепочку локальных + компенсирующие действия. Choreography (события, децентрализованно) vs Orchestration (центральный оркестратор). Пример: оплата → списание → бронирование..."
+          "text": "Распределённые транзакции через цепочку локальных + компенсирующие действия. Choreography (события, децентрализованно) vs Orchestration (центральный оркестратор). Пример: оплата → списание → бронирование; при сбое шага выполняются компенсирующие действия, семантически отменяющие уже сделанное (зафиксированные локальные транзакции откатить нельзя)."
         },
         {
           "id": "d",
@@ -807,7 +807,7 @@
         },
         {
           "id": "b",
-          "text": "KafkaTemplate: отправка сообщений (send). @KafkaListener: получение (метод с @KafkaListener(topics=\"...\")). ConcurrentKafkaListenerContainerFactory: настройка concurrency, error handler, retry..."
+          "text": "KafkaTemplate: отправка сообщений (send). @KafkaListener: получение (метод с @KafkaListener(topics=\"...\")). ConcurrentKafkaListenerContainerFactory: создаёт контейнеры слушателей, настраивает concurrency, error handler, retry."
         },
         {
           "id": "c",
@@ -862,7 +862,7 @@
         },
         {
           "id": "d",
-          "text": "Старые версии Kafka: ZooKeeper хранил метаданные (контроллер, брокеры, топики). KRaft (Kafka Raft, с Kafka 3.3+): метаданные хранятся в самом Kafka через Raft-консенсус. Проще деплой (нет отдельного ZooKeeper-кластера)..."
+          "text": "Старые версии Kafka: ZooKeeper хранил метаданные (контроллер, брокеры, топики). KRaft (Kafka Raft, с Kafka 3.3+): метаданные хранятся в самом Kafka через Raft-консенсус выделенными controller-нодами. Проще деплой (нет отдельного ZooKeeper-кластера), ZooKeeper полностью удалён, ZAB заменён на Raft."
         }
       ],
       "correct": [
@@ -915,7 +915,7 @@
         },
         {
           "id": "d",
-          "text": "at-most-once — может потеряться. at-least-once — может продублироваться (default). exactly-once — idempotent producer + transactional + read_committed. В проде: at-least-once + идемпотентная обработка (upsert в БД..."
+          "text": "at-most-once — может потеряться (но не дублируется). at-least-once — может продублироваться, но не теряется (default). exactly-once — idempotent producer + transactional + read_committed на консьюмере. В проде: at-least-once + идемпотентная обработка (upsert в БД)."
         }
       ],
       "correct": [
@@ -956,7 +956,7 @@
         },
         {
           "id": "b",
-          "text": "Асинхронные платежи (не блокировать пользователя), уведомления (SMS/push), события между микросервисами (заявка одобрена → выдать кредит → отправить SMS). Kafka: pull, хранит сообщения, high throughput. RabbitMQ: push..."
+          "text": "Асинхронные платежи (не блокировать пользователя), уведомления (SMS/push), события между микросервисами (заявка одобрена → выдать кредит → отправить SMS). Kafka: pull, хранит сообщения в логе, чтение по offset, high throughput. RabbitMQ: push, удаляет сообщение после ack. Дают асинхронную (eventual) консистентность и развязку сервисов, но не заменяют транзакционную БД."
         },
         {
           "id": "c",
@@ -1058,7 +1058,7 @@
         },
         {
           "id": "d",
-          "text": "replication.factor=3 (каждая партиция на 3 брокерах). min.insync.replicas=2 (минимум 2 реплики подтверждают). acks=all (producer ждёт подтверждения от всех ISR). unclean.leader.election..."
+          "text": "replication.factor=3 (каждая партиция на 3 брокерах). min.insync.replicas=2 (минимум 2 реплики подтверждают). acks=all (producer ждёт подтверждения от всех ISR). unclean.leader.election.enable=false, чтобы отставшая реплика не стала лидером и не потерялись неотреплицированные сообщения."
         }
       ],
       "correct": [
@@ -1098,7 +1098,7 @@
         },
         {
           "id": "b",
-          "text": "1) Поднять Kafka через Testcontainers. 2) Отправить сообщение KafkaTemplate.send(topic, message). 3) Прочитать ответное через KafkaConsumer.poll(). 4) Проверить содержимое. Через Citrus: send(kafka).message(....."
+          "text": "1) Поднять Kafka через Testcontainers (или EmbeddedKafka). 2) Отправить сообщение KafkaTemplate.send(topic, message). 3) Прочитать ответное через KafkaConsumer.poll(). 4) Проверить содержимое. Testcontainers поднимает реальный брокер и сам управляет портами."
         },
         {
           "id": "c",
@@ -1146,7 +1146,7 @@
         },
         {
           "id": "b",
-          "text": "Rate limiter на стороне A (ограничить исходящие). Kafka как буфер: A пишет в топик → B читает со своей скоростью (backpressure). Circuit Breaker: при перегрузке B → A получает fallback..."
+          "text": "Rate limiter на стороне A (ограничить исходящие). Kafka как буфер: A пишет в топик → B читает со своей скоростью (backpressure). Circuit Breaker: при перегрузке B → A получает fallback."
         },
         {
           "id": "c",
@@ -1190,7 +1190,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "Retry с exponential backoff + jitter (не все клиенты ретраят одновременно). Circuit Breaker: после N ошибок → OPEN (не шлём запросы) → HALF_OPEN (тестовый) → CLOSED. Idempotency-Key: чтобы retry не создал дубль..."
+          "text": "Retry с exponential backoff + jitter (не все клиенты ретраят одновременно). Circuit Breaker: после N ошибок → OPEN (не шлём запросы) → HALF_OPEN (тестовый) → CLOSED. Idempotency-Key: чтобы retry не создал дубль."
         },
         {
           "id": "b",
@@ -1336,7 +1336,7 @@
         },
         {
           "id": "b",
-          "text": "Автономный сервис с одной зоной ответственности, собственной БД, независимым деплоем. Общается через REST/gRPC (синхронно) или брокер (асинхронно). Плюсы: независимый деплой, масштабирование, технологическая гибкость..."
+          "text": "Автономный сервис с одной зоной ответственности, собственной БД, независимым деплоем. Общается через REST/gRPC (синхронно) или брокер (асинхронно). Плюсы: независимый деплой, масштабирование, технологическая гибкость."
         },
         {
           "id": "c",

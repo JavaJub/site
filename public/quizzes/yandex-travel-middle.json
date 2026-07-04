@@ -165,7 +165,7 @@
         },
         {
           "id": "d",
-          "text": "ArrayList: O(1) доступ по индексу, O(n) вставка в середину, дружелюбно к CPU-кэшу (непрерывная память). LinkedList: O(1) вставка в начало/конец (если есть ссылка), O(n) доступ по индексу..."
+          "text": "ArrayList: O(1) доступ по индексу, O(n) вставка в середину, дружелюбно к CPU-кэшу (непрерывная память). LinkedList: O(1) вставка в начало/конец (если есть ссылка), O(n) доступ по индексу, так как нужно последовательно идти по узлам двусвязного списка."
         }
       ],
       "correct": [
@@ -451,7 +451,7 @@
         },
         {
           "id": "b",
-          "text": "EXPLAIN — план без выполнения. EXPLAIN ANALYZE — реальное выполнение + actual time. Seq Scan на большой таблице — плохо. Index Scan / Index Only Scan — хорошо. Rows Removed by Filter — индекс не помогает..."
+          "text": "EXPLAIN — оценочный план без выполнения. EXPLAIN ANALYZE — реальное выполнение запроса + actual time и число строк. Seq Scan на большой таблице — плохо. Index Scan / Index Only Scan — хорошо. Rows Removed by Filter — индекс не помогает фильтрации."
         },
         {
           "id": "c",
@@ -514,7 +514,7 @@
         },
         {
           "id": "c",
-          "text": "ConcurrentModificationException при изменении коллекции не через сам итератор. Реализован через modCount. Не гарантирован в многопоточной среде — только best effort. Альтернатива: CopyOnWriteArrayList (fail-safe..."
+          "text": "ConcurrentModificationException при изменении коллекции не через сам итератор. Реализован через сравнение modCount с expectedModCount. Не гарантирован в многопоточной среде — только best effort. Альтернатива: CopyOnWriteArrayList (fail-safe)."
         },
         {
           "id": "d",
@@ -677,7 +677,7 @@
         },
         {
           "id": "d",
-          "text": "Ключевое отношение JMM. Если A happens-before B, то записи в A видны в B. Примеры: unlock → lock того же монитора. volatile write → read. Thread.start() → первая инструкция потока. Последняя инструкция → Thread.join()..."
+          "text": "Ключевое отношение JMM: гарантия видимости и упорядочивания эффектов (JVM вправе переупорядочивать, пока наблюдаемый порядок соблюдён). Если A happens-before B, то записи в A (в том числе все обычные записи до volatile-записи) видны в B. Примеры: unlock → lock того же монитора; volatile write → read; Thread.start() → первая инструкция потока; последняя инструкция → Thread.join()."
         }
       ],
       "correct": [
@@ -1008,7 +1008,7 @@
         },
         {
           "id": "b",
-          "text": "Обращение к lazy-полю после закрытия сессии. Решения (от лучшего к худшему): DTO-проекция (SELECT NEW), JOIN FETCH (@Query), @EntityGraph(attributePaths), @BatchSize(size=100)..."
+          "text": "Обращение к lazy-полю после закрытия сессии (вне транзакции), когда прокси не может догрузить данные. Решения (от лучшего к худшему): DTO-проекция (SELECT NEW), JOIN FETCH (@Query), @EntityGraph(attributePaths), @BatchSize(size=100)."
         },
         {
           "id": "c",
@@ -1434,7 +1434,7 @@
         },
         {
           "id": "b",
-          "text": "@Configuration + @EnableAutoConfiguration + @ComponentScan. Автоконфигурация через @Conditional: если DataSource в classpath — настроит JPA. Список в META- INF/spring/...AutoConfiguration.imports (Spring Boot 3+..."
+          "text": "@Configuration + @EnableAutoConfiguration + @ComponentScan. Автоконфигурация через @Conditional: если DataSource в classpath — настроит JPA. Кандидаты берутся из META-INF/spring/...AutoConfiguration.imports (Spring Boot 3+). По умолчанию сканируется пакет класса и подпакеты."
         },
         {
           "id": "c",
@@ -1542,7 +1542,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "Захватывает монитор объекта. Instance-метод — монитор this. Static — монитор Class. Блок — указанный объект. Только один поток. Reentrant: поток может повторно захватить свой монитор (счётчик)..."
+          "text": "Захватывает монитор объекта. Instance-метод — монитор this. Static — монитор Class. Блок — указанный объект. Только один поток. Reentrant: поток может повторно захватить свой монитор (счётчик). Даёт happens-before, поэтому отдельный volatile не нужен."
         },
         {
           "id": "b",
@@ -1880,7 +1880,7 @@
         },
         {
           "id": "c",
-          "text": "Абстрактный класс: состояние (поля), конструкторы, один наследник. Интерфейс: контракт, множественная реализация, Java 8 — default/static методы. Когда что: общее поведение + состояние → абстрактный класс..."
+          "text": "Абстрактный класс: состояние (поля), конструкторы, один наследник. Интерфейс: контракт, множественная реализация, Java 8 — default/static методы. Когда что: общее поведение + состояние → абстрактный класс; только контракт с множественной реализацией → интерфейс."
         },
         {
           "id": "d",
@@ -1990,7 +1990,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "BeanDefinition → инстанцирование → DI → Aware-интерфейсы → BPP.postProcessBefore → @PostConstruct → InitializingBean → init-method → BPP.postProcessAfter → ГОТОВ → @PreDestroy → DisposableBean → destroy-method..."
+          "text": "BeanDefinition → инстанцирование → DI → Aware-интерфейсы → BPP.postProcessBefore → @PostConstruct → InitializingBean → init-method → BPP.postProcessAfter (здесь оборачивание в прокси, AOP) → ГОТОВ → @PreDestroy → DisposableBean → destroy-method."
         },
         {
           "id": "b",
@@ -2055,7 +2055,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "Массив Node<K,V>[]. Размер — степень двойки (default 16). Индекс: (n-1) & hash(key), hash — XOR верхних 16 бит с нижними. Коллизии — связный список. Java 8+: при TREEIFY_THRESHOLD=8 И capacity ≥ 64 → red-black tree..."
+          "text": "Массив Node<K,V>[]. Размер — степень двойки (default 16). Индекс: (n-1) & hash(key), hash — XOR верхних 16 бит с нижними. Коллизии — связный список (chaining). Java 8+: при TREEIFY_THRESHOLD=8 И capacity ≥ 64 → red-black tree."
         },
         {
           "id": "b",
@@ -2134,7 +2134,7 @@
         },
         {
           "id": "c",
-          "text": "Если a.equals(b) == true, то a.hashCode() == b.hashCode(). Обратное необязательно (коллизии допустимы). equals(null) → false. Переопределяешь один — переопределяй оба. Практический пример: положить объект в HashSet..."
+          "text": "Если a.equals(b) == true, то a.hashCode() == b.hashCode(). Обратное необязательно (коллизии допустимы). equals(null) → false. Переопределяешь один — переопределяй оба. Практический пример: положить объект в HashSet — иначе он не найдётся."
         },
         {
           "id": "d",
@@ -2191,7 +2191,7 @@
         },
         {
           "id": "d",
-          "text": "First-level: автоматический, привязан к Session. Гарантирует identity (один PK = один объект). Second-level: опциональный, общий (EhCache, Caffeine, Infinispan). Query cache: кэширует JPQL-результаты..."
+          "text": "First-level: автоматический, привязан к Session. Гарантирует identity (один PK = один объект). Second-level: опциональный, общий на уровне SessionFactory (EhCache, Caffeine, Infinispan). Query cache: кэширует результаты JPQL-запросов и требует включённого second-level."
         }
       ],
       "correct": [
@@ -2298,7 +2298,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "Heap — хранение объектов, управляется GC. Stack — фрейм для каждого вызова метода (локальные переменные, ссылки, примитивы). Metaspace (до Java 8 — PermGen) — метаданные классов, пул интернированных строк..."
+          "text": "Heap — хранение объектов, управляется GC, общий для всех потоков. Stack — фрейм для каждого вызова метода (локальные переменные, ссылки, примитивы), приватный для потока. Metaspace (до Java 8 — PermGen) — метаданные классов в нативной памяти, вне Heap."
         },
         {
           "id": "b",
@@ -2359,7 +2359,7 @@
         },
         {
           "id": "c",
-          "text": "@RestControllerAdvice + @ExceptionHandler. ErrorDto с code, message, timestamp. HTTP-статусы: 400 (валидация), 404 (не найдено), 409 (бизнес-конфликт), 500. MethodArgumentNotValidException для @Valid..."
+          "text": "@RestControllerAdvice + @ExceptionHandler. ErrorDto с code, message, timestamp. HTTP-статусы: 400 (валидация), 404 (не найдено), 409 (бизнес-конфликт), 500 (непредвиденные). MethodArgumentNotValidException для ошибок @Valid отдаёт 400."
         },
         {
           "id": "d",
@@ -2469,7 +2469,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "ROW_NUMBER(), RANK(), DENSE_RANK() — нумерация/ранжирование. LAG/LEAD — предыдущая/следующая строка. SUM/AVG/COUNT OVER (PARTITION BY ... ORDER BY ...) — агрегация без GROUP BY..."
+          "text": "ROW_NUMBER(), RANK(), DENSE_RANK() — нумерация/ранжирование. LAG/LEAD — предыдущая/следующая строка. SUM/AVG/COUNT OVER (PARTITION BY ... ORDER BY ...) — агрегация без GROUP BY. В отличие от GROUP BY оконные функции не сворачивают строки."
         },
         {
           "id": "b",
@@ -2785,7 +2785,7 @@
         },
         {
           "id": "c",
-          "text": "Transient — new User(), Hibernate не знает. Persistent/Managed — связан с сессией, dirty checking автоматически синхронизирует изменения. Detached — сессия закрыта/detach. Removed — помечен на удаление..."
+          "text": "Transient — new User(), Hibernate не знает. Persistent/Managed — связан с сессией, dirty checking автоматически синхронизирует изменения. Detached — сессия закрыта/detach, изменения сами в БД не уходят, нужен merge(). Removed — помечен на удаление. Всего четыре состояния."
         },
         {
           "id": "d",
@@ -2834,7 +2834,7 @@
         },
         {
           "id": "b",
-          "text": "B-tree (default) — =, <, >, BETWEEN, ORDER BY, LIKE 'abc%'. Hash — только =. GIN — массивы, JSONB, full-text. GiST — геометрия, диапазоны. BRIN — большие таблицы с порядком (timestamp)..."
+          "text": "B-tree (default) — =, <, >, BETWEEN, ORDER BY, LIKE 'abc%'. Hash — только =. GIN — массивы, JSONB, full-text. GiST — геометрия, диапазоны. BRIN — большие таблицы с порядком (timestamp). LIKE с ведущим '%' индексом не ускоряется."
         },
         {
           "id": "c",
@@ -2907,7 +2907,7 @@
         },
         {
           "id": "d",
-          "text": "READ_UNCOMMITTED — dirty read. READ_COMMITTED (default PG) — только закоммиченные. REPEATABLE_READ — повторное чтение = тот же результат. SERIALIZABLE — полная изоляция. Выше уровень → больше консистентности..."
+          "text": "READ_UNCOMMITTED — dirty read. READ_COMMITTED (default PG) — только закоммиченные. REPEATABLE_READ — повторное чтение = тот же результат. SERIALIZABLE — полная изоляция, исключает фантомы. Выше уровень → больше консистентности, но меньше параллелизма."
         }
       ],
       "correct": [

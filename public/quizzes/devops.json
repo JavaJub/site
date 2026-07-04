@@ -415,7 +415,7 @@
         },
         {
           "id": "b",
-          "text": "Образ: шаблон (класс). Контейнер: запущенный экземпляр (объект). CMD: аргументы по умолчанию (легко переопределить). ENTRYPOINT: основная команда (сложнее)..."
+          "text": "Образ: шаблон (класс). Контейнер: запущенный экземпляр (объект) с записываемым слоём. CMD: аргументы по умолчанию (легко переопределить в docker run). ENTRYPOINT: основная команда (сложнее переопределить). Обе задают, что выполнится при старте контейнера."
         },
         {
           "id": "c",
@@ -510,7 +510,7 @@
         },
         {
           "id": "b",
-          "text": "Elasticsearch хранит/индексирует, Kibana — UI для поиска. Фильтр: traceId + временной диапазон. KQL: level:ERROR AND service:payment. MDC: Mapped Diagnostic Context — traceId пробрасывается через потоки..."
+          "text": "Elasticsearch хранит/индексирует, Kibana — UI для поиска с языком KQL. Фильтр: traceId + временной диапазон. KQL: level:ERROR AND service:payment. MDC: Mapped Diagnostic Context — traceId одинаков для всего запроса и проброшен между потоками, поэтому по нему удобно найти все логи одного теста."
         },
         {
           "id": "c",
@@ -672,7 +672,7 @@
         },
         {
           "id": "d",
-          "text": "grep \"$(date +%Y-%m-%d)\" app.log | grep -c \"ERROR\". find: find . -name \"*.log\" -mtime -1 (файлы за сутки). Уникальные IP: grep -oE '([0-9]{1,3}\\.){3}[0-9]{1,3}' access.log | sort -u. tail -f app..."
+          "text": "grep \"$(date +%Y-%m-%d)\" app.log | grep -c \"ERROR\". find: find . -name \"*.log\" -mtime -1 (файлы за сутки). Уникальные IP: grep -oE '([0-9]{1,3}\\.){3}[0-9]{1,3}' access.log | sort -u. tail -f app.log — для просмотра в реальном времени."
         }
       ],
       "correct": [
@@ -772,7 +772,7 @@
         },
         {
           "id": "c",
-          "text": "Liveness — жив ли? Нет → перезапуск. Readiness — готов к трафику? Нет → убирается из LB. Startup — для медленного старта: пока не пройдёт, остальные не проверяются. Spring Boot Actuator: /actuator/health/liveness..."
+          "text": "Liveness — жив ли? Нет → перезапуск. Readiness — готов к трафику? Нет → убирается из LB. Startup — для медленного старта: пока она не пройдёт, Liveness и Readiness не выполняются, а после успеха Startup больше не опрашивается. В Spring Boot Actuator доступны /actuator/health/liveness и /actuator/health/readiness."
         },
         {
           "id": "d",
@@ -815,7 +815,7 @@
         },
         {
           "id": "b",
-          "text": "Merge: создаёт коммит-слияние, история ветвится (видно откуда пришли изменения). Rebase: перемещает коммиты на вершину целевой ветки, линейная история. Rebase в публичных ветках — не стоит (переписывает историю)..."
+          "text": "Merge: создаёт коммит-слияние, история ветвится (видно, откуда пришли изменения). Rebase: перемещает коммиты на вершину целевой ветки, даёт линейную историю, но переписывает SHA коммитов — поэтому rebase в публичных ветках делать не стоит (переписывает историю)."
         },
         {
           "id": "c",
@@ -1024,7 +1024,7 @@
         },
         {
           "id": "d",
-          "text": "Surefire: запускает unit-тесты (*Test.java) на фазе test. Failsafe: запускает интеграционные (*IT.java) на фазе verify. Failsafe НЕ падает сразу при ошибке — собирает все результаты, потом fail..."
+          "text": "Surefire: запускает unit-тесты (*Test.java) на фазе test. Failsafe: запускает интеграционные (*IT.java) на фазе verify. Failsafe НЕ падает сразу при ошибке — доводит post-integration-test до конца (чтобы освободить ресурсы) и сигнализирует об ошибке только на фазе verify."
         }
       ],
       "correct": [
@@ -1108,7 +1108,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "Библиотека для запуска Docker-контейнеров из Java-тестов. PostgreSQLContainer, KafkaContainer, GenericContainer (WireMock). @Testcontainers + @Container. Для AQA: поднять реальную БД вместо H2..."
+          "text": "Библиотека для запуска Docker-контейнеров из Java-тестов. PostgreSQLContainer, KafkaContainer, GenericContainer (WireMock). @Testcontainers + @Container. Для AQA: поднять реальную БД вместо H2. Контейнеры поднимаются и останавливаются программно."
         },
         {
           "id": "b",
@@ -1214,7 +1214,7 @@
         },
         {
           "id": "d",
-          "text": "validate → compile → test → package → verify → install → deploy. mvn test: прогоняет unit-тесты (Surefire plugin). mvn verify: прогоняет интеграционные (Failsafe plugin). Scope: compile (по умолчанию)..."
+          "text": "validate → compile → test → package → verify → install → deploy; каждая фаза выполняет все предыдущие. mvn test: прогоняет unit-тесты (Surefire plugin). mvn verify: прогоняет интеграционные (Failsafe plugin). install кладёт артефакт в локальный ~/.m2, deploy — в удалённый репозиторий."
         }
       ],
       "correct": [
@@ -1297,7 +1297,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "1) Smoke-тесты: после каждого деплоя (быстрые, 5–10 кейсов). 2) Регрессия: на merge request или ночной запуск (полный набор). 3) Nightly: полная регрессия + отчёт Allure. Jenkins/GitLab CI → mvn verify → Allure report..."
+          "text": "1) Smoke-тесты: после каждого деплоя (быстрые, 5–10 кейсов). 2) Регрессия: на merge request или ночной запуск (полный набор). 3) Nightly: полная регрессия + отчёт Allure. Jenkins/GitLab CI → mvn verify → Allure report. Тесты разнесены по стадиям пирамиды: быстрые чаще, тяжёлые реже, чтобы фидбэк приходил рано."
         },
         {
           "id": "b",
@@ -1848,7 +1848,7 @@
         },
         {
           "id": "d",
-          "text": "Технически — все создают бин (синглтон по умолчанию). Семантически разные: @Repository — слой доступа к данным, Spring дополнительно оборачивает SQL/JPA исключения в DataAccessException. @Service — бизнес-логика..."
+          "text": "Технически — все создают бин (синглтон по умолчанию). Семантически разные: @Repository — слой доступа к данным, Spring дополнительно оборачивает SQL/JPA исключения в DataAccessException. @Service — бизнес-логика, @Controller — веб-слой. Все они специализации @Component."
         }
       ],
       "correct": [

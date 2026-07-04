@@ -58,7 +58,7 @@
         },
         {
           "id": "d",
-          "text": "ArrayList: O(1) доступ по индексу, O(n) вставка в середину, дружелюбно к CPU-кэшу (непрерывная память). LinkedList: O(1) вставка в начало/конец (если есть ссылка), O(n) доступ по индексу..."
+          "text": "ArrayList: O(1) доступ по индексу, O(n) вставка в середину, дружелюбно к CPU-кэшу (непрерывная память). LinkedList: O(1) вставка в начало/конец (если есть ссылка), O(n) доступ по индексу, так как нужно последовательно идти по узлам двусвязного списка."
         }
       ],
       "correct": [
@@ -195,7 +195,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "Checked: от Exception (не RuntimeException) — компилятор требует throws/catch. Примеры: IOException, SQLException. Unchecked: от RuntimeException и Error. Примеры: NullPointerException, IllegalArgumentException..."
+          "text": "Checked: от Exception (не RuntimeException) — компилятор требует throws/catch. Примеры: IOException, SQLException. Unchecked: от RuntimeException и Error — обрабатывать не обязательно. Примеры: NullPointerException, IllegalArgumentException."
         },
         {
           "id": "b",
@@ -337,7 +337,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "Плюсы: lock-free чтение (читатели не блокируются), fail-safe итератор (работает со snapshot). Минусы: при каждой записи — копирование всего массива → дорого. Подходит: много чтений, редкие записи (listeners, подписчики..."
+          "text": "Плюсы: lock-free чтение (читатели не блокируются), fail-safe итератор (работает со snapshot). Минусы: при каждой записи — копирование всего массива → дорого. Подходит: много чтений, редкие записи (listeners, подписчики)."
         },
         {
           "id": "b",
@@ -397,7 +397,7 @@
         },
         {
           "id": "d",
-          "text": "Если equals/hashCode используют lazy-связи (ManyToOne, OneToMany) — при первом вызове hashCode загрузится N связанных сущностей (N+1). Хуже: если связи двусторонние — StackOverflowError (бесконечная рекурсия)..."
+          "text": "Если equals/hashCode используют lazy-связи (ManyToOne, OneToMany) — при первом вызове hashCode загрузится N связанных сущностей (N+1). Хуже: если связи двусторонние — бесконечная рекурсия и StackOverflowError."
         }
       ],
       "correct": [
@@ -499,7 +499,7 @@
         },
         {
           "id": "c",
-          "text": "ConcurrentModificationException при изменении коллекции не через сам итератор. Реализован через modCount. Не гарантирован в многопоточной среде — только best effort. Альтернатива: CopyOnWriteArrayList (fail-safe..."
+          "text": "ConcurrentModificationException при изменении коллекции не через сам итератор. Реализован через сравнение modCount с expectedModCount. Не гарантирован в многопоточной среде — только best effort. Альтернатива: CopyOnWriteArrayList (fail-safe)."
         },
         {
           "id": "d",
@@ -650,7 +650,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "HashMap: не потокобезопасен, null-ключ. Hashtable: потокобезопасен (synchronized на всё), устаревший, нет null. LinkedHashMap: порядок вставки (или access order для LRU)..."
+          "text": "HashMap: не потокобезопасен, допускает null-ключ. Hashtable: потокобезопасен (synchronized на всё), устаревший, нет null. LinkedHashMap: порядок вставки (или access order для LRU). WeakHashMap: держит ключи через слабые ссылки, записи удаляются GC, когда на ключ нет сильных ссылок."
         },
         {
           "id": "b",
@@ -809,7 +809,7 @@
         },
         {
           "id": "d",
-          "text": "Формула: (n-1) & hash(key). Если capacity=16 (n=16): (15) & hash. 15 в бинарном = 1111. hash = 2_000_000_000: 2000000000 & 15 = 0 (последние 4 бита = 0000). Результат: bucket 0. Поэтому capacity — степень двойки..."
+          "text": "Формула: (n-1) & hash(key). Если capacity=16 (n=16): 15 & hash. 15 в бинарном = 1111. hash = 2_000_000_000: 2000000000 & 15 = 0 (последние 4 бита = 0000). Результат: bucket 0. Поэтому capacity — степень двойки: побитовое И эквивалентно взятию модуля."
         }
       ],
       "correct": [
@@ -939,7 +939,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "Kafka: pull (consumer сам забирает), хранит сообщения (retention), log compaction, высокая пропускная способность, горизонтальное масштабирование. RabbitMQ: push (брокер отправляет), удаляет после ACK..."
+          "text": "Kafka: pull (consumer сам забирает), хранит сообщения (retention), не удаляет после чтения (можно перечитывать), log compaction, высокая пропускная способность, горизонтальное масштабирование партициями. RabbitMQ: push (брокер отправляет), удаляет после ACK, гибкая маршрутизация (exchange/queue)."
         },
         {
           "id": "b",
@@ -1202,7 +1202,7 @@
         },
         {
           "id": "d",
-          "text": "PG: SERIAL/IDENTITY (автоинкремент), LIMIT/OFFSET, нет Read Uncommitted. Oracle: SEQUENCE, ROWNUM / FETCH FIRST N ROWS, NVL вместо COALESCE, DUAL для SELECT без таблицы, CONNECT BY для иерархий..."
+          "text": "PostgreSQL: SERIAL/IDENTITY (автоинкремент), LIMIT/OFFSET, Read Uncommitted фактически работает как Read Committed. Oracle: SEQUENCE, ROWNUM / FETCH FIRST N ROWS, NVL вместо COALESCE, таблица DUAL для SELECT без таблицы, CONNECT BY для иерархических запросов."
         }
       ],
       "correct": [
@@ -1444,7 +1444,7 @@
         },
         {
           "id": "b",
-          "text": "HashMap использует hashCode для бакета и equals для разрешения коллизий. Если по умолчанию (Object) — каждый объект уникален, два «равных по смыслу» User'а с одинаковым id будут в разных бакетах..."
+          "text": "HashMap использует hashCode для бакета и equals для разрешения коллизий. Если по умолчанию (Object) — каждый объект уникален, два «равных по смыслу» User'а с одинаковым id дадут разные hashCode, попадут в разные бакеты и не найдутся. Поэтому нужно переопределить оба метода согласованно, чтобы поиск по логически равному ключу работал."
         },
         {
           "id": "c",
@@ -1629,7 +1629,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "put: вычислили hashCode ключа → определили бакет → в бакете ищем по equals существующий ключ. Если нашли — обновляем значение. Если нет — добавляем новый Node..."
+          "text": "put: вычислили hashCode ключа → перемешали его биты и по & (n-1) определили бакет → в бакете ищем по equals существующий ключ. Если нашли — обновляем значение. Если нет — добавляем новый Node в цепочку (при переполнении бакета — в дерево). get работает симметрично: бакет по hashCode, ключ по equals."
         },
         {
           "id": "b",
@@ -1729,7 +1729,7 @@
         },
         {
           "id": "b",
-          "text": "Начальная capacity = 10. При переполнении создаётся новый массив размером 1.5× от старого, элементы копируются. Метод trimToSize() ужимает массив до текущего количества элементов..."
+          "text": "Начальная capacity = 10 (массив создаётся лениво при первом add). При переполнении создаётся новый массив размером примерно 1.5× от старого (oldCapacity + oldCapacity >> 1), элементы копируются. Метод trimToSize() ужимает массив до текущего количества элементов."
         },
         {
           "id": "c",
@@ -1886,7 +1886,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "Массив Node<K,V>[]. Размер — степень двойки (default 16). Индекс: (n-1) & hash(key), hash — XOR верхних 16 бит с нижними. Коллизии — связный список. Java 8+: при TREEIFY_THRESHOLD=8 И capacity ≥ 64 → red-black tree..."
+          "text": "Массив Node<K,V>[]. Размер — степень двойки (default 16). Индекс: (n-1) & hash(key), hash — XOR верхних 16 бит с нижними. Коллизии — связный список (chaining). Java 8+: при TREEIFY_THRESHOLD=8 И capacity ≥ 64 → red-black tree."
         },
         {
           "id": "b",
@@ -1980,7 +1980,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "Массив бакетов (table). По хэшу ключа определяется индекс бакета (примерно: hash mod capacity). В бакете — связный список узлов Node (hash + key + value + next)..."
+          "text": "Массив бакетов (table). По хэшу ключа определяется индекс бакета ((n-1) & hash при capacity — степени двойки). В бакете — связный список узлов Node (hash + key + value + next); при длине ≥ 8 и достаточной capacity список превращается в красно-чёрное дерево."
         },
         {
           "id": "b",
@@ -2178,7 +2178,7 @@
         },
         {
           "id": "c",
-          "text": "HashSet — на основе HashMap (значение в виде специальной заглушки). Не сохраняет порядок. LinkedHashSet — HashSet + порядок вставки. TreeSet — на основе TreeMap (красно-чёрное дерево), элементы отсортированы..."
+          "text": "HashSet — на основе HashMap (значение в виде специальной заглушки). Не сохраняет порядок. LinkedHashSet — HashSet + порядок вставки. TreeSet — на основе TreeMap (красно-чёрное дерево), элементы отсортированы, операции O(log n)."
         },
         {
           "id": "d",
@@ -2277,7 +2277,7 @@
         },
         {
           "id": "d",
-          "text": "ArrayList: динамический массив, O(1) доступ, O(n) вставка в середину. LinkedList: двусвязный список, O(1) вставка/удаление, O(n) доступ. HashMap: бакеты + связный список → дерево при ≥8 коллизиях..."
+          "text": "ArrayList: динамический массив, O(1) доступ, O(n) вставка в середину. LinkedList: двусвязный список, O(1) вставка/удаление у известного узла, O(n) доступ. HashMap: бакеты + связный список (метод цепочек) → дерево при ≥8 коллизиях."
         }
       ],
       "correct": [
@@ -2559,7 +2559,7 @@
         },
         {
           "id": "d",
-          "text": "Технически — да, через ALTER. Но фактически — нельзя, потому что: (1) на нём FK из других таблиц. (2) Индексы строятся по PK. (3) В кластерных индексах данные физически отсортированы по PK. Операция дорогая и опасная..."
+          "text": "Технически — да, через ALTER. Но фактически — нельзя, потому что: (1) на нём FK из других таблиц. (2) Индексы строятся по PK. (3) В кластерных индексах данные физически отсортированы по PK. Операция дорогая и опасная — требует перестройки индексов и обновления связей."
         }
       ],
       "correct": [
@@ -2750,7 +2750,7 @@
         },
         {
           "id": "c",
-          "text": "@RestControllerAdvice + @ExceptionHandler. ErrorDto с code, message, timestamp. HTTP-статусы: 400 (валидация), 404 (не найдено), 409 (бизнес-конфликт), 500. MethodArgumentNotValidException для @Valid..."
+          "text": "@RestControllerAdvice + @ExceptionHandler. ErrorDto с code, message, timestamp. HTTP-статусы: 400 (валидация), 404 (не найдено), 409 (бизнес-конфликт), 500 (непредвиденные). MethodArgumentNotValidException для ошибок @Valid отдаёт 400."
         },
         {
           "id": "d",
@@ -2807,7 +2807,7 @@
         },
         {
           "id": "d",
-          "text": "Collection (List, Set, Queue) и Map (отдельно, НЕ наследует Collection). List — упорядоченный с дубликатами. Set — без дубликатов. Queue — очередь. Map — пары ключ-значение. Реализации: ArrayList, LinkedList, HashSet..."
+          "text": "Collection (List, Set, Queue) и Map (отдельно, НЕ наследует Collection). List — упорядоченный с дубликатами. Set — без дубликатов. Queue — очередь. Map — пары ключ-значение. Реализации: ArrayList, LinkedList, HashSet, HashMap."
         }
       ],
       "correct": [
@@ -2843,7 +2843,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "Cache locality. ArrayList хранит элементы в непрерывном куске памяти — процессор подгружает целые блоки в L1/L2 кэш. У LinkedList узлы разбросаны по куче — каждый next() это cache miss..."
+          "text": "Cache locality. ArrayList хранит элементы в непрерывном куске памяти — процессор подгружает целые блоки в L1/L2 кэш. У LinkedList узлы разбросаны по куче — каждый next() это cache miss, что и замедляет обход на практике."
         },
         {
           "id": "b",
@@ -3096,7 +3096,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "Throwable — корень. Делится на Error (OOM, StackOverflow — не ловить) и Exception. Exception → checked (IOException, SQLException — обязаны быть в throws) и RuntimeException → unchecked (NullPointerException..."
+          "text": "Throwable — корень. Делится на Error (OOM, StackOverflow — не ловить) и Exception. Exception → checked (IOException, SQLException — обязаны быть в throws) и RuntimeException → unchecked (NullPointerException и потомки, которые не требуют объявления в throws)."
         },
         {
           "id": "b",
@@ -3143,7 +3143,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "HashMap — основная, не потокобезопасна, без порядка, null-ключ можно. LinkedHashMap — порядок вставки или access-order (последнее нужно для LRU-кэша). TreeMap — отсортирована по ключу, через NavigableMap (firstKey..."
+          "text": "HashMap — основная, не потокобезопасна, без порядка, null-ключ можно. LinkedHashMap — порядок вставки или access-order (последнее нужно для LRU-кэша). TreeMap — отсортирована по ключу, реализует NavigableMap (firstKey, floorKey и т.д.), операции за O(log n)."
         },
         {
           "id": "b",
@@ -3191,7 +3191,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "Если a.equals(b), то hashCode одинаков. Обратное необязательно. При константном hashCode — все в одном bucket: Java 7 — список O(n), Java 8+ при 8 коллизиях — red-black tree O(log n). Деградация..."
+          "text": "Если a.equals(b), то hashCode одинаков. Обратное необязательно. При константном hashCode — все в одном bucket: Java 7 — список O(n), Java 8+ при 8 коллизиях — red-black tree O(log n). Деградация производительности поиска с O(1) до O(n) или O(log n)."
         },
         {
           "id": "b",
@@ -3447,7 +3447,7 @@
         },
         {
           "id": "b",
-          "text": "Доступ по индексу: ArrayList O(1), LinkedList O(n) (нужно идти от головы или хвоста). Вставка в конец: ArrayList амортизированный O(1), LinkedList O(1). Вставка в середину: ArrayList O(n) (сдвиг элементов)..."
+          "text": "Доступ по индексу: ArrayList O(1), LinkedList O(n) (нужно идти от головы или хвоста). Вставка в конец: ArrayList амортизированный O(1), LinkedList O(1). Вставка в середину: ArrayList O(n) (сдвиг элементов), LinkedList O(1), только если итератор уже стоит на нужном узле (иначе поиск позиции O(n))."
         },
         {
           "id": "c",
@@ -3541,7 +3541,7 @@
         },
         {
           "id": "b",
-          "text": "Iterator — однонаправленный обход. Методы hasNext, next, remove. Доступен для любой Collection. ListIterator — только у List. Двунаправленный (hasPrevious / previous)..."
+          "text": "Iterator — однонаправленный обход. Методы hasNext, next, remove. Доступен для любой Collection. ListIterator — только у List. Двунаправленный (hasPrevious / previous), умеет add/set и знает индексы (nextIndex / previousIndex)."
         },
         {
           "id": "c",
@@ -3846,7 +3846,7 @@
         },
         {
           "id": "d",
-          "text": "Checked — компилятор требует обработать (catch) или объявить в throws. Используются для ожидаемых внешних ошибок (IO, БД). Unchecked (RuntimeException и наследники) — обрабатывать не обязательно..."
+          "text": "Checked (наследники Exception, кроме RuntimeException) — компилятор требует обработать (catch) или объявить в throws; применяются для ожидаемых внешних ошибок (IO, БД). Unchecked (RuntimeException и его наследники, а также Error) обрабатывать не обязательно."
         }
       ],
       "correct": [
@@ -3950,7 +3950,7 @@
         },
         {
           "id": "b",
-          "text": "Соотношение size / capacity, при котором происходит расширение таблицы. По умолчанию 0.75. То есть когда size превышает 75% от capacity, таблица расширяется в 2 раза и все элементы перехэшируются..."
+          "text": "Пороговое соотношение size / capacity (по умолчанию 0.75), при превышении которого таблица расширяется. То есть когда size превышает 75% от capacity, capacity увеличивается в 2 раза и все элементы перехэшируются под новый размер."
         },
         {
           "id": "c",
@@ -3998,7 +3998,7 @@
         },
         {
           "id": "b",
-          "text": "Oracle: SEQUENCE — отдельный объект БД, генератор уникальных чисел. Используется для auto-increment ID: INSERT VALUES (my_seq.nextval, ...). Postgres: аналог — SERIAL или IDENTITY. SERIAL — алиас для INTEGER + sequence..."
+          "text": "Oracle: SEQUENCE — отдельный объект БД, генератор уникальных чисел для auto-increment ID: INSERT VALUES (my_seq.nextval, ...). Postgres аналог — SERIAL или IDENTITY. При этом sequence не гарантирует непрерывность: при откате транзакции или кэшировании значения теряются и образуются пропуски."
         },
         {
           "id": "c",

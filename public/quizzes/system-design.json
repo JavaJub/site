@@ -229,7 +229,7 @@
         },
         {
           "id": "d",
-          "text": "Health checks: HTTP GET /health каждые N секунд. Если 3 подряд неуспешных → убрать из ротации. Service Discovery (Eureka/Consul): сервис регистрируется, посылает heartbeat. Если heartbeat пропал → deregister..."
+          "text": "Health checks: HTTP GET /health каждые N секунд. Если 3 подряд неуспешных → убрать из ротации. Service Discovery (Eureka/Consul): сервис регистрируется, посылает heartbeat. Если heartbeat пропал → deregister."
         }
       ],
       "correct": [
@@ -269,7 +269,7 @@
         },
         {
           "id": "b",
-          "text": "Rate limiter на стороне A (ограничить исходящие). Kafka как буфер: A пишет в топик → B читает со своей скоростью (backpressure). Circuit Breaker: при перегрузке B → A получает fallback..."
+          "text": "Rate limiter на стороне A (ограничить исходящие). Kafka как буфер: A пишет в топик → B читает со своей скоростью (backpressure). Circuit Breaker: при перегрузке B → A получает fallback."
         },
         {
           "id": "c",
@@ -313,7 +313,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "Retry с exponential backoff + jitter (не все клиенты ретраят одновременно). Circuit Breaker: после N ошибок → OPEN (не шлём запросы) → HALF_OPEN (тестовый) → CLOSED. Idempotency-Key: чтобы retry не создал дубль..."
+          "text": "Retry с exponential backoff + jitter (не все клиенты ретраят одновременно). Circuit Breaker: после N ошибок → OPEN (не шлём запросы) → HALF_OPEN (тестовый) → CLOSED. Idempotency-Key: чтобы retry не создал дубль."
         },
         {
           "id": "b",

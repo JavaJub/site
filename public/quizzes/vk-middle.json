@@ -117,7 +117,7 @@
         },
         {
           "id": "d",
-          "text": "ArrayList: O(1) доступ по индексу, O(n) вставка в середину, дружелюбно к CPU-кэшу (непрерывная память). LinkedList: O(1) вставка в начало/конец (если есть ссылка), O(n) доступ по индексу..."
+          "text": "ArrayList: O(1) доступ по индексу, O(n) вставка в середину, дружелюбно к CPU-кэшу (непрерывная память). LinkedList: O(1) вставка в начало/конец (если есть ссылка), O(n) доступ по индексу, так как нужно последовательно идти по узлам двусвязного списка."
         }
       ],
       "correct": [
@@ -413,7 +413,7 @@
         },
         {
           "id": "c",
-          "text": "Каждая партиция — ровно один consumer из группы. Больше партиций → больше параллелизма. Если consumers > partitions — лишние простаивают. Rebalancing при добавлении/падении consumer..."
+          "text": "Каждая партиция — ровно один consumer из группы. Больше партиций → больше параллелизма. Если consumers > partitions — лишние простаивают. Rebalancing при добавлении/падении consumer. Offset хранится на уровне группы (в __consumer_offsets), поэтому после rebalancing чтение продолжается с закоммиченной позиции."
         },
         {
           "id": "d",
@@ -521,7 +521,7 @@
         },
         {
           "id": "b",
-          "text": "EXPLAIN — план без выполнения. EXPLAIN ANALYZE — реальное выполнение + actual time. Seq Scan на большой таблице — плохо. Index Scan / Index Only Scan — хорошо. Rows Removed by Filter — индекс не помогает..."
+          "text": "EXPLAIN — оценочный план без выполнения. EXPLAIN ANALYZE — реальное выполнение запроса + actual time и число строк. Seq Scan на большой таблице — плохо. Index Scan / Index Only Scan — хорошо. Rows Removed by Filter — индекс не помогает фильтрации."
         },
         {
           "id": "c",
@@ -635,7 +635,7 @@
         },
         {
           "id": "d",
-          "text": "Ключевое отношение JMM. Если A happens-before B, то записи в A видны в B. Примеры: unlock → lock того же монитора. volatile write → read. Thread.start() → первая инструкция потока. Последняя инструкция → Thread.join()..."
+          "text": "Ключевое отношение JMM: гарантия видимости и упорядочивания эффектов (JVM вправе переупорядочивать, пока наблюдаемый порядок соблюдён). Если A happens-before B, то записи в A (в том числе все обычные записи до volatile-записи) видны в B. Примеры: unlock → lock того же монитора; volatile write → read; Thread.start() → первая инструкция потока; последняя инструкция → Thread.join()."
         }
       ],
       "correct": [
@@ -999,7 +999,7 @@
         },
         {
           "id": "b",
-          "text": "Распределённый лог-ориентированный брокер. Данные хранятся на диске (retention), не удаляются после прочтения. Topic → Partition → Offset. Partition — единица параллелизма. Зачем: асинхронное взаимодействие..."
+          "text": "Распределённый лог-ориентированный брокер. Данные хранятся на диске (retention), не удаляются после прочтения. Topic → Partition → Offset. Partition — единица параллелизма. Зачем: асинхронное взаимодействие, развязка сервисов и потоковая обработка."
         },
         {
           "id": "c",
@@ -1384,7 +1384,7 @@
         },
         {
           "id": "c",
-          "text": "REQUIRED (default) — присоединяется/создаёт. REQUIRES_NEW — всегда новая, приостанавливает текущую (аудит/логирование). NESTED — savepoint внутри текущей. SUPPORTS — присоединяется если есть, нет — без..."
+          "text": "REQUIRED (default) — присоединяется к текущей или создаёт новую. REQUIRES_NEW — всегда новая, приостанавливает текущую (аудит/логирование). NESTED — savepoint внутри текущей (откат внешней откатывает и вложенную). SUPPORTS — присоединяется если транзакция есть, нет — работает без неё. MANDATORY требует существующую (иначе исключение), NEVER — наоборот, бросает исключение при наличии транзакции."
         },
         {
           "id": "d",
@@ -1722,7 +1722,7 @@
         },
         {
           "id": "b",
-          "text": "@Configuration + @EnableAutoConfiguration + @ComponentScan. Автоконфигурация через @Conditional: если DataSource в classpath — настроит JPA. Список в META- INF/spring/...AutoConfiguration.imports (Spring Boot 3+..."
+          "text": "@Configuration + @EnableAutoConfiguration + @ComponentScan. Автоконфигурация через @Conditional: если DataSource в classpath — настроит JPA. Кандидаты берутся из META-INF/spring/...AutoConfiguration.imports (Spring Boot 3+). По умолчанию сканируется пакет класса и подпакеты."
         },
         {
           "id": "c",
@@ -1924,7 +1924,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "Захватывает монитор объекта. Instance-метод — монитор this. Static — монитор Class. Блок — указанный объект. Только один поток. Reentrant: поток может повторно захватить свой монитор (счётчик)..."
+          "text": "Захватывает монитор объекта. Instance-метод — монитор this. Static — монитор Class. Блок — указанный объект. Только один поток. Reentrant: поток может повторно захватить свой монитор (счётчик). Даёт happens-before, поэтому отдельный volatile не нужен."
         },
         {
           "id": "b",
@@ -2132,7 +2132,7 @@
         },
         {
           "id": "c",
-          "text": "Лёгкие потоки, управляемые JVM (не ОС). Thread.ofVirtual().start(). Миллионы потоков без проблем. НЕ подходят для CPU-bound задач (нет preemption). Идеальны для I/O-bound (сетевые запросы, БД). Executors..."
+          "text": "Лёгкие потоки, управляемые JVM (не ОС). Thread.ofVirtual().start(). Миллионы потоков без проблем. НЕ подходят для CPU-bound задач (нет preemption). Идеальны для I/O-bound (сетевые запросы, БД). Executors.newVirtualThreadPerTaskExecutor()."
         },
         {
           "id": "d",
@@ -2395,7 +2395,7 @@
         },
         {
           "id": "d",
-          "text": "at-most-once — может потеряться. at-least-once — может продублироваться (default). exactly-once — idempotent producer + transactional + read_committed. В проде: at-least-once + идемпотентная обработка (upsert в БД..."
+          "text": "at-most-once — может потеряться (но не дублируется). at-least-once — может продублироваться, но не теряется (default). exactly-once — idempotent producer + transactional + read_committed на консьюмере. В проде: at-least-once + идемпотентная обработка (upsert в БД)."
         }
       ],
       "correct": [
@@ -2454,7 +2454,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "BeanDefinition → инстанцирование → DI → Aware-интерфейсы → BPP.postProcessBefore → @PostConstruct → InitializingBean → init-method → BPP.postProcessAfter → ГОТОВ → @PreDestroy → DisposableBean → destroy-method..."
+          "text": "BeanDefinition → инстанцирование → DI → Aware-интерфейсы → BPP.postProcessBefore → @PostConstruct → InitializingBean → init-method → BPP.postProcessAfter (здесь оборачивание в прокси, AOP) → ГОТОВ → @PreDestroy → DisposableBean → destroy-method."
         },
         {
           "id": "b",
@@ -2627,7 +2627,7 @@
         },
         {
           "id": "c",
-          "text": "Если a.equals(b) == true, то a.hashCode() == b.hashCode(). Обратное необязательно (коллизии допустимы). equals(null) → false. Переопределяешь один — переопределяй оба. Практический пример: положить объект в HashSet..."
+          "text": "Если a.equals(b) == true, то a.hashCode() == b.hashCode(). Обратное необязательно (коллизии допустимы). equals(null) → false. Переопределяешь один — переопределяй оба. Практический пример: положить объект в HashSet — иначе он не найдётся."
         },
         {
           "id": "d",
@@ -2691,7 +2691,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "Heap — хранение объектов, управляется GC. Stack — фрейм для каждого вызова метода (локальные переменные, ссылки, примитивы). Metaspace (до Java 8 — PermGen) — метаданные классов, пул интернированных строк..."
+          "text": "Heap — хранение объектов, управляется GC, общий для всех потоков. Stack — фрейм для каждого вызова метода (локальные переменные, ссылки, примитивы), приватный для потока. Metaspace (до Java 8 — PermGen) — метаданные классов в нативной памяти, вне Heap."
         },
         {
           "id": "b",
@@ -2809,7 +2809,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "ROW_NUMBER(), RANK(), DENSE_RANK() — нумерация/ранжирование. LAG/LEAD — предыдущая/следующая строка. SUM/AVG/COUNT OVER (PARTITION BY ... ORDER BY ...) — агрегация без GROUP BY..."
+          "text": "ROW_NUMBER(), RANK(), DENSE_RANK() — нумерация/ранжирование. LAG/LEAD — предыдущая/следующая строка. SUM/AVG/COUNT OVER (PARTITION BY ... ORDER BY ...) — агрегация без GROUP BY. В отличие от GROUP BY оконные функции не сворачивают строки."
         },
         {
           "id": "b",
@@ -3227,7 +3227,7 @@
         },
         {
           "id": "d",
-          "text": "READ_UNCOMMITTED — dirty read. READ_COMMITTED (default PG) — только закоммиченные. REPEATABLE_READ — повторное чтение = тот же результат. SERIALIZABLE — полная изоляция. Выше уровень → больше консистентности..."
+          "text": "READ_UNCOMMITTED — dirty read. READ_COMMITTED (default PG) — только закоммиченные. REPEATABLE_READ — повторное чтение = тот же результат. SERIALIZABLE — полная изоляция, исключает фантомы. Выше уровень → больше консистентности, но меньше параллелизма."
         }
       ],
       "correct": [

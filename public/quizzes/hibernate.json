@@ -27,7 +27,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "application/json: JSON в body (REST API). application/x-www-form-urlencoded: пары key=value (формы логина). multipart/form-data: для загрузки файлов (binary + metadata)..."
+          "text": "application/json: JSON в body (REST API). application/x-www-form-urlencoded: пары key=value (формы логина). multipart/form-data: для загрузки файлов (binary + metadata)."
         },
         {
           "id": "b",
@@ -87,7 +87,7 @@
         },
         {
           "id": "d",
-          "text": "Если equals/hashCode используют lazy-связи (ManyToOne, OneToMany) — при первом вызове hashCode загрузится N связанных сущностей (N+1). Хуже: если связи двусторонние — StackOverflowError (бесконечная рекурсия)..."
+          "text": "Если equals/hashCode используют lazy-связи (ManyToOne, OneToMany) — при первом вызове hashCode загрузится N связанных сущностей (N+1). Хуже: если связи двусторонние — бесконечная рекурсия и StackOverflowError."
         }
       ],
       "correct": [
@@ -130,7 +130,7 @@
         },
         {
           "id": "c",
-          "text": "JDBC — низкий уровень, прямой SQL, ResultSet, ручной маппинг колонок в поля. Hibernate — поверх JDBC. Генерирует SQL автоматически, маппит результаты в объекты. Удобно для типового CRUD..."
+          "text": "JDBC — низкий уровень, прямой SQL, ResultSet, ручной маппинг колонок в поля. Hibernate — поверх JDBC: сам генерирует обычный SQL и маппит результаты в объекты. Удобно для типового CRUD."
         },
         {
           "id": "d",
@@ -181,7 +181,7 @@
         },
         {
           "id": "d",
-          "text": "Сложные аналитические запросы (оконные функции, CTE). Batch-операции (тысячи INSERT). Запросы, где ORM генерирует неоптимальный SQL. Миграция legacy-кода. Простые CRUD без сложных связей..."
+          "text": "Сложные аналитические запросы (оконные функции, CTE). Batch-операции (тысячи INSERT). Запросы, где ORM генерирует неоптимальный SQL. Миграция legacy-кода. Простые CRUD без сложных связей — везде, где нужен полный контроль над SQL."
         }
       ],
       "correct": [
@@ -263,7 +263,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "JPA — спецификация (набор интерфейсов и аннотаций). Hibernate — реализация (конкретная библиотека). EntityManager — JPA-интерфейс, Session — Hibernate-интерфейс..."
+          "text": "JPA — спецификация (набор интерфейсов и аннотаций). Hibernate — одна из её реализаций (наряду с EclipseLink, OpenJPA). EntityManager — JPA-интерфейс, Session — нативный Hibernate-интерфейс, расширяющий спецификацию."
         },
         {
           "id": "b",
@@ -369,7 +369,7 @@
         },
         {
           "id": "b",
-          "text": "Обращение к lazy-полю после закрытия сессии. Решения (от лучшего к худшему): DTO-проекция (SELECT NEW), JOIN FETCH (@Query), @EntityGraph(attributePaths), @BatchSize(size=100)..."
+          "text": "Обращение к lazy-полю после закрытия сессии (вне транзакции), когда прокси не может догрузить данные. Решения (от лучшего к худшему): DTO-проекция (SELECT NEW), JOIN FETCH (@Query), @EntityGraph(attributePaths), @BatchSize(size=100)."
         },
         {
           "id": "c",
@@ -471,7 +471,7 @@
         },
         {
           "id": "d",
-          "text": "1 findAll() + N доп. запросов на lazy-коллекции. 1000 заказов → 1001 SQL. Обнаружение: hibernate.generate_statistics=true, datasource-proxy. Решения: JOIN FETCH, @EntityGraph, @BatchSize(100), @Fetch(FetchMode..."
+          "text": "1 findAll() + N доп. запросов на lazy-коллекции при обращении к ним: 1000 заказов → 1001 SQL. Обнаружение: hibernate.generate_statistics=true, datasource-proxy. Решения: JOIN FETCH, @EntityGraph, @BatchSize(100), @Fetch(FetchMode.SUBSELECT)."
         }
       ],
       "correct": [
@@ -661,7 +661,7 @@
         },
         {
           "id": "d",
-          "text": "Интерфейс extends JpaRepository<Entity, ID>. Spring создаёт прокси в рантайме. Имя метода парсится: findByEmailAndStatus → JPQL. @Query для сложных запросов. Pageable → Page/Slice. JpaRepository добавляет flush()..."
+          "text": "Интерфейс extends JpaRepository<Entity, ID>. Spring создаёт прокси в рантайме. Имя метода парсится: findByEmailAndStatus → JPQL. @Query для сложных запросов (JPQL по умолчанию, native по флагу). Pageable → Page/Slice. JpaRepository добавляет flush() и batch-операции."
         }
       ],
       "correct": [
@@ -698,7 +698,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "@SpringBootTest: поднимает ВЕСЬ контекст (медленно, для E2E). @WebMvcTest: только контроллеры + MockMvc (без БД). @DataJpaTest: только JPA-слой + встроенная БД..."
+          "text": "@SpringBootTest: поднимает ВЕСЬ контекст (медленно, для интеграционных/E2E). @WebMvcTest: только веб-слой (контроллеры + MockMvc, без БД). @DataJpaTest: только JPA-слой + встроенная БД, с откатом транзакций после каждого теста."
         },
         {
           "id": "b",
@@ -753,7 +753,7 @@
         },
         {
           "id": "c",
-          "text": "Entity — связана с БД (@Entity). Может иметь связи (LazyInitializationException наружу!). DTO — независимый объект для передачи. Хорошая практика: НЕ возвращать Entity из REST-контроллеров, маппить в DTO..."
+          "text": "Entity — связана с БД (@Entity). Может иметь связи (LazyInitializationException наружу!). DTO — независимый объект для передачи. Хорошая практика: НЕ возвращать Entity из REST-контроллеров, маппить в DTO, чтобы не тянуть ленивые связи вне сессии."
         },
         {
           "id": "d",
@@ -796,7 +796,7 @@
         },
         {
           "id": "b",
-          "text": "JPA (Java Persistence API) — спецификация (интерфейсы и аннотации в пакете javax.persistence / jakarta.persistence). Hibernate — конкретная реализация. Альтернативы: EclipseLink, OpenJPA..."
+          "text": "JPA (Java Persistence API) — спецификация (интерфейсы и аннотации в пакете javax.persistence / jakarta.persistence). Hibernate — её конкретная реализация (как EclipseLink и OpenJPA), которая вдобавок предоставляет собственные расширения: HQL, кэш второго уровня и т.д."
         },
         {
           "id": "c",
@@ -899,7 +899,7 @@
         },
         {
           "id": "d",
-          "text": "(1) JPQL с JOIN FETCH: select o from Order o join fetch o.user. (2) @EntityGraph — атрибут на репозиторий-методе, говорит «подгрузить эти поля сразу». (3) Hibernate batch_size — группирует SELECT'ы по пачкам..."
+          "text": "(1) JPQL с JOIN FETCH: select o from Order o join fetch o.user. (2) @EntityGraph — атрибут на репозиторий-методе, говорит «подгрузить эти поля сразу». (3) Hibernate default_batch_fetch_size — группирует SELECT'ы по пачкам вместо запроса на каждую сущность."
         }
       ],
       "correct": [
@@ -1029,7 +1029,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "Для коллекций (@OneToMany, @ManyToMany) — Lazy. Для скалярных связей (@OneToOne, @ManyToOne) — Eager. Eager по умолчанию для @ManyToOne — частая ловушка: при загрузке Order сразу подтянется User..."
+          "text": "Для коллекций (@OneToMany, @ManyToMany) — Lazy. Для скалярных связей (@OneToOne, @ManyToOne) — Eager. Eager по умолчанию для @ManyToOne — частая ловушка: при загрузке Order сразу подтянется User, что провоцирует проблему N+1."
         },
         {
           "id": "b",
@@ -1080,7 +1080,7 @@
         },
         {
           "id": "b",
-          "text": "PERSIST + MERGE + REMOVE + REFRESH + DETACH. Опасность: CascadeType.REMOVE при OneToMany — удаление родителя удалит ВСЕХ детей. Если детей 10 000 — 10 000 DELETE запросов..."
+          "text": "PERSIST + MERGE + REMOVE + REFRESH + DETACH. Опасность: CascadeType.REMOVE при OneToMany — удаление родителя удалит ВСЕХ детей. Если детей 10 000 — 10 000 DELETE запросов."
         },
         {
           "id": "c",
@@ -1141,7 +1141,7 @@
         },
         {
           "id": "d",
-          "text": "First-level: автоматический, привязан к Session. Гарантирует identity (один PK = один объект). Second-level: опциональный, общий (EhCache, Caffeine, Infinispan). Query cache: кэширует JPQL-результаты..."
+          "text": "First-level: автоматический, привязан к Session. Гарантирует identity (один PK = один объект). Second-level: опциональный, общий на уровне SessionFactory (EhCache, Caffeine, Infinispan). Query cache: кэширует результаты JPQL-запросов и требует включённого second-level."
         }
       ],
       "correct": [
@@ -1434,7 +1434,7 @@
         },
         {
           "id": "c",
-          "text": "Transient — new User(), Hibernate не знает. Persistent/Managed — связан с сессией, dirty checking автоматически синхронизирует изменения. Detached — сессия закрыта/detach. Removed — помечен на удаление..."
+          "text": "Transient — new User(), Hibernate не знает. Persistent/Managed — связан с сессией, dirty checking автоматически синхронизирует изменения. Detached — сессия закрыта/detach, изменения сами в БД не уходят, нужен merge(). Removed — помечен на удаление. Всего четыре состояния."
         },
         {
           "id": "d",
@@ -1589,7 +1589,7 @@
         },
         {
           "id": "d",
-          "text": "Технически — все создают бин (синглтон по умолчанию). Семантически разные: @Repository — слой доступа к данным, Spring дополнительно оборачивает SQL/JPA исключения в DataAccessException. @Service — бизнес-логика..."
+          "text": "Технически — все создают бин (синглтон по умолчанию). Семантически разные: @Repository — слой доступа к данным, Spring дополнительно оборачивает SQL/JPA исключения в DataAccessException. @Service — бизнес-логика, @Controller — веб-слой. Все они специализации @Component."
         }
       ],
       "correct": [
@@ -1770,7 +1770,7 @@
         },
         {
           "id": "b",
-          "text": "Возникает, когда обращаешься к LAZY-полю после закрытия сессии Hibernate. Сценарий: достал Entity в @Transactional-методе, вернул наружу. Транзакция закрылась — сессия закрылась..."
+          "text": "Runtime-исключение, возникающее при обращении к LAZY-полю или коллекции после закрытия сессии Hibernate. Сценарий: достал Entity в @Transactional-методе, вернул наружу; транзакция и сессия закрылись — при попытке дочитать ленивое поле летит исключение."
         },
         {
           "id": "c",
@@ -1920,7 +1920,7 @@
       "choices": [
         {
           "id": "a",
-          "text": "Object-Relational Mapping — отображение объектов на таблицы БД. Класс User → таблица users, поля → колонки, связи (@OneToMany) → JOIN'ы. Hibernate берёт на себя SQL — разработчик работает с объектами..."
+          "text": "Object-Relational Mapping — отображение объектов на таблицы БД: класс User → таблица users, поля → колонки, связи (@OneToMany) → JOIN'ы. Hibernate сам генерирует SQL, а разработчик работает с объектами."
         },
         {
           "id": "b",
@@ -2029,7 +2029,7 @@
         },
         {
           "id": "c",
-          "text": "Удобная обёртка над JPA / Hibernate. Создаёшь интерфейс, наследуешь JpaRepository — Spring сам сгенерирует реализацию. Query methods: метод findByEmail — Spring сам соберёт SQL по имени..."
+          "text": "Удобная обёртка над JPA / Hibernate: создаёшь интерфейс-наследник JpaRepository — Spring сам генерирует реализацию. Query methods: по имени метода вроде findByEmail Spring сам собирает SQL-запрос, работая с @Entity-классами."
         },
         {
           "id": "d",
@@ -2080,7 +2080,7 @@
         },
         {
           "id": "d",
-          "text": "Value Object — объект, который определяется ТОЛЬКО своими значениями (не identity). Например, Money(amount, currency) — два VO с одинаковыми полями равны. Иммутабельны, имеют equals/hashCode по содержимому..."
+          "text": "Value Object — объект, который определяется ТОЛЬКО своими значениями (не identity). Например, Money(amount, currency) — два VO с одинаковыми полями равны. Иммутабельны, имеют equals/hashCode по содержимому."
         }
       ],
       "correct": [
