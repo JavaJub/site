@@ -8,14 +8,18 @@ export const SITE = {
 } as const;
 
 export const LINKS = {
-  telegram: 'https://t.me/java_jub',
+  telegram: 'https://t.me/java_jub',            // canonical channel URL (JSON-LD identity)
+  telegramInvite: 'https://t.me/+vDYjUmPrBYZmMTAy', // invite link — Telegram counts joins per link
   telegramPro: 'https://t.me/Java_Jub_Pro',
   subBot: 'https://t.me/java_jub_subscriptions_bot',
   github: 'https://github.com/JavaJub/java-interview',
 } as const;
 
-// Telegram join with a source tag for attribution.
-export const tg = (source: string) => `${LINKS.telegram}?source=${encodeURIComponent(source)}`;
+// All "join the free channel" CTAs use the invite link so Telegram's per-link
+// join counter tracks arrivals from the site. NOTE: Telegram ignores URL query
+// params, so `source` is not encoded — to measure per-placement, create several
+// named invite links in Telegram and map source→link here.
+export const tg = (_source?: string) => LINKS.telegramInvite;
 
 // Feature flags. Both OFF until the operator files the Roskomnadzor personal-data
 // notification (152-ФЗ) and sets up payment/оферта. While OFF the site collects
